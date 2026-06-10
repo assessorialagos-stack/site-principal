@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* ===== Tema CLARO estilo cal.com ===== */
+  --color-background: #FFFFFF;   /* branco puro */
+  --color-section: #F8F9FB;      /* cinza claríssimo (seção alternada) */
+  --color-card: #FFFFFF;
+  --color-card-2: #F8F9FB;
+  --color-foreground: #0F0F11;   /* quase preto (títulos) */
+  --color-muted: #62656E;        /* cinza (texto) */
+  --color-border: rgba(15, 15, 17, 0.09);
+  --color-border-strong: rgba(15, 15, 17, 0.16);
+
+  /* Ação PRETA (assinatura cal.com) */
+  --color-ink: #0F0F11;
+  --color-ink-soft: #2A2A2E;
+  --color-ink-muted: #62656E;
+
+  /* Acento azul discreto (cal.com usa pouco) */
+  --color-accent: #155EEF;
+  --color-accent-2: #155EEF;
+  --color-accent-hover: #0E47BE;
+  --color-accent-soft: rgba(21, 94, 239, 0.08);
+  --color-accent-glow: rgba(21, 94, 239, 0.18);
+
+  /* tokens "light-*" coerentes (claro) */
+  --color-light: #F8F9FB;
+  --color-light-2: #FFFFFF;
+  --color-light-border: rgba(15, 15, 17, 0.09);
+
+  /* compat com tokens antigos */
+  --color-neon: #155EEF;
+  --color-neon-bright: #155EEF;
+  --color-neon-glow: rgba(21, 94, 239, 0.18);
+  --color-primary: #0F0F11;
+  --color-primary-hover: #2A2A2E;
+  --color-primary-glow: rgba(15, 15, 17, 0.12);
+  --color-support: #155EEF;
+  --color-border-neon: rgba(15, 15, 17, 0.12);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes accordion-up {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  ::-webkit-scrollbar { width: 12px; }
+  ::-webkit-scrollbar-track { background: #FFFFFF; }
+  ::-webkit-scrollbar-thumb {
+    background: #D4D6DD;
+    border-radius: 999px;
+    border: 3px solid #FFFFFF;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #B6B9C2; }
+}
+
+@layer utilities {
+  /* Glass claro (header) */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--color-border);
+  }
+  .glass-neon {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px) saturate(180%);
+    border: 1px solid var(--color-border);
+  }
+
+  /* Realce de palavra — sutil (cal.com usa quase nada) */
+  .text-gradient {
+    color: var(--color-accent);
+  }
+  .neon-text {
+    color: var(--color-foreground);
+  }
+
+  .neon-border {
+    border: 1px solid var(--color-border);
+  }
+  /* Card cal.com: hairline + leve sombra; hover discreto */
+  .card-glow {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card-glow:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 10px 30px -16px rgba(15, 15, 17, 0.20);
+  }
+
+  .glow-divider {
+    height: 1px;
+    width: 100%;
+    background: var(--color-border);
+  }
+
+  /* Grade/pontilhado bem sutil (linhas escuras sobre claro) */
+  .bg-grid,
+  .bg-grid-ink {
+    background-image:
+      linear-gradient(to right, rgba(15, 15, 17, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 15, 17, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-dots {
+    background-image: radial-gradient(rgba(15, 15, 17, 0.10) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  .grain::after { content: none; }
+
+  .mask-radial {
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 55%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 55%, transparent 100%);
+  }
+  .mask-radial-center {
+    -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 45%, transparent 100%);
+    mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 45%, transparent 100%);
+  }
+
+  /* Moldura de "janela de navegador" (cal.com mostra prints assim) */
+  .browser-frame {
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    box-shadow: 0 30px 60px -30px rgba(15, 15, 17, 0.30), 0 12px 24px -16px rgba(15, 15, 17, 0.12);
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Lenis (smooth scroll) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}

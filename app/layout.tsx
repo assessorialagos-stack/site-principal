@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full antialiased scroll-smooth`}
+      className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <head>
         {/* Aplica o tema salvo antes da primeira pintura (sem flash). Padrão: escuro. */}

@@ -115,8 +115,10 @@ export function Header() {
           renderizado pelo Staggered Menu — evita sobreposição) */}
       <div
         className={cn(
-          "mx-3 flex items-center gap-3 rounded-full px-4 py-2 transition-all md:hidden",
-          isScrolled ? "border border-white/10 bg-[#0c0c12]/85 backdrop-blur-xl" : "bg-transparent"
+          "mx-3 flex items-center gap-3 rounded-full px-4 py-2 transition-colors md:hidden",
+          // Fundo sólido (sem backdrop-blur) no mobile: alternar blur a cada pixel
+          // de scroll forçava recomposição de camada e fazia o header piscar.
+          isScrolled ? "border border-white/10 bg-[#0c0c12]/95" : "bg-transparent"
         )}
       >
         <LagosLogo />

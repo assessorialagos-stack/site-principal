@@ -38,7 +38,7 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-40 bg-gradient-to-b from-transparent to-dark" />
 
       {/* Tela 1 — título */}
-      <div className="container relative z-10 mx-auto flex min-h-[88vh] max-w-4xl flex-col justify-center px-4 pt-40 pb-10 text-center sm:px-6 lg:px-8">
+      <div className="container relative z-10 mx-auto flex min-h-[88dvh] max-w-4xl flex-col justify-center px-4 pt-40 pb-10 text-center sm:px-6 lg:px-8">
         <h1 className="sr-only">Marketing que vira lucro de verdade.</h1>
 
         <div className="flex justify-center">

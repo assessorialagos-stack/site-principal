@@ -66,7 +66,9 @@ const GradientBlinds = ({
     let renderer;
     try {
       renderer = new Renderer({
-        dpr: dpr ?? (typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1),
+        // Teto de dpr 2 (alinhado a LaserFlow/MagicRings/LightPillar): nunca
+        // renderiza em 3x num retina, o que custaria ~9x a fragment work.
+        dpr: dpr ?? Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
         alpha: true,
         antialias: true,
       });

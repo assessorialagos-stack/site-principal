@@ -31,7 +31,15 @@ const BlurText = ({
 }) => {
   const elements = animateBy === 'words' ? text.split(' ') : text.split('');
   const [inView, setInView] = useState(false);
+  // No mobile trocamos o filter:blur por translate/opacity: blur animado no
+  // título já no load do celular é um dos maiores causadores de flicker.
+  const [mobile, setMobile] = useState(false);
   const ref = useRef(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    setMobile(window.matchMedia('(max-width: 1024px), (pointer: coarse)').matches);
+  }, []);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -49,21 +57,25 @@ const BlurText = ({
   }, [threshold, rootMargin]);
 
   const defaultFrom = useMemo(
-    () =>
-      direction === 'top' ? { filter: 'blur(10px)', opacity: 0, y: -50 } : { filter: 'blur(10px)', opacity: 0, y: 50 },
-    [direction]
+    () => {
+      const y = direction === 'top' ? -50 : 50;
+      return mobile ? { opacity: 0, y } : { filter: 'blur(10px)', opacity: 0, y };
+    },
+    [direction, mobile]
   );
 
   const defaultTo = useMemo(
-    () => [
-      {
-        filter: 'blur(5px)',
-        opacity: 0.5,
-        y: direction === 'top' ? 5 : -5
-      },
-      { filter: 'blur(0px)', opacity: 1, y: 0 }
-    ],
-    [direction]
+    () =>
+      mobile
+        ? [
+            { opacity: 0.5, y: direction === 'top' ? 5 : -5 },
+            { opacity: 1, y: 0 }
+          ]
+        : [
+            { filter: 'blur(5px)', opacity: 0.5, y: direction === 'top' ? 5 : -5 },
+            { filter: 'blur(0px)', opacity: 1, y: 0 }
+          ],
+    [direction, mobile]
   );
 
   const fromSnapshot = animationFrom ?? defaultFrom;
@@ -87,7 +99,7 @@ const BlurText = ({
 
         return (
           <motion.span
-            className="inline-block will-change-[transform,filter,opacity]"
+            className={mobile ? 'inline-block will-change-[transform,opacity]' : 'inline-block will-change-[transform,filter,opacity]'}
             key={index}
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}

@@ -12,6 +12,9 @@ export function SmoothScroll() {
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // No celular/tablet (toque) o Lenis briga com o scroll nativo e provoca
+    // tremor/flicker ao rolar. Lá deixamos o scroll nativo, que é mais fluido.
+    if (window.matchMedia("(max-width: 1024px), (pointer: coarse)").matches) return;
 
     const lenis = new Lenis({
       duration: 1.1,

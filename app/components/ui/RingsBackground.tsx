@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { WebGLBoundary } from "./WebGLBoundary";
+import { useIsDesktop } from "@/app/lib/useIsDesktop";
 
 type MagicRingsProps = {
   color?: string;
@@ -34,8 +35,12 @@ export function RingsBackground({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
+  // Os anéis WebGL só existem no desktop (seguem o mouse). No mobile viram um
+  // glow radial estático — mesmo clima, sem mais um contexto 3D piscando.
+  const desktop = useIsDesktop();
 
   useEffect(() => {
+    if (!desktop) return;
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(([entry]) => setShow(entry.isIntersecting), {
@@ -43,28 +48,32 @@ export function RingsBackground({
     });
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [desktop]);
 
   return (
     <div ref={ref} aria-hidden className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}>
-      {show && (
-        <WebGLBoundary>
-          <MagicRings
-            color={color}
-            colorTwo={colorTwo}
-            speed={1}
-            ringCount={7}
-            attenuation={9}
-            lineThickness={2}
-            baseRadius={0.3}
-            radiusStep={0.12}
-            scaleRate={0.12}
-            opacity={0.85}
-            noiseAmount={0.06}
-            followMouse
-            parallax={0.04}
-          />
-        </WebGLBoundary>
+      {desktop ? (
+        show && (
+          <WebGLBoundary>
+            <MagicRings
+              color={color}
+              colorTwo={colorTwo}
+              speed={1}
+              ringCount={7}
+              attenuation={9}
+              lineThickness={2}
+              baseRadius={0.3}
+              radiusStep={0.12}
+              scaleRate={0.12}
+              opacity={0.85}
+              noiseAmount={0.06}
+              followMouse
+              parallax={0.04}
+            />
+          </WebGLBoundary>
+        )
+      ) : (
+        <div className="absolute inset-0 bg-[radial-gradient(45%_55%_at_50%_50%,rgba(47,107,255,0.20),transparent_70%)]" />
       )}
     </div>
   );

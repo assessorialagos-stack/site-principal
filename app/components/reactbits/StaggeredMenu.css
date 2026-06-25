@@ -157,9 +157,9 @@
   right: 0;
   width: clamp(260px, 38vw, 420px);
   height: 100%;
+  /* Fundo opaco: o backdrop-filter aqui era invisível (nada por trás aparecia)
+     e só custava recomposição durante a animação de abertura no celular. */
   background: #0b0b0f;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   display: flex;
   flex-direction: column;
   padding: 6em 2em 2em 2em;

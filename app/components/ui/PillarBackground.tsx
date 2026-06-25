@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { WebGLBoundary } from "./WebGLBoundary";
+import { useIsDesktop } from "@/app/lib/useIsDesktop";
 
 type LightPillarProps = {
   topColor?: string;
@@ -38,8 +39,12 @@ export function PillarBackground({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [show, setShow] = useState(false);
+  // Só roda o pilar WebGL no desktop; no mobile o card já tem glows próprios e
+  // dispensa o canvas (evita um segundo contexto 3D que faz a tela piscar).
+  const desktop = useIsDesktop();
 
   useEffect(() => {
+    if (!desktop) return;
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(([entry]) => setShow(entry.isIntersecting), {
@@ -47,7 +52,7 @@ export function PillarBackground({
     });
     io.observe(el);
     return () => io.disconnect();
-  }, []);
+  }, [desktop]);
 
   return (
     <div
@@ -55,7 +60,7 @@ export function PillarBackground({
       aria-hidden
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
-      {show && (
+      {desktop && show && (
         <WebGLBoundary>
           <LightPillar
             className="h-full w-full"

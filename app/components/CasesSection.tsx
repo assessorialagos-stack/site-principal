@@ -75,7 +75,7 @@ export function CasesSection() {
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).style.display = "none";
                     }}
-                    className="relative h-full w-full object-cover object-top"
+                    className="relative h-full w-full object-contain p-3"
                   />
                   <div className="absolute bottom-3 left-3 z-10 rounded-lg bg-ink px-3 py-1.5">
                     <span className="text-xs font-medium tracking-wide text-background">{c.segment}</span>

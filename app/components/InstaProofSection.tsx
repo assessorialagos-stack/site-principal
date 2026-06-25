@@ -121,7 +121,7 @@ export function InstaProofSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group relative overflow-hidden rounded-2xl border border-dark-border bg-white/[0.02]"
+              className="group relative aspect-[10/19] overflow-hidden rounded-2xl border border-dark-border bg-black"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -130,8 +130,7 @@ export function InstaProofSection() {
                 loading="lazy"
                 decoding="async"
                 draggable={false}
-                className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
-                style={{ aspectRatio: "4 / 5" }}
+                className="h-full w-full object-contain"
               />
             </motion.div>
           ))}

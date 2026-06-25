@@ -30,7 +30,7 @@ export default function HeroDashboard() {
               loading="lazy"
               decoding="async"
               draggable={false}
-              className="h-full w-full flex-1 object-cover object-top"
+              className="h-full w-full flex-1 object-cover object-center md:object-top"
             />
           </div>
         </Card>

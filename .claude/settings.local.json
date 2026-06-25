@@ -19,7 +19,11 @@
       "PowerShell(npm run dev)",
       "PowerShell(winget install --id Git.Git -e --source winget --accept-package-agreements --accept-source-agreements)",
       "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); git --version; git config --global user.name \"Assessoria Lagos\"; git config --global user.email \"suporte@assessorialagos.com.br\"; git config --global init.defaultBranch main)",
-      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); git init -b main; git add .; git commit -m \"Primeiro commit: site principal da Assessoria Lagos\")"
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); git init -b main; git add .; git commit -m \"Primeiro commit: site principal da Assessoria Lagos\")",
+      "PowerShell($env:Path = [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"Machine\"\\) + \";\" + [System.Environment]::GetEnvironmentVariable\\(\"Path\",\"User\"\\); git remote add origin https://github.com/AssessoriaLagos/site-principal.git; git push -u origin main)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "PowerShell($deadline = \\(Get-Date\\).AddSeconds\\(60\\); do { try { $r = Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing -TimeoutSec 5 -ErrorAction Stop; break } catch { Start-Sleep -Seconds 2 } } while \\(\\(Get-Date\\) -lt $deadline\\); if \\($r\\) { \"Status: $\\($r.StatusCode\\)\"; $r.Content.Substring\\(0, [Math]::Min\\(500, $r.Content.Length\\)\\) } else { \"Servidor ainda não respondeu\" })"
     ]
   }
 }

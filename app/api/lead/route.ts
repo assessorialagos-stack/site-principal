@@ -1,26 +1,64 @@
 import { NextResponse } from "next/server";
+import { LEAD_EMAIL, SITE_URL } from "@/app/lib/contact";
 
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-
-    // Log the received lead data (for debugging purposes)
     console.log("Novo Lead Recebido:", data);
 
-    // TODO: Integrar com CRM, Planilha do Google, ou ferramenta de E-mail Marketing aqui
-    // Exemplo: await fetch('WEBHOOK_URL', { method: 'POST', body: JSON.stringify(data) })
+    // Origem real do site (para o FormSubmit aceitar a requisição do servidor).
+    const reqUrl = new URL(request.url);
+    const origin = request.headers.get("origin") || `${reqUrl.protocol}//${reqUrl.host}`;
+    const referer = origin.includes("localhost") ? SITE_URL : origin;
 
-    // Simulate a slight network delay
-    await new Promise((resolve) => setTimeout(resolve, 800));
+    // 1) E-mail do lead via FormSubmit (server-side, sem CORS).
+    try {
+      await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(LEAD_EMAIL)}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Referer: referer,
+          Origin: referer,
+        },
+        body: JSON.stringify({
+          _subject: `Novo lead do site: ${data.nome || "sem nome"}`,
+          _template: "table",
+          Nome: data.nome || "",
+          WhatsApp: data.whatsapp || "",
+          Instagram: data.instagram || "",
+          Segmento: data.segmento || "",
+          "Cidade/Estado": data.cidadeEstado || "",
+          "Faturamento mensal": data.faturamento || "",
+          "Pode investir a partir de R$ 1.500/mês": data.investimento || "",
+          Site: data.site || "(não informado)",
+          utm_source: data.utm_source || "",
+          utm_campaign: data.utm_campaign || "",
+          pagina_origem: data.pagina_origem || "",
+          data_hora: data.data_hora || "",
+        }),
+      });
+    } catch (err) {
+      console.error("Falha ao enviar o e-mail do lead:", err);
+    }
 
-    // For now, we just return success so the frontend can redirect to /obrigado
+    // 2) Webhook opcional (planilha/CRM) se LEAD_WEBHOOK_URL estiver definida.
+    const webhookUrl = process.env.LEAD_WEBHOOK_URL;
+    if (webhookUrl) {
+      try {
+        await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+      } catch (err) {
+        console.error("Falha ao encaminhar o lead para o webhook:", err);
+      }
+    }
+
     return NextResponse.json({ success: true, message: "Lead recebido com sucesso." }, { status: 200 });
-
   } catch (error) {
     console.error("Erro ao processar lead:", error);
-    return NextResponse.json(
-      { success: false, error: "Erro ao processar a requisição." },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false, error: "Erro ao processar a requisição." }, { status: 500 });
   }
 }

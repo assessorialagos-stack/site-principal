@@ -5,8 +5,8 @@ import { cn } from "@/app/lib/cn";
 import { Eyebrow } from "./Eyebrow";
 
 /**
- * Cabeçalho de seção estilo cal.com: badge + título grande quase preto + subtítulo cinza.
- * Centralizado, com bastante respiro.
+ * Cabeçalho de seção estilo cal.com: badge + título grande + subtítulo.
+ * Centralizado, com bastante respiro. `tone="dark"` inverte para as seções pretas.
  */
 export function SectionHeading({
   eyebrow,
@@ -15,6 +15,7 @@ export function SectionHeading({
   subtitle,
   align = "center",
   className,
+  tone = "light",
 }: {
   eyebrow?: React.ReactNode;
   number?: string;
@@ -22,10 +23,10 @@ export function SectionHeading({
   subtitle?: React.ReactNode;
   align?: "center" | "left";
   className?: string;
-  // mantido por compatibilidade; não é usado
   tone?: "dark" | "light";
 }) {
   const isCenter = align === "center";
+  const dark = tone === "dark";
 
   return (
     <div className={cn("max-w-2xl", isCenter ? "mx-auto text-center" : "text-left", className)}>
@@ -37,8 +38,12 @@ export function SectionHeading({
           transition={{ duration: 0.5 }}
           className={cn("mb-5 flex items-center gap-3", isCenter && "justify-center")}
         >
-          {number && <span className="font-mono text-sm font-medium text-muted">{number}</span>}
-          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+          {number && (
+            <span className={cn("font-mono text-sm font-medium", dark ? "text-white/50" : "text-muted")}>
+              {number}
+            </span>
+          )}
+          {eyebrow && <Eyebrow tone={tone}>{eyebrow}</Eyebrow>}
         </motion.div>
       )}
 
@@ -47,7 +52,10 @@ export function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.05 }}
-        className="font-heading text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-[2.85rem]"
+        className={cn(
+          "font-heading text-[2rem] font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-[2.85rem]",
+          dark ? "text-white" : "text-foreground"
+        )}
       >
         {title}
       </motion.h2>
@@ -58,7 +66,11 @@ export function SectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.15 }}
-          className={cn("mt-5 text-lg leading-relaxed text-muted", isCenter && "mx-auto")}
+          className={cn(
+            "mt-5 text-lg leading-relaxed",
+            dark ? "text-white/70" : "text-muted",
+            isCenter && "mx-auto"
+          )}
         >
           {subtitle}
         </motion.p>

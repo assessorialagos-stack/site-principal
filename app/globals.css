@@ -5,42 +5,48 @@
   --font-heading: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* ===== Tema CLARO estilo cal.com ===== */
-  --color-background: #FFFFFF;   /* branco puro */
-  --color-section: #F8F9FB;      /* cinza claríssimo (seção alternada) */
-  --color-card: #FFFFFF;
-  --color-card-2: #F8F9FB;
-  --color-foreground: #0F0F11;   /* quase preto (títulos) */
-  --color-muted: #62656E;        /* cinza (texto) */
-  --color-border: rgba(15, 15, 17, 0.09);
-  --color-border-strong: rgba(15, 15, 17, 0.16);
+  /* ===== Tema 100% ESCURO ===== */
+  --color-background: #08080A;   /* preto neutro (página inteira) */
+  --color-section: #0C0C10;      /* superfície de seção alternada */
+  --color-card: #101015;
+  --color-card-2: #16161C;
+  --color-foreground: #F4F4F5;   /* quase branco (títulos/texto) */
+  --color-muted: #9A9AA3;        /* cinza claro (texto de apoio) */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
 
-  /* Ação PRETA (assinatura cal.com) */
-  --color-ink: #0F0F11;
-  --color-ink-soft: #2A2A2E;
-  --color-ink-muted: #62656E;
+  /* Ação PRIMÁRIA = branco sobre preto (assinatura cal.com no escuro) */
+  --color-ink: #F4F4F5;
+  --color-ink-soft: #E4E4E7;
+  --color-ink-muted: #A1A1AA;
 
-  /* Acento azul discreto (cal.com usa pouco) */
-  --color-accent: #155EEF;
-  --color-accent-2: #155EEF;
-  --color-accent-hover: #0E47BE;
-  --color-accent-soft: rgba(21, 94, 239, 0.08);
-  --color-accent-glow: rgba(21, 94, 239, 0.18);
+  /* Acento azul (usado com parcimônia em ícones/realces) */
+  --color-accent: #2F6BFF;
+  --color-accent-2: #2F6BFF;
+  --color-accent-hover: #4F86FF;
+  --color-accent-soft: rgba(47, 107, 255, 0.14);
+  --color-accent-glow: rgba(47, 107, 255, 0.35);
 
-  /* tokens "light-*" coerentes (claro) */
-  --color-light: #F8F9FB;
-  --color-light-2: #FFFFFF;
-  --color-light-border: rgba(15, 15, 17, 0.09);
+  /* tokens "light-*" agora apontam para superfícies escuras */
+  --color-light: #16161C;
+  --color-light-2: #101015;
+  --color-light-border: rgba(255, 255, 255, 0.10);
+
+  /* ===== Blocos escuros (hero, método, prova social, rodapé) ===== */
+  --color-dark: #08080A;
+  --color-dark-2: #131318;
+  --color-dark-border: rgba(255, 255, 255, 0.09);
+  --color-dark-border-strong: rgba(255, 255, 255, 0.18);
 
   /* compat com tokens antigos */
-  --color-neon: #155EEF;
-  --color-neon-bright: #155EEF;
-  --color-neon-glow: rgba(21, 94, 239, 0.18);
-  --color-primary: #0F0F11;
-  --color-primary-hover: #2A2A2E;
-  --color-primary-glow: rgba(15, 15, 17, 0.12);
-  --color-support: #155EEF;
-  --color-border-neon: rgba(15, 15, 17, 0.12);
+  --color-neon: #2F6BFF;
+  --color-neon-bright: #4F86FF;
+  --color-neon-glow: rgba(47, 107, 255, 0.35);
+  --color-primary: #2F6BFF;
+  --color-primary-hover: #4F86FF;
+  --color-primary-glow: rgba(47, 107, 255, 0.30);
+  --color-support: #2F6BFF;
+  --color-border-neon: rgba(47, 107, 255, 0.22);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -58,6 +64,7 @@
 @layer base {
   html {
     scroll-padding-top: 6rem;
+    background-color: var(--color-background);
   }
 
   body {
@@ -73,29 +80,30 @@
   }
 
   ::-webkit-scrollbar { width: 12px; }
-  ::-webkit-scrollbar-track { background: #FFFFFF; }
+  ::-webkit-scrollbar-track { background: #0A0A0C; }
   ::-webkit-scrollbar-thumb {
-    background: #D4D6DD;
+    background: #2A2A31;
     border-radius: 999px;
-    border: 3px solid #FFFFFF;
+    border: 3px solid #0A0A0C;
   }
-  ::-webkit-scrollbar-thumb:hover { background: #B6B9C2; }
+  ::-webkit-scrollbar-thumb:hover { background: #3A3A44; }
 }
 
 @layer utilities {
-  /* Glass claro (header) */
-  .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid var(--color-border);
+  /* Glass escuro (header) */
+  .glass,
+  .glass-neon,
+  .glass-dark {
+    background: rgba(8, 8, 10, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
   }
-  .glass-neon {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px) saturate(180%);
-    border: 1px solid var(--color-border);
+  .glass-dark {
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
-  /* Realce de palavra — sutil (cal.com usa quase nada) */
+  /* Realce de palavra — azul discreto */
   .text-gradient {
     color: var(--color-accent);
   }
@@ -106,13 +114,13 @@
   .neon-border {
     border: 1px solid var(--color-border);
   }
-  /* Card cal.com: hairline + leve sombra; hover discreto */
+  /* Card: hairline + leve glow no hover (escuro) */
   .card-glow {
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .card-glow:hover {
     border-color: var(--color-border-strong);
-    box-shadow: 0 10px 30px -16px rgba(15, 15, 17, 0.20);
+    box-shadow: 0 18px 50px -28px rgba(0, 0, 0, 0.9);
   }
 
   .glow-divider {
@@ -121,20 +129,102 @@
     background: var(--color-border);
   }
 
-  /* Grade/pontilhado bem sutil (linhas escuras sobre claro) */
+  /* Border Glow: borda que acende seguindo o cursor (reativa) */
+  .glow-border {
+    position: relative;
+    --gb-angle: 0deg;
+    --gb-prox: 0;
+  }
+  /* Anel base sempre aceso — dá "vida" ao card mesmo em repouso */
+  .glow-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklch, var(--color-accent), transparent 55%),
+      color-mix(in oklch, var(--color-accent), transparent 86%) 55%,
+      transparent
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 4;
+  }
+  /* Glint que segue o cursor — brilhante e largo */
+  .glow-border-edge {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.6px;
+    background: conic-gradient(
+      from var(--gb-angle),
+      transparent 0deg,
+      var(--color-accent) 14deg,
+      color-mix(in oklch, var(--color-accent), white 60%) 30deg,
+      var(--color-accent) 46deg,
+      transparent 78deg,
+      transparent 360deg
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: calc(0.35 + var(--gb-prox) / 80);
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+    z-index: 5;
+  }
+  /* Halo difuso — base sutil + reforço perto do cursor */
+  .glow-border::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 60px -6px var(--color-accent-glow), 0 0 22px -8px var(--color-accent-glow);
+    opacity: calc(0.16 + var(--gb-prox) / 70);
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Grade/pontilhado claros sobre fundo escuro */
   .bg-grid,
-  .bg-grid-ink {
+  .bg-grid-ink,
+  .bg-grid-white {
     background-image:
-      linear-gradient(to right, rgba(15, 15, 17, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(15, 15, 17, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
     background-size: 56px 56px;
   }
-  .bg-dots {
-    background-image: radial-gradient(rgba(15, 15, 17, 0.10) 1px, transparent 1px);
+  .bg-dots,
+  .bg-dots-white {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 
-  .grain::after { content: none; }
+  /* Granulado fotográfico (textura sutil sobre o preto) */
+  .grain::after,
+  .grain-soft::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    opacity: 0.05;
+  }
+  .grain-soft::after {
+    opacity: 0.03;
+  }
 
   .mask-radial {
     -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 55%, transparent 100%);
@@ -145,13 +235,19 @@
     mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 45%, transparent 100%);
   }
 
-  /* Moldura de "janela de navegador" (cal.com mostra prints assim) */
+  /* Moldura de "janela de navegador" — agora escura (screenshot dark) */
   .browser-frame {
     border: 1px solid var(--color-border);
     border-radius: 16px;
-    box-shadow: 0 30px 60px -30px rgba(15, 15, 17, 0.30), 0 12px 24px -16px rgba(15, 15, 17, 0.12);
-    background: #FFFFFF;
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55), 0 12px 24px -16px rgba(0, 0, 0, 0.35);
+    background: var(--color-card);
     overflow: hidden;
+  }
+  .browser-frame-dark {
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 30px 60px -30px rgba(0, 0, 0, 0.9),
+      0 12px 24px -16px rgba(0, 0, 0, 0.6);
   }
 }
 
@@ -162,6 +258,50 @@
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ===== MODO CLARO (toggle "ligar a luz") =====
+   O site é nativamente 100% escuro. Quando o usuário liga a luz (html.light),
+   as seções de conteúdo marcadas com .theme-light passam a usar tokens claros
+   (as seções de efeito — hero, funil, CTAs, prova social, rodapé — seguem
+   escuras nos dois modos). Transição suave entre os modos. */
+html.light .theme-light {
+  --color-background: #FFFFFF;
+  --color-section: #F6F7F9;
+  --color-card: #FFFFFF;
+  --color-card-2: #F6F7F9;
+  --color-foreground: #0F0F12;
+  --color-muted: #5C6069;
+  --color-border: rgba(15, 15, 17, 0.10);
+  --color-border-strong: rgba(15, 15, 17, 0.18);
+  --color-ink: #0F0F12;
+  --color-ink-soft: #2A2A30;
+  --color-light: #F1F2F5;
+  --color-light-2: #FFFFFF;
+  --color-light-border: rgba(15, 15, 17, 0.10);
+  --color-accent: #155EEF;
+  --color-accent-hover: #0E47BE;
+  --color-accent-soft: rgba(21, 94, 239, 0.09);
+  --color-accent-glow: rgba(21, 94, 239, 0.22);
+  --color-dark-border: rgba(15, 15, 17, 0.10);
+  --color-dark-border-strong: rgba(15, 15, 17, 0.18);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+html.light .theme-light .bg-dots,
+html.light .theme-light .bg-dots-white {
+  background-image: radial-gradient(rgba(15, 15, 17, 0.10) 1px, transparent 1px);
+}
+html.light .theme-light .bg-grid,
+html.light .theme-light .bg-grid-ink,
+html.light .theme-light .bg-grid-white {
+  background-image:
+    linear-gradient(to right, rgba(15, 15, 17, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 15, 17, 0.05) 1px, transparent 1px);
+}
+html.light .theme-light .grain::after,
+html.light .theme-light .grain-soft::after {
+  opacity: 0.022;
 }
 
 /* Lenis (smooth scroll) */

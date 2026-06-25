@@ -1,0 +1,250 @@
+/* O Funil da Lagos — web bundle. Self-hosted fonts; no external requests. */
+@import url("fonts/fonts.css");
+/* ============================================================
+   FUNIL LAGOS — TOKENS + ATOMS (shared by print and web)
+   Design system = Brief §4. Size-agnostic atoms only;
+   page/section layout lives in print.css / web.css.
+   ============================================================ */
+
+:root {
+  /* Palette (§4) */
+  --abyss:#060D1A; --navy:#0A1B33; --navy2:#0E2342;
+  --line:#1C3D68; --line-soft:#16304F;
+  --tide:#2D7DFF; --tide-deep:#1257D6; --tide-soft:#6FA8FF;
+  --foam:#A9C6EE; --ice:#F0F6FF;
+  --paper:#F8FBFF; --paper2:#EEF4FC;
+  --ink:#0B1B33; --ink2:#48608A;
+  --amber:#FFB454; --ok:#36D399; --warn:#FF7A7A;
+
+  /* Font stacks (self-hosted; graceful fallbacks if a face is missing) */
+  --font-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+
+  --glow-tide:0 0 30px rgba(45,125,255,.45);
+  --node-grad:radial-gradient(circle at 35% 30%, #5E9CFF, #1257D6);
+}
+
+/* Force backgrounds/colors to survive Chromium PDF export */
+*, *::before, *::after { -webkit-print-color-adjust:exact; print-color-adjust:exact; box-sizing:border-box; }
+
+/* ---------- Typography atoms ---------- */
+.eyebrow{
+  font-family:var(--font-mono); font-weight:600;
+  text-transform:uppercase; letter-spacing:.2em;
+  color:var(--tide-soft);
+  display:inline-flex; align-items:center; gap:.5em;
+}
+.eyebrow::before{
+  content:""; width:1.6em; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,var(--tide),transparent);
+}
+.eyebrow--ink{ color:var(--tide-deep); }
+.eyebrow--plain::before{ display:none; }
+
+.tag{
+  font-family:var(--font-mono); font-weight:500;
+  text-transform:uppercase; letter-spacing:.16em;
+  color:var(--foam);
+}
+
+/* Gradient-look title: SOLID color + glow (background-clip:text dies in PDF export, §4 note) */
+.gtitle{
+  font-family:var(--font-display);
+  font-weight:880; font-stretch:115%;
+  font-variation-settings:"wght" 880,"wdth" 115;
+  letter-spacing:-.01em; line-height:1.02;
+  color:#7FB2FF; text-shadow:var(--glow-tide);
+}
+.gtitle--ink{ color:var(--tide-deep); text-shadow:none; }
+
+.dtitle{
+  font-family:var(--font-display); font-weight:850; font-stretch:112%;
+  font-variation-settings:"wght" 850,"wdth" 112;
+  letter-spacing:-.015em; line-height:1.05; color:var(--ice);
+}
+.dtitle--ink{ color:var(--ink); }
+
+.lede{ color:var(--foam); }
+.lede--ink{ color:var(--ink2); }
+
+/* ---------- Pills / chips ---------- */
+.pill{
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--font-mono); font-weight:500; font-size:.62rem;
+  text-transform:uppercase; letter-spacing:.18em;
+  padding:.35em .8em; border-radius:999px;
+  border:1px solid var(--line); background:rgba(45,125,255,.08); color:var(--foam);
+}
+.pill-dot{ width:.5em; height:.5em; border-radius:999px; background:var(--tide); box-shadow:0 0 8px var(--tide); }
+
+/* Stage number node — radial gradient circle with glow (§4 "Nós/etapas") */
+.node{
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:880; color:#fff;
+  background:var(--node-grad);
+  border:1.5px solid rgba(175,205,255,.55);
+  border-radius:999px;
+  box-shadow:0 0 0 4px rgba(45,125,255,.12), 0 6px 18px -4px rgba(45,125,255,.55);
+}
+
+/* ---------- Stage card (client) ---------- */
+.scard{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(180deg, var(--navy2), var(--navy));
+  box-shadow:0 1px 0 rgba(175,205,255,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  overflow:hidden;
+}
+.scard::before{ /* left tide accent */
+  content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg,var(--tide-soft),var(--tide-deep));
+}
+.scard__name{ font-family:var(--font-display); font-weight:850; font-stretch:112%; color:var(--ice); letter-spacing:-.01em; }
+.scard__tier{ font-family:var(--font-mono); font-weight:500; text-transform:uppercase; letter-spacing:.18em; color:var(--tide-soft); }
+.scard__does{ color:var(--foam); }
+.scard__consumer{
+  display:block; margin-top:.5em; padding-top:.5em;
+  border-top:1px dashed var(--line);
+  color:var(--ice);
+}
+.scard__consumer b{ color:var(--tide-soft); font-weight:600; }
+.scard--offer{ background:linear-gradient(180deg,#0c2750,#08172e); border-color:var(--tide-deep); }
+.scard--repurchase::before{ background:linear-gradient(180deg,var(--ok),var(--tide)); }
+
+/* mono micro-label used before the consumer benefit */
+.consumer-label{
+  font-family:var(--font-mono); font-weight:600; font-size:.6rem;
+  text-transform:uppercase; letter-spacing:.16em; color:var(--tide-soft);
+}
+
+/* ---------- Wave divider ---------- */
+.wave-divider{ display:block; width:100%; height:auto; }
+
+/* ---------- Logo mark (inline SVG sizing) ---------- */
+.logo{ display:inline-flex; align-items:center; gap:.6em; }
+.logo svg{ display:block; }
+.logo__word{ font-family:var(--font-display); font-weight:880; font-stretch:115%; letter-spacing:.02em; color:var(--ice); }
+.logo__word--ink{ color:var(--ink); }
+
+/* utility */
+.uppercase-mono{ font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.16em; }
+
+/* ============================================================
+   WEB LAYOUT — scroll landing page that replicates the client PDF.
+   Same palette / atoms (tokens.css); fluid & responsive here.
+   ============================================================ */
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; font-family:var(--font-body); color:var(--ice);
+  background:var(--abyss); -webkit-font-smoothing:antialiased;
+  overflow-x:hidden; line-height:1.5;
+}
+.wrap{ width:min(1080px,92vw); margin-inline:auto; }
+section{ position:relative; }
+
+/* ambient background fixed behind everything */
+.site-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(60% 50% at 50% -8%, rgba(45,125,255,.20), transparent 70%),
+    radial-gradient(45% 40% at 100% 30%, rgba(45,125,255,.10), transparent 70%),
+    radial-gradient(45% 40% at 0% 75%, rgba(45,125,255,.08), transparent 70%),
+    var(--abyss);
+}
+
+/* ---------- header ---------- */
+.topbar{ position:sticky; top:0; z-index:50; backdrop-filter:blur(12px) saturate(140%);
+  background:rgba(6,13,26,.72); border-bottom:1px solid var(--line-soft); }
+.topbar .wrap{ display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
+.topbar .logo__word{ font-size:1.05rem; }
+.topbar a.cta{ font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.16em;
+  color:var(--abyss); background:var(--tide-soft); padding:.7em 1.2em; border-radius:999px; text-decoration:none; font-weight:600; }
+.topbar a.cta:hover{ background:var(--ice); }
+
+/* ---------- hero ---------- */
+.hero-sec{ padding:96px 0 64px; text-align:left; }
+.hero-sec .eyebrow{ font-size:.82rem; }
+.hero-sec h1{ font-size:clamp(2.6rem,7vw,5rem); margin:18px 0 0; }
+.hero-sec .hero__sub{ font-size:clamp(1rem,2.2vw,1.3rem); color:var(--foam); max-width:760px; margin-top:22px; line-height:1.55; }
+.hero-sec .rodape{ margin-top:34px; font-family:var(--font-mono); font-size:.72rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--ink2); }
+.hero-cta{ margin-top:30px; display:flex; gap:14px; flex-wrap:wrap; }
+.btn{ display:inline-flex; align-items:center; gap:.6em; text-decoration:none; font-weight:600;
+  font-family:var(--font-body); border-radius:12px; padding:.85em 1.4em; font-size:.95rem; transition:.2s; }
+.btn--primary{ background:var(--tide-soft); color:var(--abyss); }
+.btn--primary:hover{ background:var(--ice); transform:translateY(-1px); }
+.btn--ghost{ border:1px solid var(--line); color:var(--ice); }
+.btn--ghost:hover{ background:rgba(45,125,255,.1); }
+
+/* ---------- section shell ---------- */
+.sec{ padding:64px 0; }
+.sec--alt{ background:linear-gradient(180deg, rgba(10,27,51,.5), transparent); }
+.sec__eyebrow{ font-size:.8rem; }
+.sec h2{ font-family:var(--font-display); font-weight:850; font-stretch:112%;
+  font-size:clamp(1.8rem,4.5vw,3rem); color:var(--ice); margin:14px 0 0; letter-spacing:-.015em; line-height:1.08; }
+.sec__lead{ color:var(--foam); font-size:clamp(1rem,2vw,1.18rem); max-width:780px; margin-top:18px; line-height:1.6; }
+
+/* tese band */
+.tese-web{ border:1px solid var(--line); border-left:4px solid var(--tide); border-radius:18px;
+  padding:34px 38px; background:linear-gradient(180deg, rgba(14,35,66,.7), rgba(10,27,51,.6)); }
+
+/* funnel section: svg + cards */
+.funnel-sec{ padding:48px 0 64px; }
+.funnel-grid{ display:grid; grid-template-columns:minmax(280px,1fr) 1.25fr; gap:46px; align-items:center; }
+.funnel-grid .funnel-wrap svg{ width:100%; height:auto; max-height:78vh; }
+.funnel-caption-web{ margin-top:14px; text-align:center; font-family:var(--font-mono);
+  font-size:.72rem; letter-spacing:.05em; color:var(--foam); line-height:1.5; }
+
+.cards-web{ display:flex; flex-direction:column; gap:16px; }
+.cards-web .scard{ padding:18px 22px 18px 24px; }
+.cards-web .scard__head{ display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+.cards-web .scard__head .node{ width:42px; height:42px; font-size:1.2rem; flex:0 0 auto; }
+.cards-web .scard__name{ font-size:1.35rem; }
+.cards-web .scard__tier{ font-size:.62rem; margin-top:3px; }
+.cards-web .scard__does{ font-size:.95rem; line-height:1.55; margin:0; }
+.cards-web .scard__consumer{ font-size:.95rem; line-height:1.5; margin-top:12px; padding-top:10px; }
+
+/* per-stage deep sections (scroll storytelling) */
+.stage-sec{ padding:54px 0; border-top:1px solid var(--line-soft); }
+.stage-sec .wrap{ display:grid; grid-template-columns:120px 1fr; gap:32px; align-items:start; }
+.stage-sec .big-node{ display:flex; flex-direction:column; align-items:center; gap:10px; }
+.stage-sec .big-node .node{ width:88px; height:88px; font-size:2.4rem; }
+.stage-sec .big-node .tier{ font-family:var(--font-mono); font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--tide-soft); }
+.stage-sec h3{ font-family:var(--font-display); font-weight:860; font-stretch:114%; font-size:clamp(1.8rem,4vw,2.6rem); color:var(--ice); margin:0; letter-spacing:-.015em; }
+.stage-sec .does{ color:var(--foam); font-size:1.08rem; line-height:1.6; margin:16px 0 0; max-width:680px; }
+.stage-sec .consumer-row{ margin-top:20px; display:inline-flex; align-items:center; gap:12px; flex-wrap:wrap;
+  padding:14px 20px; border-radius:12px; border:1px dashed var(--line); background:rgba(45,125,255,.07); }
+.stage-sec .consumer-row .consumer-label{ font-size:.66rem; }
+.stage-sec .consumer-row .val{ color:var(--ice); font-weight:600; }
+
+/* closing */
+.fechamento-web{ border:1px solid var(--line); border-radius:20px; padding:44px 42px; text-align:center;
+  background:linear-gradient(180deg,#0c2750,#08172e); }
+.fechamento-web p{ font-family:var(--font-display); font-weight:820; font-stretch:108%;
+  font-size:clamp(1.4rem,3.2vw,2.1rem); line-height:1.35; color:var(--ice); margin:16px 0 0; letter-spacing:-.01em; }
+.final-cta{ text-align:center; padding:30px 0 90px; }
+
+/* footer */
+.site-foot{ border-top:1px solid var(--line-soft); padding:34px 0; }
+.site-foot .wrap{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); }
+
+/* reveal-on-scroll (progressive enhancement; visible if JS disabled via .no-js) */
+.reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
+.reveal.in{ opacity:1; transform:none; }
+.no-js .reveal{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .reveal{ opacity:1 !important; transform:none !important; } html{ scroll-behavior:auto; } }
+
+/* funnel draw animation hook */
+.loop-path{ stroke-dasharray:1400; stroke-dashoffset:1400; transition:stroke-dashoffset 1.8s ease .3s; }
+.loop-path.drawn{ stroke-dashoffset:0; }
+.no-js .loop-path{ stroke-dashoffset:0; }
+
+/* responsive */
+@media (max-width:880px){
+  .funnel-grid{ grid-template-columns:1fr; gap:30px; }
+  .funnel-grid .funnel-wrap{ max-width:360px; margin-inline:auto; }
+  .stage-sec .wrap{ grid-template-columns:1fr; gap:18px; }
+  .stage-sec .big-node{ flex-direction:row; }
+}

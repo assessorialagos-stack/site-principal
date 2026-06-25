@@ -7,17 +7,17 @@ function SolutionMock() {
   return (
     <div className="browser-frame mx-auto w-full max-w-xl">
       <div className="flex items-center gap-2 border-b border-border bg-section px-4 py-3">
-        <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
-        <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
-        <span className="h-3 w-3 rounded-full bg-[#28C840]" />
+        <span className="h-3 w-3 rounded-full bg-foreground/15" />
+        <span className="h-3 w-3 rounded-full bg-foreground/15" />
+        <span className="h-3 w-3 rounded-full bg-foreground/15" />
         <div className="ml-3 hidden flex-1 items-center justify-center sm:flex">
-          <span className="rounded-md border border-border bg-white px-3 py-1 font-mono text-[0.68rem] text-muted">
+          <span className="rounded-md border border-border bg-card px-3 py-1 font-mono text-[0.68rem] text-muted">
             lagos.com/receita
           </span>
         </div>
       </div>
 
-      <div className="bg-white p-5 md:p-6">
+      <div className="bg-card p-5 md:p-6">
         <div className="mb-5 flex items-center justify-between">
           <span className="font-heading text-sm font-semibold text-foreground">Receita por canal</span>
           <span className="rounded-full border border-border bg-section px-3 py-1 text-xs text-muted">
@@ -51,7 +51,6 @@ function SolutionMock() {
             </span>
           </span>
         </div>
-        <p className="mt-3 text-right text-[0.62rem] text-muted/70">*dados ilustrativos</p>
       </div>
     </div>
   );
@@ -59,7 +58,7 @@ function SolutionMock() {
 
 export function SolutionSection() {
   return (
-    <section className="relative overflow-hidden bg-section py-28 md:py-36">
+    <section className="theme-light relative overflow-hidden bg-section py-28 text-foreground md:py-36">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FeatureRow
           eyebrow="A solução"

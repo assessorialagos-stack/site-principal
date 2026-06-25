@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Componentes de terceiros (reactbits / WebGL) — vendorizados como estão.
+    "app/components/reactbits/**",
+    // Pastas auxiliares que não fazem parte do app.
+    "Teste Gemini/**",
+    "Referencias/**",
+    "Funil de Vendas/**",
   ]),
 ]);
 

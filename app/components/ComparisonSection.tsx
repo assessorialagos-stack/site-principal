@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { XCircle, Check } from "lucide-react";
 import { SectionHeading } from "./ui/SectionHeading";
+import { Backdrop } from "./ui/Backdrop";
+import { ProximityText } from "./ui/ProximityText";
 
 const generic = [
   "Foca apenas em likes, curtidas e métricas de vaidade.",
@@ -20,13 +22,17 @@ const lagos = [
 
 export function ComparisonSection() {
   return (
-    <section className="relative overflow-hidden bg-section py-28 md:py-36">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="theme-light relative isolate overflow-hidden bg-section py-28 text-foreground md:py-36">
+      <Backdrop variant="section" />
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Comparativo"
           title={
             <>
-              Por que a Lagos é <span className="text-gradient">diferente?</span>
+              Por que a Lagos é{" "}
+              <span className="text-gradient">
+                <ProximityText>diferente?</ProximityText>
+              </span>
             </>
           }
           className="mb-16"

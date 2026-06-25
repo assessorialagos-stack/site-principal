@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { CheckCircle2, MessageSquare, ArrowRight, Play } from "lucide-react";
 import { Backdrop } from "../components/ui/Backdrop";
+import { GlassButton } from "../components/ui/GlassButton";
+import { whatsappLink } from "../lib/contact";
 
 const steps = [
   {
@@ -127,16 +129,16 @@ export default function ObrigadoPage() {
             transition={{ delay: 0.8 }}
           >
             <p className="mb-4 text-muted">Tem pressa? Mande uma mensagem agora mesmo.</p>
-            <a
-              href="https://wa.me/5514999999999"
+            <GlassButton
+              href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-ink px-8 py-4 text-base font-semibold text-background transition-colors hover:bg-ink-soft"
+              height={52}
+              icon={<ArrowRight size={18} />}
             >
               <MessageSquare size={18} />
               Adiantar pelo WhatsApp
-              <ArrowRight size={18} />
-            </a>
+            </GlassButton>
           </motion.div>
         </div>
       </div>

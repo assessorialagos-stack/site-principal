@@ -34,7 +34,16 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-background text-foreground overflow-x-hidden selection:bg-accent/15 selection:text-ink">
+      <head>
+        {/* Aplica o tema salvo antes da primeira pintura (sem flash). Padrão: escuro. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('lagos-theme');if(t==='light'){document.documentElement.classList.add('light');}}catch(e){}",
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-sans bg-background text-foreground overflow-x-hidden selection:bg-accent/30">
         <SmoothScroll />
         {children}
         <WhatsAppFloat />

@@ -1,0 +1,8 @@
+Coloque aqui os 3 prints dos painéis de resultados, com estes nomes exatos:
+
+  case-1.png  -> loja de semijoias  (345 conversas, R$ 0,97 por conversa)
+  case-2.png  -> loja de computadores (R$ 35 mil em 1 semana, ticket R$ 1.524)
+  case-3.png  -> loja de roupas de grife (ROAS 14,2x em 30 dias)
+
+Pode ser .png ou .jpg (se usar .jpg, troque a extensão em app/components/CasesSection.tsx).
+Enquanto a imagem não estiver aqui, o card mostra um fundo de marca no lugar (não quebra).

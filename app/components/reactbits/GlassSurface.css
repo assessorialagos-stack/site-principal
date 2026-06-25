@@ -1,0 +1,46 @@
+.glass-surface {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.26s ease-out, box-shadow 0.26s ease-out;
+}
+
+.glass-surface__filter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-surface__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Versão com filtro SVG (Chromium) */
+.glass-surface--svg {
+  background: hsl(0 0% 100% / var(--glass-frost, 0));
+  backdrop-filter: var(--filter-id) saturate(var(--glass-saturation, 1));
+  -webkit-backdrop-filter: saturate(var(--glass-saturation, 1));
+  box-shadow:
+    0 0 1px 1px rgba(255, 255, 255, 0.18) inset,
+    0 0 12px 4px rgba(255, 255, 255, 0.06) inset,
+    0 8px 30px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* Fallback (Safari/Firefox/sem suporte) — vidro escuro simples */
+.glass-surface--fallback {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 30px -12px rgba(0, 0, 0, 0.6);
+}

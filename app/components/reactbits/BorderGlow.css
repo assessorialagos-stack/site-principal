@@ -1,0 +1,63 @@
+.border-glow-card {
+  position: relative;
+  border-radius: var(--border-radius, 28px);
+  background: var(--card-bg, #120f17);
+  isolation: isolate;
+  --edge-proximity: 0;
+  --cursor-angle: 0deg;
+}
+
+/* Borda que acende seguindo o cursor (proximidade da borda + ângulo) */
+.border-glow-card .edge-light {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--cursor-angle),
+    transparent 0deg,
+    var(--glow-color, hsl(40deg 80% 80%)) calc(var(--cone-spread, 25) * 1deg),
+    transparent calc(var(--cone-spread, 25) * 2.4deg),
+    transparent 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: calc(var(--edge-proximity) / 100);
+  transition: opacity 0.25s ease-out;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Halo difuso ao redor do card */
+.border-glow-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 calc(var(--glow-padding, 40px) * 0.6) var(--glow-color-20, hsl(40deg 80% 80% / 0.2));
+  opacity: calc(var(--edge-proximity) / 100);
+  transition: opacity 0.25s ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Borda base sempre visível (sutil) */
+.border-glow-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.border-glow-inner {
+  position: relative;
+  border-radius: inherit;
+  z-index: 3;
+  height: 100%;
+}

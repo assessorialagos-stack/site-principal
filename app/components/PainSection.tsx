@@ -4,6 +4,7 @@ import { motion, Variants } from "framer-motion";
 import { TrendingDown, AlertCircle, Users } from "lucide-react";
 import { GlowCard } from "./ui/GlowCard";
 import { Eyebrow } from "./ui/Eyebrow";
+import { ProximityText } from "./ui/ProximityText";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -17,7 +18,7 @@ const itemVariants: Variants = {
 
 export function PainSection() {
   return (
-    <section className="relative overflow-hidden border-y border-border bg-background py-28 md:py-36">
+    <section className="theme-light relative overflow-hidden border-y border-border bg-background py-28 text-foreground md:py-36">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,13 +28,15 @@ export function PainSection() {
           className="mx-auto mb-16 max-w-3xl text-center"
         >
           <div className="mb-6 flex justify-center">
-            <Eyebrow className="text-red-500" icon={<AlertCircle size={13} />}>
+            <Eyebrow icon={<AlertCircle size={13} />}>
               O diagnóstico
             </Eyebrow>
           </div>
-          <h2 className="mb-6 font-heading text-4xl font-black text-foreground md:text-5xl text-balance">
+          <h2 className="mb-6 font-heading text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-[2.85rem] text-balance">
             O marketing que só foca em vaidade{" "}
-            <span className="text-red-500">está matando seu lucro.</span>
+            <span className="text-accent">
+              <ProximityText>está matando seu lucro.</ProximityText>
+            </span>
           </h2>
           <p className="text-lg font-light text-muted">
             Não dá mais para brincar de fazer anúncio. Curtidas e seguidores não pagam o seu
@@ -51,7 +54,7 @@ export function PainSection() {
           {/* Card grande */}
           <motion.div variants={itemVariants} className="md:col-span-2">
             <GlowCard className="h-full p-7 md:p-8">
-              <div className="mb-8 flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/[0.08] text-red-500 transition-transform duration-500 group-hover:scale-110">
+              <div className="mb-8 flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent transition-transform duration-500 group-hover:scale-110">
                 <TrendingDown className="h-5 w-5" />
               </div>
               <h3 className="mb-4 font-heading text-2xl font-bold tracking-tight text-foreground md:text-3xl">
@@ -68,7 +71,7 @@ export function PainSection() {
           {/* Card menor */}
           <motion.div variants={itemVariants}>
             <GlowCard className="h-full p-7 md:p-8">
-              <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-xl bg-red-500/[0.08] text-red-500 transition-transform duration-500 group-hover:scale-110">
+              <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-xl bg-accent-soft text-accent transition-transform duration-500 group-hover:scale-110">
                 <AlertCircle className="h-5 w-5" />
               </div>
               <h3 className="mb-3 font-heading text-xl font-bold text-foreground">Dinheiro queimado</h3>

@@ -1,0 +1,79 @@
+/* MagicBentoCard — reusable single-card effect wrapper.
+   The wrapper imposes NO background and NO padding. It only adds a
+   relative positioning context, a transform-origin, and the border-glow
+   overlay layer. The wrapped child keeps its own styling entirely. */
+
+.magic-bento-card {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 200px;
+  --glow-color: 47, 107, 255;
+
+  position: relative;
+  /* Inherit the child's corner radius so the glow matches rounded cards. */
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  /* Particles / ripples are absolutely positioned children of the card and
+     must be clipped to its bounds. */
+  overflow: hidden;
+}
+
+/* The card sets transform via GSAP (rotateX/rotateY/x/y); keep it smooth. */
+.magic-bento-card {
+  will-change: transform;
+}
+
+/* Border glow: a radial light that follows the cursor, masked to the border
+   ring via a transparent->black gradient + xor composite so only the border
+   lights up (not the interior). Lives on ::after, above the child. */
+.magic-bento-card--border-glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.85)) 0%,
+    rgba(var(--glow-color), calc(var(--glow-intensity) * 0.4)) 30%,
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.25s ease;
+  opacity: var(--glow-intensity);
+}
+
+.magic-bento-particle {
+  position: absolute;
+  pointer-events: none;
+}
+
+.magic-bento-ripple {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* Graceful degradation: kill transforms and effect layers for users who
+   prefer reduced motion (JS also early-returns, this is the visual backstop). */
+@media (prefers-reduced-motion: reduce) {
+  .magic-bento-card {
+    transform: none !important;
+  }
+  .magic-bento-card--border-glow::after {
+    display: none;
+  }
+  .magic-bento-particle,
+  .magic-bento-ripple {
+    display: none;
+  }
+}

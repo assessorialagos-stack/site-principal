@@ -19,6 +19,7 @@ interface MarqueeProps {
   speed?: "fast" | "normal" | "slow";
   title?: React.ReactNode;
   className?: string;
+  tone?: "dark" | "light";
 }
 
 // Mantém v entre min e max (loop infinito sem emendas)
@@ -33,7 +34,9 @@ export function Marquee({
   speed = "normal",
   title,
   className,
+  tone = "light",
 }: MarqueeProps) {
+  const dark = tone === "dark";
   const reduce = useReducedMotion();
   const baseSpeed = { fast: 3, normal: 2, slow: 1.2 }[speed];
   const baseVelocity = (direction === "left" ? -1 : 1) * baseSpeed;
@@ -64,21 +67,48 @@ export function Marquee({
   return (
     <div className={cn("w-full overflow-hidden py-10", className)}>
       {title && (
-        <p className="mb-8 text-center font-mono text-xs uppercase tracking-[0.25em] text-muted">
+        <p
+          className={cn(
+            "mb-8 text-center font-mono text-xs uppercase tracking-[0.25em]",
+            dark ? "text-white/50" : "text-muted"
+          )}
+        >
           {title}
         </p>
       )}
       <div className="relative flex w-full items-center">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-background to-transparent md:w-48" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background to-transparent md:w-48" />
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r to-transparent md:w-48",
+            dark ? "from-dark" : "from-background"
+          )}
+        />
+        <div
+          className={cn(
+            "pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l to-transparent md:w-48",
+            dark ? "from-dark" : "from-background"
+          )}
+        />
 
         <motion.div style={{ x }} className="flex w-max items-center gap-6 md:gap-10">
           {duplicatedLogos.map((logo, index) => (
             <div
               key={`${logo.id}-${index}`}
-              className="group flex h-16 w-32 shrink-0 items-center justify-center rounded-xl border border-border bg-card text-muted transition-all duration-300 hover:border-border-strong hover:text-foreground md:h-20 md:w-44"
+              className={cn(
+                "group flex h-16 w-32 shrink-0 items-center justify-center rounded-xl border transition-all duration-300 md:h-20 md:w-44",
+                dark
+                  ? "border-dark-border bg-white/[0.03] hover:border-dark-border-strong"
+                  : "border-border bg-card text-muted hover:border-border-strong hover:text-foreground"
+              )}
             >
-              <span className="font-heading text-base font-semibold tracking-wide text-muted transition-colors group-hover:text-foreground md:text-lg">
+              <span
+                className={cn(
+                  "font-heading text-base font-semibold tracking-wide transition-colors md:text-lg",
+                  dark
+                    ? "text-white/50 group-hover:text-white"
+                    : "text-muted group-hover:text-foreground"
+                )}
+              >
                 {logo.name}
               </span>
             </div>

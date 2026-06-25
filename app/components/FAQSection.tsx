@@ -10,7 +10,7 @@ const faqs = [
   {
     question: "Qual o investimento mínimo para ser cliente?",
     answer:
-      "Trabalhamos com planos de assessoria a partir de R$ 2.100 mensais. Além do valor do nosso serviço, recomendamos um investimento em anúncios no Meta/Google compatível com a sua meta de faturamento, que será definido em conjunto durante nosso diagnóstico inicial.",
+      "Trabalhamos com planos de assessoria a partir de R$ 1.500 mensais. Além do valor do nosso serviço, recomendamos um investimento em anúncios no Meta/Google compatível com a sua meta de faturamento, que será definido em conjunto durante nosso diagnóstico inicial.",
   },
   {
     question: "Em quanto tempo começo a ver resultados?",
@@ -49,7 +49,7 @@ export function FAQSection() {
   const toggleOpen = (index: number) => setOpenIndex(openIndex === index ? null : index);
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-light py-28 md:py-36">
+    <section id="faq" className="theme-light relative overflow-hidden bg-background py-28 text-foreground md:py-36">
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Dúvidas"
@@ -90,9 +90,7 @@ export function FAQSection() {
                   <span
                     className={cn(
                       "flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300",
-                      isOpen
-                        ? "bg-foreground text-background"
-                        : "bg-section text-muted"
+                      isOpen ? "bg-foreground text-background" : "bg-foreground/[0.06] text-muted"
                     )}
                   >
                     <ChevronDown

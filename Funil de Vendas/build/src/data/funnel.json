@@ -1,0 +1,156 @@
+{
+  "brand": {
+    "name": "LAGOS ASSESSORIA",
+    "rodape": "LAGOS ASSESSORIA · BAURU/SP · ATENDIMENTO PARA TODO O BRASIL",
+    "confidential": "CONFIDENCIAL · USO INTERNO",
+    "confidentialFoot": "NÃO CIRCULA FORA DA EQUIPE"
+  },
+  "client": {
+    "hero": {
+      "eyebrow": "COMO VENDEMOS O SEU PRODUTO",
+      "title": "O FUNIL DA LAGOS",
+      "sub": "Não vendemos anúncio. Construímos o caminho que leva o seu consumidor de “nunca ouvi falar” até “comprei de novo” — e cuidamos de cada passo desse caminho."
+    },
+    "tese": {
+      "eyebrow": "A DIFERENÇA",
+      "title": "O mercado para no meio do caminho. A gente não.",
+      "text": "A maioria trabalha só o topo, o meio e o fundo — atrai, nutre, vende, e some. A Lagos abre o funil antes, na oferta que faz o seu produto valer a compra, e fecha ele depois, fazendo quem comprou comprar de novo. É aí, na recompra, que mora o maior lucro do seu negócio."
+    },
+    "stages": [
+      {
+        "id": "oferta", "num": "0", "kind": "offer",
+        "name": "OFERTA", "tier": "O ALICERCE — A BASE DO FUNIL",
+        "does": "Antes de gastar R$ 1 anunciando, a gente garante que o seu produto resolve uma dor, tem diferencial e gera desejo. Oferta fraca não se conserta com anúncio — então a gente arruma a oferta primeiro.",
+        "consumer": "um motivo claro para comprar de você, e não do concorrente."
+      },
+      {
+        "id": "descoberta", "num": "1", "kind": "stage",
+        "name": "DESCOBERTA", "tier": "TOPO",
+        "does": "Colocamos o seu produto na frente das pessoas certas — não de qualquer um. Testamos formatos, mensagens e canais para encontrar quem realmente tem a ver com o que você vende.",
+        "consumer": "conhecer a sua marca no momento certo."
+      },
+      {
+        "id": "desejo", "num": "2", "kind": "stage",
+        "name": "DESEJO", "tier": "MEIO",
+        "does": "Quem demonstrou interesse, a gente aquece: conteúdo, prova, resposta às dúvidas e quebra de objeção. Transformamos curiosidade em vontade de comprar — e separamos quem só olha de quem vai levar.",
+        "consumer": "confiança para dar o próximo passo."
+      },
+      {
+        "id": "decisao", "num": "3", "kind": "stage",
+        "name": "DECISÃO", "tier": "FUNDO",
+        "does": "A hora da compra. A oferta certa na frente da pessoa certa, e o atendimento conduzindo até o “sim”. Se a venda trava, a gente investiga onde — do anúncio ao atendimento — em vez de só baixar o preço.",
+        "consumer": "uma compra fácil, sem fricção."
+      },
+      {
+        "id": "recompra", "num": "4", "kind": "loop",
+        "name": "RECOMPRA", "tier": "O LOOP — ONDE MORA O LUCRO",
+        "does": "A venda não é o fim. A gente faz quem já comprou voltar a comprar: remarketing, relacionamento e ofertas para a sua base. É o cliente mais barato e mais lucrativo que existe — e quase ninguém trabalha isso.",
+        "consumer": "motivos para continuar comprando de você."
+      }
+    ],
+    "fechamento": {
+      "eyebrow": "EM UMA FRASE",
+      "text": "A maioria das agências te traz cliente novo e para por aí. A Lagos constrói a oferta, atrai a pessoa certa, conduz a venda e faz ela voltar — o funil inteiro, da primeira impressão à recompra."
+    }
+  },
+  "team": {
+    "howto": {
+      "eyebrow": "COMO LER ESTE DOCUMENTO",
+      "title": "Etapa não é mês. Etapa é onde o consumidor está.",
+      "lead": "Esquece mês 1, mês 2, mês 3. O consumidor avança pela etapa em que ele está, no ritmo dele. Loja que já fatura alto atravessa rápido; loja crua demora. O funil é o mesmo — a velocidade é que muda.",
+      "minicards": [
+        { "k": "O FUNIL", "t": "Oferta → Descoberta → Desejo → Decisão → Recompra", "p": "A Oferta abre (é o alicerce) e a Recompra fecha o loop, realimentando o topo. As três etapas do meio são onde o consumidor de fato atravessa." },
+        { "k": "CADA CARTÃO TEM", "t": "O que fazemos · mecânica · sinal · quem", "p": "Toda etapa segue os mesmos campos fixos, mais um Diferencial quando houver. É o que a gestora, o social e o comercial seguem na operação." },
+        { "k": "O GATILHO DE AVANÇO", "t": "Sinal de passagem substitui o calendário", "p": "O consumidor só avança quando bate o sinal de passagem definido na etapa — nunca por data. Loja rápida atravessa rápido; loja crua demora." },
+        { "k": "RÉGUAS EM ÂMBAR", "t": "Caixas âmbar = a gestora preenche", "p": "Verba, dias de teste, estrutura de público, % de escala e fadiga de criativo entram como placeholder. O material funciona sem os números; com eles, vira v1.1." }
+      ],
+      "rule": {
+        "k": "REGRA QUE ATRAVESSA TUDO",
+        "p": "Primeiro o problema, depois a solução. Nenhuma alavanca é puxada, nenhuma campanha morre e nenhuma verba desce antes de saber em qual etapa o consumidor está travando."
+      }
+    },
+    "stages": [
+      {
+        "id": "oferta", "num": "0", "kind": "offer",
+        "name": "OFERTA", "tier": "O ALICERCE", "role": "Não é etapa — é a base que tudo o resto amplifica.",
+        "fields": [
+          { "type": "normal", "k": "O que a gente faz", "v": "Percorrer o funil do cliente como consumidor final e submeter a oferta a 4 perguntas — resolve dor direta? tem diferencial? gera desejo? está estruturada? 4 sim = entra no funil. Qualquer não = reconstruir a oferta antes de rodar." },
+          { "type": "accent", "k": "A mecânica · engenharia de oferta", "v": "Oferta agregada + demanda fragmentada = decompor. Listar tudo que está dentro da oferta → mapear as dores que mistura → separar por dor → re-precificar pelo valor percebido. Referências: pacote único caro → 3 ofertas por dor (vale mais somado e vende); kit forçado → item avulso que o público realmente quer." },
+          { "type": "diferencial", "k": "Trava de margem · diferencial / cuidado", "v": "Markup não escolhe o produto (escolhe quem resolve dor e gera desejo), mas define o teto de desconto, frete grátis e brinde. Nenhuma oferta agressiva vai pro ar sem o markup na mão." },
+          { "type": "signal", "k": "Sinal de passagem → Descoberta", "v": "Oferta passou nos 4 critérios · markup conhecido (teto definido) · produtos-foco escolhidos." },
+          { "type": "who", "k": "Quem toca", "v": "DAVID define a oferta e valida a reestruturação · COMERCIAL entrega os dados da loja." }
+        ]
+      },
+      {
+        "id": "descoberta", "num": "1", "kind": "stage",
+        "name": "DESCOBERTA", "tier": "TOPO", "role": "Atrair volume e ler o terreno — não é pra vender.",
+        "fields": [
+          { "type": "normal", "k": "O que a gente faz", "v": "Colocar o produto na frente das pessoas certas e testar amplo pra descobrir quem reage. Não é pra vender — é pra atrair volume e ler o terreno (quem interage, de onde vem, o que puxa atenção)." },
+          { "type": "accent", "k": "A mecânica", "v": "Testar em volume — estático × vídeo · com form × sem form · WhatsApp × site/Instagram como destino. 10–20 criativos de partida (a maioria morre rápido, é o teste funcionando). Construir a máquina por trás: pixel + API, catálogo, CRM, base do Instagram, site." },
+          { "type": "amber", "k": "Placeholder gestora", "v": "Verba mínima por criativo / conjunto · estrutura de público (aberto × interesse × lookalike) · dias de teste antes de matar criativo." },
+          { "type": "diferencial", "k": "Diferencial · resultado ≠ só venda", "v": "Visibilidade já é resultado nesta etapa. No varejo físico, o site funciona como vitrine do estoque (descobre online, fecha na loja). Topo se mede em alcance certo, não em venda." },
+          { "type": "signal", "k": "Sinal de passagem → Desejo", "v": "Volume certo alcançado · dá pra ver quem interage e de onde · criativos vencedores de atenção identificados." },
+          { "type": "who", "k": "Quem toca", "v": "GESTORA roda e lê dados de alcance · TIME CRIATIVO produz o volume (no varejo, criativo na loja e com produto real é o mais eficaz)." }
+        ]
+      },
+      {
+        "id": "desejo", "num": "2", "kind": "stage",
+        "name": "DESEJO", "tier": "MEIO", "role": "Aquecer e qualificar quem reagiu.",
+        "fields": [
+          { "type": "normal", "k": "O que a gente faz", "v": "Aquecer e qualificar quem reagiu. Conteúdo, prova, resposta a dúvida e quebra de objeção viram curiosidade em vontade — e revelam quem está pronto pra Decisão." },
+          { "type": "accent", "k": "A mecânica", "v": "Funil de pesquisa no Instagram (caixinhas / enquetes — “qual produto com 50% OFF te deixaria feliz?”). Conteúdo que responde o que perguntam, duvidam e objetam. No varejo, a loja física como quebra de objeção; no e-com, humanização (bastidores, fornecedor)." },
+          { "type": "diferencial", "k": "Diferencial · qualificar antes de empurrar", "v": "Não joga todo mundo pra venda — separa quem vai comprar de quem só olha, pro comercial receber lead aquecido." },
+          { "type": "signal", "k": "Sinal de passagem → Decisão", "v": "Consumidor demonstrou intenção (perguntou preço, salvou, chamou) · objeção principal endereçada · sabe-se qual oferta puxa esse público." },
+          { "type": "who", "k": "Quem toca", "v": "SOCIAL conduz aquecimento e pesquisa · GESTORA alimenta com remarketing de quem interagiu · TIME CRIATIVO produz prova e quebra de objeção." }
+        ]
+      },
+      {
+        "id": "decisao", "num": "3", "kind": "stage",
+        "name": "DECISÃO", "tier": "FUNDO", "role": "Converter — e, se travar, achar o elo antes de mexer.",
+        "fields": [
+          { "type": "normal", "k": "O que a gente faz", "v": "Converter — oferta certa + comercial conduzindo. Quando não fecha, não baixa preço no susto: investiga onde trava." },
+          { "type": "accent", "k": "Diagnóstico em Cadeia · quando lead não vira venda, nesta ordem", "v": "1 CAMPANHA (lead é qualificado?) → 2 PROMESSA (anúncio promete o que entrega?) → 3 ATENDIMENTO (comercial responde e sustenta valor?) → 4 OFERTA (o problema é o quê / como se vende?). Achar o elo antes de mexer. Ex.: 1.000 no WhatsApp, 10 vendas — a campanha trouxe gente, não é culpada até o elo aparecer." },
+          { "type": "accent", "k": "Escada de Alavancas · quando o elo é a oferta, nesta ordem", "v": "1 valor percebido → 2 kit → 3 frete → 4 condição → 5 forma de ofertar → 6 comercial → 7 PREÇO (último, sempre)." },
+          { "type": "diferencial", "k": "Omnichannel", "v": "“Reserve no site, retire na loja” com condição especial — capta online e leva à loja, onde confiança e estrutura fecham." },
+          { "type": "signal", "k": "Sinal de passagem → Recompra", "v": "Primeira compra concluída · dados do comprador no CRM · produto entregue / experiência positiva." },
+          { "type": "who", "k": "Quem toca", "v": "COMERCIAL fecha e sustenta valor · GESTORA mantém a oferta vencedora rodando · DAVID + RAFAEL diagnosticam o elo travado." }
+        ]
+      },
+      {
+        "id": "recompra", "num": "4", "kind": "loop",
+        "name": "RECOMPRA", "tier": "O LOOP", "role": "A venda não é o fim — é o começo do loop. O coração da proposta.",
+        "fields": [
+          { "type": "normal", "k": "O que a gente faz", "v": "A venda não é o fim — é o começo do loop. Reativar, relacionar e ofertar de novo. Quem volta reentra no topo já aquecido, custando fração do cliente novo." },
+          { "type": "accent", "k": "A mecânica", "v": "Remarketing de comprador (“você já comprou aqui” → recompra, complementar, condição de cliente) · relacionamento pela base (CRM / WhatsApp trabalhando recorrência) · expansão de ticket (upsell / cross-sell)." },
+          { "type": "diferencial", "k": "Diferencial · o que quase ninguém faz", "v": "O mercado para no fundo e corre atrás de cliente novo. A Lagos transforma comprador em recorrência — LTV cresce, CAC dilui. Este loop é o coração da proposta." },
+          { "type": "signal", "k": "O loop → volta ao topo aquecido", "v": "Comprador segmentado por recência / recorrência · oferta de recompra ativa · reentra com desejo já construído." },
+          { "type": "who", "k": "Quem toca", "v": "GESTORA roda remarketing de base · SOCIAL sustenta relacionamento · DAVID + RAFAEL desenham ofertas de recompra e expansão de ticket." }
+        ]
+      }
+    ],
+    "transversal": {
+      "eyebrow": "O QUE NÃO É ETAPA, MAS SUSTENTA TODAS",
+      "title": "Alavancas sobre o funil",
+      "blocks": [
+        {
+          "h": "ESCALA", "sub": "Alavanca sobre o funil — não é etapa",
+          "p": "Escalar é despejar mais verba no pedaço que já provou que converte. Quando a Decisão de uma oferta está consistente, amplia-se o que entra nela. RAFAEL bate o martelo de subir; critério é número consistente (não só venda direta).",
+          "amber": "% por subida · cadência entre subidas · sinais de fadiga de criativo (frequência, CTR caindo).",
+          "extra": "Sobe-não-desce por reflexo: subiu e caiu? 1 troca criativo → 2 troca oferta → 3 só então trava / reduz + investiga."
+        },
+        {
+          "h": "RITUAL DE COMUNICAÇÃO", "sub": "O que segura o cliente",
+          "p": "Semanal: relatório + áudio-resumo (60–90s) → pede feedback (“esses números batem com o que você vê aí?”). Mensal: call de estratégia conduzida pelo Rafael. Travou? Call quinzenal até destravar."
+        },
+        {
+          "h": "FREIOS", "sub": "Quando pausar ou sair", "warn": true,
+          "p": "Pausar investimento: leads entrando e cliente não convertendo (alinha comercial) · vendendo o produto errado (realinha foco — alinhar o melhor, não obedecer). Demitir cliente: desespero por venda rápida (filtro na venda) · quebra da via de mão dupla (não grava, não responde, não cumpre)."
+        }
+      ],
+      "nota": {
+        "k": "NOTA PARA OS SÓCIOS",
+        "p": "O funil é a casca de venda; o método de entrega (interno) é o motor. Os dois convivem: o funil vende, o método entrega. Os nomes das etapas são proposta — reajam, troquem, lapidem. A única exigência estrutural: a Oferta abre o funil e a Recompra fecha o loop, porque é aí que está o diferencial."
+      }
+    }
+  }
+}

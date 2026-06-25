@@ -17,17 +17,17 @@ function OnboardingMock() {
   return (
     <div className="browser-frame mx-auto w-full max-w-xl">
       <div className="flex items-center gap-2 border-b border-border bg-section px-4 py-3">
-        <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
-        <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
-        <span className="h-3 w-3 rounded-full bg-[#28C840]" />
+        <span className="h-3 w-3 rounded-full bg-foreground/15" />
+        <span className="h-3 w-3 rounded-full bg-foreground/15" />
+        <span className="h-3 w-3 rounded-full bg-foreground/15" />
         <div className="ml-3 hidden flex-1 items-center justify-center sm:flex">
-          <span className="rounded-md border border-border bg-white px-3 py-1 font-mono text-[0.68rem] text-muted">
+          <span className="rounded-md border border-border bg-card px-3 py-1 font-mono text-[0.68rem] text-muted">
             lagos.com/onboarding
           </span>
         </div>
       </div>
 
-      <div className="bg-white p-4 md:p-5">
+      <div className="bg-card p-4 md:p-5">
         <div className="mb-3 flex items-center justify-between px-1">
           <span className="font-heading text-sm font-semibold text-foreground">Onboarding</span>
           <span className="rounded-full border border-border bg-section px-2.5 py-0.5 text-[0.7rem] text-muted">
@@ -54,7 +54,7 @@ function OnboardingMock() {
 
 export function OnboardingSection() {
   return (
-    <section className="relative overflow-hidden bg-background py-28 md:py-36">
+    <section className="theme-light relative overflow-hidden bg-background py-28 text-foreground md:py-36">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FeatureRow
           reverse

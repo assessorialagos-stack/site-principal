@@ -1,134 +1,150 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Quote, Star, Heart, MessageCircle, User } from "lucide-react";
+import { Star, MessageCircle, Video } from "lucide-react";
 import { SectionHeading } from "./ui/SectionHeading";
-import { GlowCard } from "./ui/GlowCard";
-import { MediaPlaceholder } from "./ui/MediaPlaceholder";
-import { Marquee } from "./Marquee";
-import { InstagramIcon } from "./ui/SocialIcons";
+import { Backdrop } from "./ui/Backdrop";
+import LogoLoop from "./reactbits/LogoLoop";
+import { ClientLogos } from "./ui/ClientLogos";
 
-// Depoimentos ILUSTRATIVOS — troque por foto, nome e negócio reais.
-const testimonials = [
-  {
-    quote:
-      "A Lagos conseguiu traduzir a nossa loja física para o digital. Estávamos queimando dinheiro no Meta Ads, e em dois meses a estratégia de LTV já se pagou.",
-    author: "Cliente Exemplo 1",
-    role: "E-commerce de Moda",
-    result: "ROAS 4.8x",
-  },
-  {
-    quote:
-      "Eles entendem de margem. Não é só sobre gerar boleto, mas sobre focar nos produtos que deixam dinheiro no caixa. Recomendo para qualquer varejista sério.",
-    author: "Cliente Exemplo 2",
-    role: "Rede de Varejo",
-    result: "+R$ 420k/mês",
-  },
-  {
-    quote:
-      "Pela primeira vez sinto que o marketing não é uma despesa, e sim um braço de vendas de verdade operando junto com o meu time.",
-    author: "Cliente Exemplo 3",
-    role: "Lojista de Eletrônicos",
-    result: "CAC −41%",
-  },
+// Vídeos de depoimento já editados (topo cortado + números borrados), em public/depoimentos/videos.
+const videos = [
+  "/depoimentos/videos/dep-1.mp4",
+  "/depoimentos/videos/dep-2.mp4",
+  "/depoimentos/videos/dep-3.mp4",
 ];
 
-const instaHandles = ["@cliente.um", "@cliente.dois", "@cliente.tres", "@cliente.quatro", "@cliente.cinco", "@cliente.seis"];
-
-const logos = [
-  { id: 1, name: "LOGO 6" },
-  { id: 2, name: "LOGO 7" },
-  { id: 3, name: "LOGO 8" },
-  { id: 4, name: "LOGO 9" },
-  { id: 5, name: "LOGO 10" },
+// Prints reais de conversas/feedback de clientes (em public/depoimentos)
+const depoimentos = [
+  "/depoimentos/Screenshot_20260619_180511_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260619_181207_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260619_181825_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260619_182032_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260619_182151_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260619_183055_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260619_141402_WhatsAppBusiness.jpg",
+  "/depoimentos/Screenshot_20260127_123011_WhatsAppBusiness.jpg",
 ];
+
+// Resultados reais (números dos painéis dos clientes) em mural rolante.
+function ProofChip({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-white/12 bg-white/[0.05] px-5 py-2.5 text-sm font-semibold text-white/85 backdrop-blur-md">
+      <Star size={13} className="fill-accent text-accent" />
+      {children}
+    </span>
+  );
+}
+
+const proofItems = [
+  "ROAS 14,2x em 30 dias",
+  "R$ 35 mil em 1 semana",
+  "R$ 0,97 por conversa",
+  "Ticket médio R$ 1.524",
+  "97 vendas em 30 dias",
+  "8.381 visitas/semana",
+].map((t) => ({ node: <ProofChip>{t}</ProofChip>, title: t, ariaLabel: t }));
 
 export function InstaProofSection() {
   return (
-    <section className="relative overflow-hidden border-t border-border bg-background py-28 md:py-36">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="relative isolate grain overflow-hidden bg-dark py-28 md:py-36">
+      <Backdrop variant="dark-section" />
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
+          tone="dark"
           eyebrow="Prova social"
           title="Quem confia na Lagos"
-          subtitle="Depoimentos, bastidores e a comunidade de lojistas que crescem com a gente."
-          className="mb-16"
+          subtitle="Resultados, bastidores e a comunidade de lojistas que crescem com a gente."
+          className="mb-12"
         />
 
-        {/* Depoimentos com foto */}
-        <div className="mb-20 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-          {testimonials.map((t, index) => (
+        {/* Mural de resultados (rolante) */}
+        <div className="mb-20">
+          <LogoLoop
+            logos={proofItems}
+            speed={55}
+            direction="left"
+            logoHeight={44}
+            gap={20}
+            fadeOut
+            fadeOutColor="#08080A"
+            pauseOnHover
+            ariaLabel="Resultados de clientes da Lagos"
+          />
+        </div>
+
+        {/* Depoimentos em vídeo */}
+        <div className="mb-10 flex items-center justify-center gap-2">
+          <Video size={18} className="text-accent" />
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50">
+            Depoimentos em vídeo
+          </span>
+        </div>
+        <div className="mb-20 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {videos.map((src, index) => (
             <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
+              key={src}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.45, delay: index * 0.08 }}
+              className="overflow-hidden rounded-2xl border border-dark-border bg-black"
             >
-              <GlowCard className="flex h-full flex-col p-7 md:p-8">
-                <Quote className="absolute right-6 top-6 h-9 w-9 text-foreground/[0.06]" />
-                <div className="mb-4 flex gap-0.5 text-accent">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <Star key={i} size={14} className="fill-current" />
-                  ))}
-                </div>
-                <p className="mb-6 flex-1 leading-relaxed text-muted">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-4 border-t border-border pt-5">
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-foreground/[0.06] text-foreground">
-                    <User size={18} />
-                  </span>
-                  <div className="flex-1">
-                    <p className="font-heading font-bold text-foreground">{t.author}</p>
-                    <p className="text-sm text-muted">{t.role}</p>
-                  </div>
-                  <span className="rounded-full border border-border bg-section px-3 py-1 text-xs font-semibold text-foreground">
-                    {t.result}
-                  </span>
-                </div>
-              </GlowCard>
+              <video
+                src={src}
+                controls
+                preload="metadata"
+                playsInline
+                className="mx-auto block max-h-[520px] w-full bg-black object-contain"
+              />
             </motion.div>
           ))}
         </div>
 
-        {/* Grade estilo Instagram */}
-        <div className="mb-10 flex items-center justify-center gap-2">
-          <InstagramIcon size={18} className="text-accent" />
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted">
-            Direto do nosso Instagram
-          </span>
+        {/* Prints reais de conversas */}
+        <div className="mb-10 text-center">
+          <div className="mb-3 flex items-center justify-center gap-2">
+            <MessageCircle size={18} className="text-accent" />
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50">
+              Conversas reais
+            </span>
+          </div>
+          <h3 className="mx-auto max-w-2xl font-heading text-2xl font-bold leading-tight text-white md:text-3xl">
+            Veja o que os nossos clientes falam de nós.
+          </h3>
         </div>
-        <div className="mb-16 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {instaHandles.map((handle, index) => (
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {depoimentos.map((src, index) => (
             <motion.div
-              key={handle}
-              initial={{ opacity: 0, scale: 0.9 }}
+              key={src}
+              initial={{ opacity: 0, scale: 0.96 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-30px" }}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="group relative aspect-square overflow-hidden rounded-2xl"
+              className="group relative overflow-hidden rounded-2xl border border-dark-border bg-white/[0.02]"
             >
-              <MediaPlaceholder label="Post" className="h-full w-full rounded-2xl" />
-              <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-ink/90 via-ink/40 to-transparent p-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                <span className="font-mono text-[0.65rem] text-white">{handle}</span>
-                <div className="mt-1 flex items-center gap-3 text-white/80">
-                  <span className="inline-flex items-center gap-1 text-xs">
-                    <Heart size={12} className="fill-current" /> 1,2k
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-xs">
-                    <MessageCircle size={12} /> 86
-                  </span>
-                </div>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={src}
+                alt={`Conversa real com cliente da Lagos ${index + 1}`}
+                loading="lazy"
+                decoding="async"
+                draggable={false}
+                className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                style={{ aspectRatio: "4 / 5" }}
+              />
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Logos dos clientes */}
-      <Marquee logos={logos} speed="slow" direction="right" />
-
-      <p className="mt-6 text-center font-mono text-[0.65rem] uppercase tracking-widest text-muted/50">
-        *conteúdo ilustrativo (adicione posts, fotos e logos reais)
-      </p>
+      {/* Logos reais dos clientes — 2 fileiras (sentidos opostos) */}
+      <div className="relative z-10 mx-auto mt-20 max-w-7xl px-4 sm:px-6 lg:px-8">
+        <p className="mb-8 text-center font-mono text-xs uppercase tracking-[0.25em] text-white/45">
+          Marcas que crescem com a Lagos
+        </p>
+        <ClientLogos />
+      </div>
     </section>
   );
 }

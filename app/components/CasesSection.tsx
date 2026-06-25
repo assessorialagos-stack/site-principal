@@ -1,51 +1,54 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp, Camera } from "lucide-react";
+import { TrendingUp } from "lucide-react";
 import { SectionHeading } from "./ui/SectionHeading";
 import { GlowCard } from "./ui/GlowCard";
-import { MediaPlaceholder } from "./ui/MediaPlaceholder";
 
-// Cases ILUSTRATIVOS — substitua prints, números e nomes pelos reais.
+// Cases reais. As imagens (prints dos painéis) ficam em /public/cases.
+// Coloque os 3 screenshots como case-1.png, case-2.png e case-3.png.
 const cases = [
   {
-    segment: "E-commerce de Moda",
-    metric: "+312%",
-    metricLabel: "Faturamento em 90 dias",
-    chips: ["ROAS 4.8x", "CAC −38%"],
+    segment: "Semijoias",
+    img: "/cases/case-1.png",
+    metric: "R$ 0,97",
+    metricLabel: "por conversa no WhatsApp",
+    chips: ["345 conversas", "71% abaixo do mercado"],
     description:
-      "Reestruturamos o funil de aquisição e a oferta carro-chefe. Em 3 meses, a operação triplicou o faturamento mantendo a margem saudável.",
-    client: "Cliente Exemplo 1",
+      "Primeiro mês de teste de uma loja de semijoias. Estruturamos a campanha de mensagens e geramos 345 conversas qualificadas a R$ 0,97 cada — 71% mais barato que a média da concorrência.",
+    context: "1º mês de teste",
   },
   {
-    segment: "Rede de Varejo Físico",
-    metric: "4.6x",
-    metricLabel: "ROAS médio omnichannel",
-    chips: ["+R$ 420k/mês", "5 lojas"],
+    segment: "Loja de computadores",
+    img: "/cases/case-2.png",
+    metric: "R$ 35 mil",
+    metricLabel: "em vendas numa única semana",
+    chips: ["Ticket médio R$ 1.524", "8.381 visitas"],
     description:
-      "Integramos o tráfego digital ao fluxo das lojas físicas, gerando visitas presenciais rastreáveis e vendas online simultâneas.",
-    client: "Cliente Exemplo 2",
+      "Operação validada de uma loja de computadores. Em apenas uma semana, R$ 35 mil em vendas, com ticket médio de R$ 1.524 e mais de 8 mil visitas qualificadas na loja.",
+    context: "1 semana de operação",
   },
   {
-    segment: "Loja de Eletrônicos",
-    metric: "−41%",
-    metricLabel: "Custo de Aquisição (CAC)",
-    chips: ["ROAS 5.2x", "LTV +27%"],
+    segment: "Roupas de grife",
+    img: "/cases/case-3.png",
+    metric: "14,2x",
+    metricLabel: "de ROAS em 30 dias",
+    chips: ["97 vendas", "Conversão direto no site"],
     description:
-      "Otimização agressiva de campanhas e reativação via CRM derrubaram o CAC e aumentaram o valor de cada cliente ao longo do tempo.",
-    client: "Cliente Exemplo 3",
+      "Loja de roupas de grife com conversão direto no site. Em 30 dias, ROAS de 14,2x — cada real investido voltou multiplicado, com 97 vendas atribuídas à operação.",
+    context: "Últimos 30 dias",
   },
 ];
 
 export function CasesSection() {
   return (
-    <section id="cases" className="relative overflow-hidden bg-section py-28 text-foreground md:py-36">
+    <section id="cases" className="theme-light relative overflow-hidden bg-section py-28 text-foreground md:py-36">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           tone="light"
           eyebrow="Cases"
           title="Resultados que falam por si"
-          subtitle="Nossa operação é baseada em dados reais e lucros consistentes. Veja o tipo de transformação que entregamos."
+          subtitle="Operações reais que escalamos com a Lagos. Os números abaixo são de painéis dos próprios clientes."
           className="mb-16"
         />
 
@@ -59,17 +62,23 @@ export function CasesSection() {
               transition={{ duration: 0.5, delay: index * 0.12 }}
             >
               <GlowCard tone="light" className="flex h-full flex-col">
-                <div className="relative">
-                  <MediaPlaceholder
-                    tone="light"
-                    label="Print do resultado (Meta/Google)"
-                    icon={<Camera size={20} />}
-                    className="aspect-[4/3] rounded-b-none border-x-0 border-t-0"
+                {/* Print do painel (degradê de marca como fundo, caso a imagem ainda não esteja) */}
+                <div className="relative aspect-[4/3] overflow-hidden rounded-t-[inherit] bg-gradient-to-br from-section via-card to-background">
+                  <div className="absolute inset-0 bg-grid opacity-10" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={c.img}
+                    alt={`Painel de resultados — ${c.segment}`}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                    }}
+                    className="relative h-full w-full object-cover object-top"
                   />
-                  <div className="absolute bottom-3 left-3 rounded-lg bg-ink px-3 py-1.5">
-                    <span className="text-xs font-medium tracking-wide text-white">
-                      {c.segment}
-                    </span>
+                  <div className="absolute bottom-3 left-3 z-10 rounded-lg bg-ink px-3 py-1.5">
+                    <span className="text-xs font-medium tracking-wide text-background">{c.segment}</span>
                   </div>
                 </div>
 
@@ -95,19 +104,15 @@ export function CasesSection() {
 
                   <p className="mb-6 flex-1 text-sm leading-relaxed text-muted">{c.description}</p>
 
-                  <div className="flex items-center gap-3 border-t border-border pt-5">
-                    <span className="h-9 w-9 rounded-full bg-foreground/[0.06]" />
-                    <span className="text-sm font-medium text-foreground">{c.client}</span>
+                  <div className="flex items-center gap-2 border-t border-border pt-5">
+                    <span className="h-2 w-2 rounded-full bg-accent" />
+                    <span className="font-mono text-xs uppercase tracking-wider text-muted">{c.context}</span>
                   </div>
                 </div>
               </GlowCard>
             </motion.div>
           ))}
         </div>
-
-        <p className="mt-12 text-center text-xs text-muted/70">
-          *cases ilustrativos (substitua prints, números e nomes em CasesSection.tsx)
-        </p>
       </div>
     </section>
   );

@@ -1,9 +1,9 @@
-const WHATSAPP_URL = "https://wa.me/5514999999999"; // TODO: trocar pelo número real
+import { whatsappLink } from "@/app/lib/contact";
 
 export function WhatsAppFloat() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={whatsappLink()}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"

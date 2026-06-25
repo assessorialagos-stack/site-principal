@@ -1,0 +1,130 @@
+/* ============================================================
+   FUNIL LAGOS — TOKENS + ATOMS (shared by print and web)
+   Design system = Brief §4. Size-agnostic atoms only;
+   page/section layout lives in print.css / web.css.
+   ============================================================ */
+
+:root {
+  /* Palette (§4) */
+  --abyss:#060D1A; --navy:#0A1B33; --navy2:#0E2342;
+  --line:#1C3D68; --line-soft:#16304F;
+  --tide:#2D7DFF; --tide-deep:#1257D6; --tide-soft:#6FA8FF;
+  --foam:#A9C6EE; --ice:#F0F6FF;
+  --paper:#F8FBFF; --paper2:#EEF4FC;
+  --ink:#0B1B33; --ink2:#48608A;
+  --amber:#FFB454; --ok:#36D399; --warn:#FF7A7A;
+
+  /* Font stacks (self-hosted; graceful fallbacks if a face is missing) */
+  --font-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --font-body:"Inter",system-ui,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+
+  --glow-tide:0 0 30px rgba(45,125,255,.45);
+  --node-grad:radial-gradient(circle at 35% 30%, #5E9CFF, #1257D6);
+}
+
+/* Force backgrounds/colors to survive Chromium PDF export */
+*, *::before, *::after { -webkit-print-color-adjust:exact; print-color-adjust:exact; box-sizing:border-box; }
+
+/* ---------- Typography atoms ---------- */
+.eyebrow{
+  font-family:var(--font-mono); font-weight:600;
+  text-transform:uppercase; letter-spacing:.2em;
+  color:var(--tide-soft);
+  display:inline-flex; align-items:center; gap:.5em;
+}
+.eyebrow::before{
+  content:""; width:1.6em; height:2px; border-radius:2px;
+  background:linear-gradient(90deg,var(--tide),transparent);
+}
+.eyebrow--ink{ color:var(--tide-deep); }
+.eyebrow--plain::before{ display:none; }
+
+.tag{
+  font-family:var(--font-mono); font-weight:500;
+  text-transform:uppercase; letter-spacing:.16em;
+  color:var(--foam);
+}
+
+/* Gradient-look title: SOLID color + glow (background-clip:text dies in PDF export, §4 note) */
+.gtitle{
+  font-family:var(--font-display);
+  font-weight:880; font-stretch:115%;
+  font-variation-settings:"wght" 880,"wdth" 115;
+  letter-spacing:-.01em; line-height:1.02;
+  color:#7FB2FF; text-shadow:var(--glow-tide);
+}
+.gtitle--ink{ color:var(--tide-deep); text-shadow:none; }
+
+.dtitle{
+  font-family:var(--font-display); font-weight:850; font-stretch:112%;
+  font-variation-settings:"wght" 850,"wdth" 112;
+  letter-spacing:-.015em; line-height:1.05; color:var(--ice);
+}
+.dtitle--ink{ color:var(--ink); }
+
+.lede{ color:var(--foam); }
+.lede--ink{ color:var(--ink2); }
+
+/* ---------- Pills / chips ---------- */
+.pill{
+  display:inline-flex; align-items:center; gap:.5em;
+  font-family:var(--font-mono); font-weight:500; font-size:.62rem;
+  text-transform:uppercase; letter-spacing:.18em;
+  padding:.35em .8em; border-radius:999px;
+  border:1px solid var(--line); background:rgba(45,125,255,.08); color:var(--foam);
+}
+.pill-dot{ width:.5em; height:.5em; border-radius:999px; background:var(--tide); box-shadow:0 0 8px var(--tide); }
+
+/* Stage number node — radial gradient circle with glow (§4 "Nós/etapas") */
+.node{
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:880; color:#fff;
+  background:var(--node-grad);
+  border:1.5px solid rgba(175,205,255,.55);
+  border-radius:999px;
+  box-shadow:0 0 0 4px rgba(45,125,255,.12), 0 6px 18px -4px rgba(45,125,255,.55);
+}
+
+/* ---------- Stage card (client) ---------- */
+.scard{
+  position:relative;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:linear-gradient(180deg, var(--navy2), var(--navy));
+  box-shadow:0 1px 0 rgba(175,205,255,.06) inset, 0 18px 40px -28px rgba(0,0,0,.9);
+  overflow:hidden;
+}
+.scard::before{ /* left tide accent */
+  content:""; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:linear-gradient(180deg,var(--tide-soft),var(--tide-deep));
+}
+.scard__name{ font-family:var(--font-display); font-weight:850; font-stretch:112%; color:var(--ice); letter-spacing:-.01em; }
+.scard__tier{ font-family:var(--font-mono); font-weight:500; text-transform:uppercase; letter-spacing:.18em; color:var(--tide-soft); }
+.scard__does{ color:var(--foam); }
+.scard__consumer{
+  display:block; margin-top:.5em; padding-top:.5em;
+  border-top:1px dashed var(--line);
+  color:var(--ice);
+}
+.scard__consumer b{ color:var(--tide-soft); font-weight:600; }
+.scard--offer{ background:linear-gradient(180deg,#0c2750,#08172e); border-color:var(--tide-deep); }
+.scard--repurchase::before{ background:linear-gradient(180deg,var(--ok),var(--tide)); }
+
+/* mono micro-label used before the consumer benefit */
+.consumer-label{
+  font-family:var(--font-mono); font-weight:600; font-size:.6rem;
+  text-transform:uppercase; letter-spacing:.16em; color:var(--tide-soft);
+}
+
+/* ---------- Wave divider ---------- */
+.wave-divider{ display:block; width:100%; height:auto; }
+
+/* ---------- Logo mark (inline SVG sizing) ---------- */
+.logo{ display:inline-flex; align-items:center; gap:.6em; }
+.logo svg{ display:block; }
+.logo__word{ font-family:var(--font-display); font-weight:880; font-stretch:115%; letter-spacing:.02em; color:var(--ice); }
+.logo__word--ink{ color:var(--ink); }
+
+/* utility */
+.uppercase-mono{ font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.16em; }

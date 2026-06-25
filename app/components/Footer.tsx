@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
-import { InstagramIcon, LinkedinIcon } from "./ui/SocialIcons";
+import { InstagramIcon } from "./ui/SocialIcons";
 import { Backdrop } from "./ui/Backdrop";
 import { whatsappLink, WHATSAPP_DISPLAY } from "@/app/lib/contact";
 
@@ -32,13 +32,6 @@ export function Footer() {
                 aria-label="Instagram"
               >
                 <InstagramIcon size={18} />
-              </a>
-              <a
-                href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-dark-border text-white/70 transition-all hover:border-dark-border-strong hover:text-white"
-                aria-label="LinkedIn"
-              >
-                <LinkedinIcon size={18} />
               </a>
             </div>
           </div>

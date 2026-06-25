@@ -69,7 +69,7 @@ export function BannerCTA({
             <ShieldCheck size={16} /> Diagnóstico sem compromisso
           </span>
           <span className="inline-flex items-center gap-2">
-            <Clock size={16} /> Resposta em até 24h
+            <Clock size={16} /> Resposta em menos de 5h
           </span>
         </div>
       </motion.div>

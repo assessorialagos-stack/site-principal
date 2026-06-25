@@ -63,7 +63,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.7 }}
           className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl"
         >
-          A assessoria de quem entende de loja de verdade. Tráfego, conteúdo, design e estratégia
+          A Assessoria que cuida de ponta a ponta do seu Marketing. Tráfego, conteúdo, design e estratégia
           operando como um só ecossistema, focado em LTV e lucro líquido.
         </motion.p>
 

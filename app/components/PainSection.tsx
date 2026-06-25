@@ -33,7 +33,7 @@ export function PainSection() {
             </Eyebrow>
           </div>
           <h2 className="mb-6 font-heading text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-[2.85rem] text-balance">
-            O marketing que só foca em vaidade{" "}
+            O marketing que só foca em aparência{" "}
             <span className="text-accent">
               <ProximityText>está matando seu lucro.</ProximityText>
             </span>

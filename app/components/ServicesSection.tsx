@@ -145,8 +145,7 @@ export function ServicesSection() {
               Tenha esse ecossistema trabalhando para você
             </h3>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
-              A estrutura completa de marketing por uma fração do que custaria montar uma equipe interna
-              equivalente.
+              A estrutura completa que sua loja precisa em um lugar só, sem o custo de um time inteiro!
             </p>
 
             <div className="mt-8 flex flex-col items-center gap-5">

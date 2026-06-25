@@ -16,14 +16,14 @@ const videos = [
 
 // Prints reais de conversas/feedback de clientes (em public/depoimentos)
 const depoimentos = [
-  "/depoimentos/Screenshot_20260619_180511_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260619_181207_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260619_181825_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260619_182032_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260619_182151_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260619_183055_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260619_141402_WhatsAppBusiness.jpg",
-  "/depoimentos/Screenshot_20260127_123011_WhatsAppBusiness.jpg",
+  "/depoimentos/testemunho-1.jpg",
+  "/depoimentos/testemunho-2.jpg",
+  "/depoimentos/testemunho-3.jpg",
+  "/depoimentos/testemunho-4.jpg",
+  "/depoimentos/testemunho-5.jpg",
+  "/depoimentos/testemunho-6.jpg",
+  "/depoimentos/testemunho-7.jpg",
+  "/depoimentos/testemunho-8.png",
 ];
 
 // Resultados reais (números dos painéis dos clientes) em mural rolante.

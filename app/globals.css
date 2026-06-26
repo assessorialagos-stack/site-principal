@@ -251,6 +251,24 @@
   }
 }
 
+/* ===== Mobile / touch: desempenho ===== */
+/* No celular, `backdrop-filter` (vidro) e o granulado fazem o navegador repintar a
+   cada frame durante o scroll — é a causa do "piscando". Desligamos os dois
+   (o fundo sólido/translúcido continua), deixando o scroll limpo e estável. */
+@media (max-width: 1024px), (pointer: coarse) {
+  *,
+  *::before,
+  *::after {
+    /* só a propriedade padrão — o otimizador (lightningcss) adiciona o -webkit;
+       se escrevermos as duas à mão ele descarta a padrão e o blur não some. */
+    backdrop-filter: none !important;
+  }
+  .grain::after,
+  .grain-soft::after {
+    display: none !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;

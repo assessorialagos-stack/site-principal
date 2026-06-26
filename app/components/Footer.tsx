@@ -97,12 +97,6 @@ export function Footer() {
         <div className="flex flex-col items-center justify-between gap-4 border-t border-dark-border pt-8 md:flex-row">
           <div className="text-sm text-white/40">
             <p>&copy; {currentYear} Lagos Assessoria. Todos os direitos reservados.</p>
-            <p className="mt-1">CNPJ: 65.728.805/0001-00</p>
-          </div>
-          <div className="text-sm">
-            <Link href="#" className="text-white/40 transition-colors hover:text-white">
-              Política de Privacidade
-            </Link>
           </div>
         </div>
       </div>

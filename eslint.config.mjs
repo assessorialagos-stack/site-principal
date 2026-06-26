@@ -18,6 +18,8 @@ const eslintConfig = defineConfig([
     "Teste Gemini/**",
     "Referencias/**",
     "Funil de Vendas/**",
+    // Shim de deploy (HostGator/cPanel Passenger) — Node CommonJS, fora do app Next.
+    "server.js",
   ]),
 ]);
 

@@ -56,10 +56,13 @@ const BlurText = ({
     return () => observer.disconnect();
   }, [threshold, rootMargin]);
 
+  // IMPORTANTE: o `filter` precisa existir em TODOS os keyframes (mobile = blur(0px)).
+  // Se ele some quando `mobile` vira true no meio da animação, o framer "abandona"
+  // a propriedade e o título fica travado borrado no celular.
   const defaultFrom = useMemo(
     () => {
       const y = direction === 'top' ? -50 : 50;
-      return mobile ? { opacity: 0, y } : { filter: 'blur(10px)', opacity: 0, y };
+      return mobile ? { filter: 'blur(0px)', opacity: 0, y } : { filter: 'blur(10px)', opacity: 0, y };
     },
     [direction, mobile]
   );
@@ -68,8 +71,8 @@ const BlurText = ({
     () =>
       mobile
         ? [
-            { opacity: 0.5, y: direction === 'top' ? 5 : -5 },
-            { opacity: 1, y: 0 }
+            { filter: 'blur(0px)', opacity: 0.5, y: direction === 'top' ? 5 : -5 },
+            { filter: 'blur(0px)', opacity: 1, y: 0 }
           ]
         : [
             { filter: 'blur(5px)', opacity: 0.5, y: direction === 'top' ? 5 : -5 },
@@ -99,7 +102,7 @@ const BlurText = ({
 
         return (
           <motion.span
-            className={mobile ? 'inline-block will-change-[transform,opacity]' : 'inline-block will-change-[transform,filter,opacity]'}
+            className="inline-block"
             key={index}
             initial={fromSnapshot}
             animate={inView ? animateKeyframes : fromSnapshot}

@@ -83,7 +83,6 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
     );
     io.observe(obsTarget);
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const seqSize = isVertical ? seqHeight : seqWidth;
 
     if (seqSize > 0) {
@@ -94,7 +93,9 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHover
       track.style.transform = transformValue;
     }
 
-    if (prefersReduced) return;
+    // NÃO respeitamos prefers-reduced-motion neste carrossel: é um elemento de marca
+    // que o cliente quer sempre deslizando (muitos celulares têm "reduzir animações"
+    // ligado por padrão, o que travava as logos).
 
     const animate = timestamp => {
       if (lastTimestampRef.current === null) {
@@ -246,7 +247,10 @@ export const LogoLoop = memo(
     );
 
     const handleMouseEnter = useCallback(() => {
-      if (effectiveHoverSpeed !== undefined) setIsHovered(true);
+      // só pausa em telas com mouse de verdade; em touch um "tap" dispara mouseenter
+      // sem mouseleave e travaria o carrossel parado no celular.
+      const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
+      if (effectiveHoverSpeed !== undefined && canHover) setIsHovered(true);
     }, [effectiveHoverSpeed]);
     const handleMouseLeave = useCallback(() => {
       if (effectiveHoverSpeed !== undefined) setIsHovered(false);

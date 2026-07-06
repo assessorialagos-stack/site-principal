@@ -19,7 +19,7 @@ export function whatsappLink(message?: string) {
 
 // ── Recebimento dos leads por e-mail ─────────────────────────────────────────
 // Os formulários chegam neste e-mail (enviados pelo servidor via FormSubmit).
-export const LEAD_EMAIL = "suporte@assessorialagos.com.br";
+export const LEAD_EMAIL = "assessorialagoscontato@gmail.com";
 
 // URL pública do site (fallback usado pelo servidor ao falar com o FormSubmit).
-export const SITE_URL = "https://lagos-site.vercel.app";
+export const SITE_URL = "https://assessorialagos.com.br";

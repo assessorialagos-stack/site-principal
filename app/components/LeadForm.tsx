@@ -250,7 +250,7 @@ export function LeadForm() {
                   onChange={handleChange}
                   required
                   className={inputCls}
-                  placeholder="Ex: Bauru - SP"
+                  placeholder="Ex: São Paulo - SP"
                 />
               </div>
               <div className="space-y-2">

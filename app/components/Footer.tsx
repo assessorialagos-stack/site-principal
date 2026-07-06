@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
 import { InstagramIcon } from "./ui/SocialIcons";
 import { Backdrop } from "./ui/Backdrop";
-import { whatsappLink, WHATSAPP_DISPLAY } from "@/app/lib/contact";
+import { whatsappLink } from "@/app/lib/contact";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -42,8 +42,13 @@ export function Footer() {
             <ul className="mt-2 flex flex-col gap-3">
               <li className="flex items-center gap-3 text-white/70">
                 <Phone size={18} className="text-accent" />
-                <a href={whatsappLink()} className="transition-colors hover:text-white">
-                  {WHATSAPP_DISPLAY}
+                <a
+                  href={whatsappLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors hover:text-white"
+                >
+                  Falar no WhatsApp
                 </a>
               </li>
               <li className="flex items-center gap-3 text-white/70">
@@ -57,11 +62,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-3 text-white/70">
                 <MapPin size={18} className="mt-1 shrink-0 text-accent" />
-                <span>
-                  Bauru, SP
-                  <br />
-                  Atendimento para todo o Brasil
-                </span>
+                <span>Atendimento para todo o Brasil</span>
               </li>
             </ul>
           </div>

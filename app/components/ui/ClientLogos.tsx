@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import LogoLoop from "../reactbits/LogoLoop";
 import { cn } from "@/app/lib/cn";
 
@@ -34,8 +35,11 @@ const toItems = (list: typeof logos) =>
 
 /** Carrossel de logos em 2 fileiras: a de cima rola p/ a esquerda, a de baixo p/ a direita. */
 export function ClientLogos({ className = "" }: { className?: string }) {
-  const row1 = toItems(logos);
-  const row2 = toItems([...logos].reverse());
+  // Memoizado: sem isso as listas viravam arrays novos a cada render do pai, o
+  // LogoLoop (memo) re-renderizava à toa e seus ResizeObservers se
+  // desmontavam/remontavam junto.
+  const row1 = useMemo(() => toItems(logos), []);
+  const row2 = useMemo(() => toItems([...logos].reverse()), []);
 
   return (
     <div className={cn("flex flex-col gap-4", className)}>

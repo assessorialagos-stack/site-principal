@@ -277,6 +277,11 @@
     scroll-behavior: auto !important;
   }
 }
+/* ATENÇÃO: a regra acima zera QUALQUER animação CSS, e muitos celulares vêm com
+   "reduzir animações" ligado de fábrica. Foi uma das razões de o carrossel de
+   marcas ficar parado no celular. Ele agora é criado com a Web Animations API
+   (ver LogoLoop.tsx), que não é afetada por esta regra — se algum dia voltar a
+   ser @keyframes, vai precisar de uma exceção aqui. */
 
 /* ===== MODO CLARO (toggle "ligar a luz") =====
    O site é nativamente 100% escuro. Quando o usuário liga a luz (html.light),

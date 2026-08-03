@@ -66,11 +66,14 @@ const GradientBlinds = ({
     let renderer;
     try {
       renderer = new Renderer({
-        // Teto de dpr 2 (alinhado a LaserFlow/MagicRings/LightPillar): nunca
-        // renderiza em 3x num retina, o que custaria ~9x a fragment work.
-        dpr: dpr ?? Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 2),
+        // Teto de dpr 1.5 (era 2, alinhado a MagicRings/LightPillar). É o fundo
+        // que ocupa a tela inteira do hero: em dpr 2 são ~4x os pixels da tela
+        // por quadro, o que sozinho já engasga placa integrada.
+        dpr: dpr ?? Math.min(typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1, 1.5),
         alpha: true,
-        antialias: true,
+        // antialias num quad de tela cheia não muda nada (não há bordas de
+        // geometria), mas pede um framebuffer multisample — desligado.
+        antialias: false,
       });
     } catch (e) {
       return;
@@ -279,9 +282,17 @@ void main() {
     };
     canvas.addEventListener("pointermove", onPointerMove);
 
+    // Teto de 30fps: é um gradiente que se move devagar atrás do conteúdo. A
+    // 60fps a GPU desenha a tela inteira 60x por segundo à toa; a 30fps o
+    // movimento continua igual aos olhos e o custo cai pela metade.
+    const MIN_FRAME_MS = 1000 / 30;
+    let ultimoDesenho = 0;
+
     const loop = (t) => {
       rafRef.current = requestAnimationFrame(loop);
       if (pausedRef.current) return; // fora da viewport: não atualiza nem renderiza
+      if (t - ultimoDesenho < MIN_FRAME_MS) return;
+      ultimoDesenho = t;
       uniforms.iTime.value = t * 0.001;
       if (mouseDampening > 0) {
         if (!lastTimeRef.current) lastTimeRef.current = t;

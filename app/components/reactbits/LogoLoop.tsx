@@ -5,7 +5,32 @@
 import { useCallback, useEffect, useMemo, useRef, useState, memo } from 'react';
 import './LogoLoop.css';
 
-const ANIMATION_CONFIG = { SMOOTH_TAU: 0.25, MIN_COPIES: 2, COPY_HEADROOM: 2 };
+// ─────────────────────────────────────────────────────────────────────────────
+// POR QUE ISTO NÃO USA MAIS requestAnimationFrame
+//
+// A versão original movia a esteira no JS: um requestAnimationFrame por quadro
+// escrevendo `track.style.transform`. Isso roda na THREAD PRINCIPAL, que é a
+// mesma que processa scroll, toque e React. No celular o navegador SUSPENDE o
+// requestAnimationFrame enquanto o dedo arrasta a página (o iOS faz isso sempre;
+// o Android faz quando a thread está ocupada) — resultado: as logos ficavam
+// paradas exatamente quando o usuário estava rolando o site, ou seja, sempre.
+//
+// Agora a esteira é uma ANIMAÇÃO DECLARATIVA, criada com a Web Animations API
+// (`element.animate`). Diferenças que importam:
+//
+//   • É montada UMA vez, não a cada quadro. Zero JS durante a animação.
+//   • Os keyframes usam PIXELS. Transform em pixel é a forma que o navegador
+//     consegue delegar para a thread de composição (GPU) — aí a animação
+//     continua rodando durante o scroll e mesmo se a thread principal travar.
+//     (Porcentagem, ou valor vindo de variável CSS, faz o Chrome desistir de
+//     compor e devolver a animação para a thread principal — o problema de novo.)
+//   • Não é afetada pela regra global de `prefers-reduced-motion` do
+//     globals.css, que zera a duração de QUALQUER animação CSS. Muitos celulares
+//     vêm com "reduzir animações" ligado de fábrica.
+//
+// A esteira tem sempre 2 sequências iguais e anda exatamente uma sequência por
+// volta, então a emenda é invisível.
+// ─────────────────────────────────────────────────────────────────────────────
 
 const toCssLength = value => (typeof value === 'number' ? `${value}px` : (value ?? undefined));
 
@@ -62,88 +87,6 @@ const useImageLoader = (seqRef, onLoad, dependencies) => {
   }, [onLoad, seqRef, dependencies]);
 };
 
-const useAnimationLoop = (trackRef, targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical) => {
-  const rafRef = useRef(null);
-  const lastTimestampRef = useRef(null);
-  const offsetRef = useRef(0);
-  const velocityRef = useRef(0);
-  const visibleRef = useRef(true);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    // pausa o loop quando o carrossel sai da viewport (economia de CPU)
-    const obsTarget = track.parentElement || track;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        visibleRef.current = entry.isIntersecting;
-      },
-      { rootMargin: '200px' }
-    );
-    io.observe(obsTarget);
-
-    const seqSize = isVertical ? seqHeight : seqWidth;
-
-    if (seqSize > 0) {
-      offsetRef.current = ((offsetRef.current % seqSize) + seqSize) % seqSize;
-      const transformValue = isVertical
-        ? `translate3d(0, ${-offsetRef.current}px, 0)`
-        : `translate3d(${-offsetRef.current}px, 0, 0)`;
-      track.style.transform = transformValue;
-    }
-
-    // NÃO respeitamos prefers-reduced-motion neste carrossel: é um elemento de marca
-    // que o cliente quer sempre deslizando (muitos celulares têm "reduzir animações"
-    // ligado por padrão, o que travava as logos).
-
-    const animate = timestamp => {
-      if (lastTimestampRef.current === null) {
-        lastTimestampRef.current = timestamp;
-      }
-
-      // fora da viewport: não faz trabalho, só reagenda
-      if (!visibleRef.current) {
-        lastTimestampRef.current = timestamp;
-        rafRef.current = requestAnimationFrame(animate);
-        return;
-      }
-
-      const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
-      lastTimestampRef.current = timestamp;
-
-      const target = isHovered && hoverSpeed !== undefined ? hoverSpeed : targetVelocity;
-
-      const easingFactor = 1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
-      velocityRef.current += (target - velocityRef.current) * easingFactor;
-
-      if (seqSize > 0) {
-        let nextOffset = offsetRef.current + velocityRef.current * deltaTime;
-        nextOffset = ((nextOffset % seqSize) + seqSize) % seqSize;
-        offsetRef.current = nextOffset;
-
-        const transformValue = isVertical
-          ? `translate3d(0, ${-offsetRef.current}px, 0)`
-          : `translate3d(${-offsetRef.current}px, 0, 0)`;
-        track.style.transform = transformValue;
-      }
-
-      rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      io.disconnect();
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-      lastTimestampRef.current = null;
-    };
-  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, trackRef]);
-};
-
 export const LogoLoop = memo(
   ({
     logos,
@@ -165,38 +108,42 @@ export const LogoLoop = memo(
     const containerRef = useRef(null);
     const trackRef = useRef(null);
     const seqRef = useRef(null);
+    const animRef = useRef(null);
 
-    const [seqWidth, setSeqWidth] = useState(0);
-    const [seqHeight, setSeqHeight] = useState(0);
-    const [copyCount, setCopyCount] = useState(ANIMATION_CONFIG.MIN_COPIES);
-    const [isHovered, setIsHovered] = useState(false);
+    // Quantas vezes a lista se repete DENTRO de uma sequência. Precisa ser o
+    // bastante para uma sequência cobrir a largura visível (senão apareceria um
+    // buraco no meio do loop).
+    const [repeats, setRepeats] = useState(1);
+    const repeatsRef = useRef(1);
+    repeatsRef.current = repeats;
 
-    const effectiveHoverSpeed = useMemo(() => {
-      if (hoverSpeed !== undefined) return hoverSpeed;
-      if (pauseOnHover === true) return 0;
-      if (pauseOnHover === false) return undefined;
-      return 0;
-    }, [hoverSpeed, pauseOnHover]);
+    const [seqSize, setSeqSize] = useState(0);
 
     const isVertical = direction === 'up' || direction === 'down';
 
-    const targetVelocity = useMemo(() => {
-      const magnitude = Math.abs(speed);
-      let directionMultiplier;
-      if (isVertical) {
-        directionMultiplier = direction === 'up' ? 1 : -1;
-      } else {
-        directionMultiplier = direction === 'left' ? 1 : -1;
-      }
-      const speedMultiplier = speed < 0 ? -1 : 1;
-      return magnitude * directionMultiplier * speedMultiplier;
-    }, [speed, direction, isVertical]);
+    // 'left'/'up' andam no sentido normal do keyframe; 'right'/'down' invertem.
+    // speed negativo também inverte (mantém a API antiga).
+    const reversed = useMemo(() => {
+      const base = direction === 'right' || direction === 'down';
+      return speed < 0 ? !base : base;
+    }, [direction, speed]);
 
     const updateDimensions = useCallback(() => {
-      const containerWidth = containerRef.current?.clientWidth ?? 0;
-      const sequenceRect = seqRef.current?.getBoundingClientRect();
-      const sequenceWidth = sequenceRect?.width ?? 0;
-      const sequenceHeight = sequenceRect?.height ?? 0;
+      const rect = seqRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const measured = isVertical ? rect.height : rect.width;
+      if (!(measured > 0)) return;
+
+      const unit = measured / Math.max(1, repeatsRef.current); // largura de UMA passada
+      const viewport = isVertical
+        ? (containerRef.current?.parentElement?.clientHeight ?? containerRef.current?.clientHeight ?? 0)
+        : (containerRef.current?.clientWidth ?? 0);
+
+      const needed = Math.max(1, Math.ceil(viewport / unit));
+      if (needed !== repeatsRef.current) setRepeats(needed);
+
+      setSeqSize(prev => (Math.abs(prev - measured) > 1 ? Math.ceil(measured) : prev));
+
       if (isVertical) {
         const parentHeight = containerRef.current?.parentElement?.clientHeight ?? 0;
         if (containerRef.current && parentHeight > 0) {
@@ -204,24 +151,56 @@ export const LogoLoop = memo(
           if (containerRef.current.style.height !== `${targetHeight}px`)
             containerRef.current.style.height = `${targetHeight}px`;
         }
-        if (sequenceHeight > 0) {
-          setSeqHeight(Math.ceil(sequenceHeight));
-          const viewport = containerRef.current?.clientHeight ?? parentHeight ?? sequenceHeight;
-          const copiesNeeded = Math.ceil(viewport / sequenceHeight) + ANIMATION_CONFIG.COPY_HEADROOM;
-          setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
-        }
-      } else if (sequenceWidth > 0) {
-        setSeqWidth(Math.ceil(sequenceWidth));
-        const copiesNeeded = Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
-        setCopyCount(Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded));
       }
     }, [isVertical]);
 
-    useResizeObserver(updateDimensions, [containerRef, seqRef], [logos, gap, logoHeight, isVertical]);
+    // Arrays memoizados: antes eram literais novos a cada render, então o efeito
+    // do ResizeObserver se desmontava e remontava em TODO render (desperdício).
+    const observed = useMemo(() => [containerRef, seqRef], []);
+    const measureDeps = useMemo(
+      () => [logos, gap, logoHeight, isVertical, repeats],
+      [logos, gap, logoHeight, isVertical, repeats]
+    );
 
-    useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight, isVertical]);
+    useResizeObserver(updateDimensions, observed, measureDeps);
+    useImageLoader(seqRef, updateDimensions, measureDeps);
 
-    useAnimationLoop(trackRef, targetVelocity, seqWidth, seqHeight, isHovered, effectiveHoverSpeed, isVertical);
+    // Uma volta completa percorre uma sequência inteira. speed é em px/s.
+    const durationSeconds = useMemo(() => {
+      const px = Math.abs(speed);
+      if (!seqSize || !px) return 0;
+      return seqSize / px;
+    }, [seqSize, speed]);
+
+    // Cria (ou recria, se a medida mudou) a animação. Roda uma vez, não por quadro.
+    useEffect(() => {
+      const track = trackRef.current;
+      if (!track || !durationSeconds) return;
+      if (typeof track.animate !== 'function') return;
+
+      const from = 'translate3d(0px, 0px, 0px)';
+      const to = isVertical
+        ? `translate3d(0px, ${-seqSize}px, 0px)`
+        : `translate3d(${-seqSize}px, 0px, 0px)`;
+
+      // guarda onde a esteira estava, p/ não dar um pulo quando a medida muda
+      const anterior = animRef.current?.currentTime ?? 0;
+      animRef.current?.cancel();
+
+      const anim = track.animate([{ transform: from }, { transform: to }], {
+        duration: durationSeconds * 1000,
+        iterations: Infinity,
+        easing: 'linear',
+        direction: reversed ? 'reverse' : 'normal'
+      });
+      anim.currentTime = anterior % (durationSeconds * 1000);
+      animRef.current = anim;
+
+      return () => {
+        anim.cancel();
+        if (animRef.current === anim) animRef.current = null;
+      };
+    }, [durationSeconds, seqSize, isVertical, reversed]);
 
     const cssVariables = useMemo(
       () => ({
@@ -232,6 +211,27 @@ export const LogoLoop = memo(
       [gap, logoHeight, fadeOutColor]
     );
 
+    const pausesOnHover = hoverSpeed === 0 || pauseOnHover !== false;
+
+    // Pausa no hover SÓ onde existe mouse de verdade. Numa tela de toque um
+    // "tap" dispara mouseenter sem o mouseleave correspondente — era assim que
+    // o carrossel ficava travado parado no celular depois de um toque.
+    useEffect(() => {
+      if (!pausesOnHover) return;
+      const el = containerRef.current;
+      if (!el) return;
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+      const enter = () => animRef.current?.pause();
+      const leave = () => animRef.current?.play();
+      el.addEventListener('mouseenter', enter);
+      el.addEventListener('mouseleave', leave);
+      return () => {
+        el.removeEventListener('mouseenter', enter);
+        el.removeEventListener('mouseleave', leave);
+      };
+    }, [pausesOnHover]);
+
     const rootClassName = useMemo(
       () =>
         [
@@ -239,22 +239,13 @@ export const LogoLoop = memo(
           isVertical ? 'logoloop--vertical' : 'logoloop--horizontal',
           fadeOut && 'logoloop--fade',
           scaleOnHover && 'logoloop--scale-hover',
+          pausesOnHover && 'logoloop--pause-hover',
           className
         ]
           .filter(Boolean)
           .join(' '),
-      [isVertical, fadeOut, scaleOnHover, className]
+      [isVertical, fadeOut, scaleOnHover, pausesOnHover, className]
     );
-
-    const handleMouseEnter = useCallback(() => {
-      // só pausa em telas com mouse de verdade; em touch um "tap" dispara mouseenter
-      // sem mouseleave e travaria o carrossel parado no celular.
-      const canHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
-      if (effectiveHoverSpeed !== undefined && canHover) setIsHovered(true);
-    }, [effectiveHoverSpeed]);
-    const handleMouseLeave = useCallback(() => {
-      if (effectiveHoverSpeed !== undefined) setIsHovered(false);
-    }, [effectiveHoverSpeed]);
 
     const renderLogoItem = useCallback(
       (item, key) => {
@@ -307,21 +298,14 @@ export const LogoLoop = memo(
       [renderItem]
     );
 
-    const logoLists = useMemo(
-      () =>
-        Array.from({ length: copyCount }, (_, copyIndex) => (
-          <ul
-            className="logoloop__list"
-            key={`copy-${copyIndex}`}
-            role="list"
-            aria-hidden={copyIndex > 0}
-            ref={copyIndex === 0 ? seqRef : undefined}
-          >
-            {logos.map((item, itemIndex) => renderLogoItem(item, `${copyIndex}-${itemIndex}`))}
-          </ul>
-        )),
-      [copyCount, logos, renderLogoItem]
-    );
+    // Conteúdo de UMA sequência (a lista repetida `repeats` vezes).
+    const sequenceItems = useMemo(() => {
+      const items = [];
+      for (let r = 0; r < repeats; r++) {
+        logos.forEach((item, i) => items.push(renderLogoItem(item, `${r}-${i}`)));
+      }
+      return items;
+    }, [repeats, logos, renderLogoItem]);
 
     const containerStyle = useMemo(
       () => ({
@@ -334,8 +318,16 @@ export const LogoLoop = memo(
 
     return (
       <div ref={containerRef} className={rootClassName} style={containerStyle} role="region" aria-label={ariaLabel}>
-        <div className="logoloop__track" ref={trackRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          {logoLists}
+        <div className="logoloop__track" ref={trackRef}>
+          {/* Exatamente 2 sequências iguais: a animação anda uma sequência por
+              volta, então quando ela reinicia a segunda cópia já está no lugar
+              exato da primeira e a emenda não aparece. */}
+          <ul className="logoloop__list" role="list" ref={seqRef}>
+            {sequenceItems}
+          </ul>
+          <ul className="logoloop__list" role="list" aria-hidden="true">
+            {sequenceItems}
+          </ul>
         </div>
       </div>
     );

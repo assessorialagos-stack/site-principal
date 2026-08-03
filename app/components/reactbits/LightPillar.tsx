@@ -19,7 +19,8 @@ const LightPillar = ({
   noiseIntensity = 0.5,
   mixBlendMode = 'screen',
   pillarRotation = 0,
-  quality = 'high'
+  quality = 'high',
+  paused = false
 }) => {
   const containerRef = useRef(null);
   const rafRef = useRef(null);
@@ -31,6 +32,10 @@ const LightPillar = ({
   const mouseRef = useRef(new THREE.Vector2(0, 0));
   const timeRef = useRef(0);
   const rotationSpeedRef = useRef(rotationSpeed);
+  // `paused` entra por ref (NÃO pode ir nas dependências do efeito principal:
+  // isso remontaria o renderer e é justamente o que estamos evitando).
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
   const [webGLSupported, setWebGLSupported] = useState(true);
 
   useEffect(() => {
@@ -66,7 +71,11 @@ const LightPillar = ({
       high: {
         iterations: 80,
         waveIterations: 4,
-        pixelRatio: Math.min(window.devicePixelRatio, 2),
+        // Teto de 1.5 (era 2). Em tela HiDPI, dpr 2 significa renderizar 4x os
+        // pixels da tela a cada quadro — num shader de raymarching com 80
+        // iterações isso derruba placas integradas. 1.5 = ~44% menos pixels e
+        // nenhuma diferença visível num brilho difuso de fundo.
+        pixelRatio: Math.min(window.devicePixelRatio, 1.5),
         precision: 'highp',
         stepMultiplier: 1.0
       }
@@ -245,11 +254,22 @@ const LightPillar = ({
     }
 
     let lastTime = performance.now();
-    const targetFPS = effectiveQuality === 'low' ? 30 : 60;
+    // Só a qualidade 'high' desenha a 60fps. É um brilho de fundo que gira
+    // devagar: a 30fps o resultado é idêntico e a GPU trabalha metade.
+    const targetFPS = effectiveQuality === 'high' ? 60 : 30;
     const frameTime = 1000 / targetFPS;
 
     const animate = currentTime => {
       if (!materialRef.current || !rendererRef.current || !sceneRef.current || !cameraRef.current) return;
+
+      // Fora da viewport: o contexto WebGL continua vivo, só paramos de desenhar.
+      // Custo ~zero e, ao voltar, não há recompilação de shader (que era o que
+      // engasgava a página inteira).
+      if (pausedRef.current) {
+        lastTime = currentTime;
+        rafRef.current = requestAnimationFrame(animate);
+        return;
+      }
 
       const deltaTime = currentTime - lastTime;
 

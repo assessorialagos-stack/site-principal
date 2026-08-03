@@ -16,6 +16,12 @@
   width: max-content;
   will-change: transform;
   user-select: none;
+
+  /* O movimento é criado no LogoLoop.tsx com a Web Animations API, em pixels —
+     é a forma que o navegador consegue delegar para a GPU. Não declare
+     `animation` aqui: um keyframe CSS com porcentagem ou variável faz o Chrome
+     desistir de compor e a esteira volta a depender da thread principal
+     (que é justamente o que travava as logos no celular). */
 }
 
 .logoloop__list {

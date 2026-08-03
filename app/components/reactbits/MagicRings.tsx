@@ -89,6 +89,7 @@ export default function MagicRings({
   hoverScale = 1.2,
   parallax = 0.05,
   clickBurst = false,
+  paused = false,
 }) {
   const mountRef = useRef(null);
   const propsRef = useRef(null);
@@ -102,7 +103,7 @@ export default function MagicRings({
     color, colorTwo, speed, ringCount, attenuation, lineThickness,
     baseRadius, radiusStep, scaleRate, opacity, noiseAmount,
     rotation, ringGap, fadeIn, fadeOut, followMouse, mouseInfluence,
-    hoverScale, parallax, clickBurst,
+    hoverScale, parallax, clickBurst, paused,
   };
 
   useEffect(() => {
@@ -160,7 +161,9 @@ export default function MagicRings({
     const resize = () => {
       const w = mount.clientWidth;
       const h = mount.clientHeight;
-      const dpr = Math.min(window.devicePixelRatio, 2);
+      // Teto de 1.5 (era 2): são anéis difusos de fundo, não têm detalhe fino a
+      // perder — e cada ponto de dpr custa pixels ao quadrado na GPU.
+      const dpr = Math.min(window.devicePixelRatio, 1.5);
       renderer.setSize(w, h);
       renderer.setPixelRatio(dpr);
       uniforms.uResolution.value.set(w * dpr, h * dpr);
@@ -190,9 +193,20 @@ export default function MagicRings({
     mount.addEventListener('click', onClick);
 
     let frameId;
+    // Teto de 30fps — anéis difusos de fundo não ganham nada com 60fps.
+    const MIN_FRAME_MS = 1000 / 30;
+    let ultimoDesenho = 0;
+
     const animate = (t) => {
       frameId = requestAnimationFrame(animate);
       const p = propsRef.current;
+
+      // Fora da viewport: mantém o contexto WebGL vivo e só para de desenhar.
+      // Desmontar/remontar obrigava o three.js a fazer forceContextLoss() e
+      // recompilar shaders a cada rolagem — a maior fonte de travamento do site.
+      if (p.paused) return;
+      if (t - ultimoDesenho < MIN_FRAME_MS) return;
+      ultimoDesenho = t;
 
       smoothMouseRef.current[0] += (mouseRef.current[0] - smoothMouseRef.current[0]) * 0.08;
       smoothMouseRef.current[1] += (mouseRef.current[1] - smoothMouseRef.current[1]) * 0.08;

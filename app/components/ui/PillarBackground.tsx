@@ -19,6 +19,7 @@ type LightPillarProps = {
   mixBlendMode?: string;
   pillarRotation?: number;
   quality?: "low" | "medium" | "high";
+  paused?: boolean;
 };
 
 const LightPillar = dynamic<LightPillarProps>(() => import("../reactbits/LightPillar"), {
@@ -38,7 +39,12 @@ export function PillarBackground({
   rotation?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [show, setShow] = useState(false);
+  // IMPORTANTE: isto controla PAUSA, não montagem. Antes o componente era
+  // desmontado ao sair da viewport, e o three.js respondia com dispose() +
+  // forceContextLoss(); ao voltar, recriava o contexto e recompilava os shaders.
+  // Rolando a página isso acontecia sem parar — era ~13% da CPU e travadas de
+  // mais de 1 segundo. Agora o canvas nasce uma vez e só para de desenhar.
+  const [visible, setVisible] = useState(true);
   // Só roda o pilar WebGL no desktop; no mobile o card já tem glows próprios e
   // dispensa o canvas (evita um segundo contexto 3D que faz a tela piscar).
   const desktop = useIsDesktop();
@@ -47,7 +53,7 @@ export function PillarBackground({
     if (!desktop) return;
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([entry]) => setShow(entry.isIntersecting), {
+    const io = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting), {
       rootMargin: "300px",
     });
     io.observe(el);
@@ -60,9 +66,10 @@ export function PillarBackground({
       aria-hidden
       className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
-      {desktop && show && (
+      {desktop && (
         <WebGLBoundary>
           <LightPillar
+            paused={!visible}
             className="h-full w-full"
             topColor="#6FA8FF"
             bottomColor="#1E3A8A"
@@ -74,7 +81,10 @@ export function PillarBackground({
             noiseIntensity={0.5}
             mixBlendMode="screen"
             pillarRotation={rotation}
-            quality="high"
+            // "medium" = 40 iterações de raymarching em vez de 80. É um brilho
+            // difuso atrás do dashboard, a 65% de opacidade: o olho não vê a
+            // diferença, a GPU vê. Volte para "high" se quiser o máximo.
+            quality="medium"
           />
         </WebGLBoundary>
       )}

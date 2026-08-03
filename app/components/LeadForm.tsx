@@ -59,9 +59,16 @@ const requiredFields: (keyof FormData)[] = [
   "investimento",
 ];
 
+// "Random string" do FormSubmit (recurso "Invisible emails" da documentação).
+// Se estiver definida na Vercel, o navegador consegue reenviar o lead direto
+// para o FormSubmit caso o servidor falhe — sem expor o e-mail no código.
+const FORMSUBMIT_PUBLIC_ID = process.env.NEXT_PUBLIC_FORMSUBMIT_ID;
+
 export function LeadForm() {
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Honeypot (_honey): campo invisível que só robô preenche.
+  const [honey, setHoney] = useState("");
 
   // Captura UTMs / origem / timestamp no envio (a URL não muda nesta SPA de página única)
   const buildTracking = () => {
@@ -74,6 +81,9 @@ export function LeadForm() {
       utm_content: urlParams.get("utm_content") || "",
       utm_term: urlParams.get("utm_term") || "",
       pagina_origem: window.location.pathname,
+      // O FormSubmit não enxerga mais a URL completa (os navegadores passaram a
+      // usar "strict-origin-when-cross-origin"); o FAQ manda mandá-la no _url.
+      pagina_url: window.location.href,
       data_hora: new Date().toISOString(),
     };
   };
@@ -122,21 +132,55 @@ export function LeadForm() {
 
     setIsSubmitting(true);
 
-    const payload = { ...formData, ...buildTracking() };
+    const tracking = buildTracking() as Record<string, string>;
+    const payload = { ...formData, ...tracking, _honey: honey };
 
-    // 1) Envia ao servidor, que dispara o e-mail do lead (best-effort: se falhar,
-    //    não trava o redirecionamento — os dados também vão na mensagem do WhatsApp).
+    // 1) Envia ao servidor, que dispara o e-mail do lead pelo FormSubmit.
+    //    Agora conferimos se o e-mail realmente saiu (o servidor devolve
+    //    emailSent) em vez de assumir que deu certo.
+    let emailSent = false;
     try {
-      await fetch("/api/lead", {
+      const res = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-    } catch {
-      // segue mesmo se falhar
+      const json = await res.json().catch(() => null);
+      emailSent = json?.emailSent === true;
+      if (!emailSent) console.warn("Lead não foi enviado por e-mail:", json?.formsubmit);
+    } catch (err) {
+      console.warn("Falha ao falar com /api/lead:", err);
     }
 
-    // 2) Redireciona direto pro WhatsApp com a mensagem pré-preenchida.
+    // 2) Plano B: se o servidor não conseguiu, tenta direto do navegador —
+    //    é o jeito oficial da documentação (AJAX, funciona cross-origin).
+    if (!emailSent && FORMSUBMIT_PUBLIC_ID && !honey) {
+      try {
+        await fetch(`https://formsubmit.co/ajax/${FORMSUBMIT_PUBLIC_ID}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            _subject: `Novo lead do site: ${formData.nome || "sem nome"}`,
+            _template: "table",
+            _captcha: "false",
+            _url: tracking.pagina_url || "",
+            Nome: formData.nome,
+            WhatsApp: formData.whatsapp,
+            Instagram: formData.instagram,
+            Segmento: formData.segmento,
+            "Cidade/Estado": formData.cidadeEstado,
+            "Faturamento mensal": formData.faturamento,
+            "Pode investir a partir de R$ 1.500/mês": formData.investimento,
+            Site: formData.site || "(não informado)",
+          }),
+        });
+      } catch (err) {
+        console.warn("Plano B (FormSubmit direto) também falhou:", err);
+      }
+    }
+
+    // 3) Redireciona direto pro WhatsApp com a mensagem pré-preenchida.
+    //    Mesmo que o e-mail falhe, o lead chega inteiro por aqui.
     window.location.href = whatsappLink(buildWhatsAppMessage(formData));
   };
 
@@ -325,6 +369,18 @@ export function LeadForm() {
                 placeholder="https://www.sualoja.com.br"
               />
             </div>
+
+            {/* Honeypot do FormSubmit (_honey): invisível para gente, visível para bot. */}
+            <input
+              type="text"
+              name="_honey"
+              value={honey}
+              onChange={(e) => setHoney(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              style={{ display: "none" }}
+            />
 
             <div className="flex justify-end pt-4">
               <StarBorder

@@ -7,6 +7,7 @@ import { Eyebrow } from "./ui/Eyebrow";
 import { Backdrop } from "./ui/Backdrop";
 import StarBorder from "./reactbits/StarBorder";
 import { whatsappLink } from "@/app/lib/contact";
+import { newEventId, trackPixel } from "@/app/lib/metaPixel";
 
 type FormData = {
   nome: string;
@@ -133,7 +134,13 @@ export function LeadForm() {
     setIsSubmitting(true);
 
     const tracking = buildTracking() as Record<string, string>;
-    const payload = { ...formData, ...tracking, _honey: honey };
+
+    // Lead no pixel (navegador). O servidor manda o mesmo evento pela API de
+    // Conversões com este event_id, e a Meta deduplica.
+    const eventId = newEventId();
+    if (!honey) trackPixel("Lead", eventId);
+
+    const payload = { ...formData, ...tracking, event_id: eventId, _honey: honey };
 
     // 1) Envia ao servidor, que dispara o e-mail do lead pelo FormSubmit.
     //    Agora conferimos se o e-mail realmente saiu (o servidor devolve

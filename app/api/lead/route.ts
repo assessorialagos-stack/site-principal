@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { LEAD_EMAIL, SITE_URL } from "@/app/lib/contact";
+import { sendLeadToMeta } from "@/app/lib/metaCapi";
 
 // ── Envio dos leads por e-mail (FormSubmit) ──────────────────────────────────
 // Docs: https://formsubmit.co/documentation  •  https://formsubmit.co/ajax-documentation
@@ -134,6 +135,17 @@ export async function POST(request: Request) {
     utm_term: data.utm_term || "",
   };
 
+  // Lead para a Meta pelo servidor (API de Conversões), em paralelo ao e-mail.
+  // Mesmo event_id do pixel no navegador, para a Meta contar uma vez só.
+  const metaPromise = data.event_id
+    ? sendLeadToMeta(request, {
+        eventId: data.event_id,
+        nome: data.nome,
+        whatsapp: data.whatsapp,
+        sourceUrl: data.pagina_url,
+      })
+    : Promise.resolve({ sent: false, reason: "sem event_id" });
+
   // 1ª tentativa em JSON (formato do /ajax-documentation); se falhar, repete no
   // formato de formulário HTML antes de desistir.
   const attempts: Attempt[] = [];
@@ -165,9 +177,12 @@ export async function POST(request: Request) {
     }
   }
 
+  const meta = await metaPromise;
+
   return NextResponse.json({
     success: true,
     emailSent,
+    metaSent: meta.sent,
     formsubmit: attempts[attempts.length - 1]?.message ?? "",
   });
 }

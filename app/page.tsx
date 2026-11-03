@@ -21,6 +21,7 @@ export default function Home() {
       <main>
         <HeroSection />
         <PageReveal>
+          <LeadForm />
           <PainSection />
           <SolutionSection />
           <FunnelSection />
@@ -53,7 +54,6 @@ export default function Home() {
             subtitle="Sem promessas mágicas. Só método, execução e foco no que importa: vendas."
             ctaText="Quero uma análise da minha loja"
           />
-          <LeadForm />
         </PageReveal>
       </main>
       <Footer />

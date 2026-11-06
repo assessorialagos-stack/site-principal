@@ -69,6 +69,21 @@ fbq('track', 'PageView');`,
           />
         </noscript>
         {/* End Meta Pixel Code */}
+        {/* Meta Pixel: evento Contact nos cliques em links de WhatsApp */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.addEventListener('click', function (e) {
+  var link = e.target.closest('a[href*="wa.me"], a[href*="api.whatsapp.com"], a[href*="whatsapp.com/send"]');
+  if (!link || typeof fbq !== 'function') return;
+  fbq('track', 'Contact');
+  // se o link abre na mesma aba, segura 300ms para o evento sair antes do WhatsApp abrir
+  if (link.target !== '_blank') {
+    e.preventDefault();
+    setTimeout(function () { window.location.href = link.href; }, 300);
+  }
+}, true);`,
+          }}
+        />
         {/* Microsoft Clarity */}
         <script
           type="text/javascript"

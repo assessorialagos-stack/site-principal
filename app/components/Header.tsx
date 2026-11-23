@@ -30,9 +30,9 @@ const StaggeredMenu = dynamic<StaggeredMenuProps>(() => import("./reactbits/Stag
 });
 
 const navLinks = [
-  { name: "Método", href: "#metodo" },
   { name: "Serviços", href: "#servicos" },
-  { name: "Cases", href: "#cases" },
+  { name: "Método", href: "#metodo" },
+  { name: "Resultados", href: "#cases" },
   { name: "FAQ", href: "#faq" },
 ];
 
@@ -135,9 +135,9 @@ export function Header() {
           displayItemNumbering
           isFixed
           items={[
-            { label: "Método", ariaLabel: "Ir para o Método", link: "#metodo" },
             { label: "Serviços", ariaLabel: "Ver os serviços", link: "#servicos" },
-            { label: "Cases", ariaLabel: "Ver os cases", link: "#cases" },
+            { label: "Método", ariaLabel: "Ir para o Método", link: "#metodo" },
+            { label: "Resultados", ariaLabel: "Ver os resultados", link: "#cases" },
             { label: "FAQ", ariaLabel: "Ver as dúvidas", link: "#faq" },
             { label: "Quero uma análise", ariaLabel: "Falar com a Lagos", link: "#formulario" },
           ]}

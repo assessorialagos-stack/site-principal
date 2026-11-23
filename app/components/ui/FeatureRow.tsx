@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import { cn } from "@/app/lib/cn";
 import { Eyebrow } from "./Eyebrow";
+import { ActionButton } from "./ActionButton";
 
 /**
- * Linha de feature estilo cal.com: texto (eyebrow + título + descrição + bullets + link)
- * de um lado e um mockup/print emoldurado do outro. `reverse` alterna os lados.
+ * Linha de feature: texto (eyebrow + título + descrição + bullets + botão) de um
+ * lado e um mockup/print emoldurado do outro. `reverse` alterna os lados, para
+ * montar o zigue-zague das seções.
  * `tone="dark"` inverte a tipografia para as seções pretas.
  */
 export function FeatureRow({
@@ -80,16 +82,13 @@ export function FeatureRow({
         )}
 
         {cta && (
-          <a
+          <ActionButton
             href={cta.href}
-            className={cn(
-              "group mt-8 inline-flex items-center gap-1.5 text-sm font-semibold",
-              dark ? "text-white" : "text-foreground"
-            )}
+            icon={<ArrowRight size={16} />}
+            className="mt-9"
           >
             {cta.label}
-            <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-          </a>
+          </ActionButton>
         )}
       </motion.div>
 

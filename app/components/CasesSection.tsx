@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp } from "lucide-react";
+import { ArrowRight, TrendingUp } from "lucide-react";
+import { cn } from "@/app/lib/cn";
 import { SectionHeading } from "./ui/SectionHeading";
-import { GlowCard } from "./ui/GlowCard";
+import { ActionButton } from "./ui/ActionButton";
 
 // Cases reais. As imagens (prints dos painéis) ficam em /public/cases.
 // Coloque os 3 screenshots como case-1.png, case-2.png e case-3.png.
@@ -40,78 +41,99 @@ const cases = [
   },
 ];
 
+/**
+ * Resultados em linha do tempo vertical (formato da referência): o texto e o
+ * print do painel trocam de lado a cada case. No celular a linha fica à
+ * esquerda e tudo empilha.
+ */
 export function CasesSection() {
   return (
-    <section id="cases" className="theme-light relative overflow-hidden bg-section py-28 text-foreground md:py-36">
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="cases" className="relative isolate overflow-hidden bg-dark py-20 text-white md:py-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(ellipse_55%_80%_at_50%_0%,rgba(47,107,255,0.14),transparent_65%)]" />
+
+      <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          tone="light"
-          eyebrow="Cases"
+          tone="dark"
+          eyebrow="Resultados"
           title="Resultados que falam por si"
           subtitle="Operações reais que escalamos com a Lagos. Os números abaixo são de painéis dos próprios clientes."
-          className="mb-16"
+          className="mb-16 md:mb-20"
         />
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
-          {cases.map((c, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.12 }}
-            >
-              <GlowCard tone="light" className="flex h-full flex-col">
-                {/* Print do painel (degradê de marca como fundo, caso a imagem ainda não esteja) */}
-                <div className="relative aspect-[4/3] overflow-hidden rounded-t-[inherit] bg-gradient-to-br from-section via-card to-background">
-                  <div className="absolute inset-0 bg-grid opacity-10" />
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={c.img}
-                    alt={`Painel de resultados — ${c.segment}`}
-                    loading="lazy"
-                    decoding="async"
-                    draggable={false}
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).style.display = "none";
-                    }}
-                    className="relative h-full w-full object-contain p-3"
-                  />
-                  <div className="absolute bottom-3 left-3 z-10 rounded-lg bg-ink px-3 py-1.5">
-                    <span className="text-xs font-medium tracking-wide text-background">{c.segment}</span>
-                  </div>
-                </div>
+        <div className="relative">
+          {/* Linha do tempo */}
+          <div className="pointer-events-none absolute bottom-6 left-[11px] top-2 w-px bg-white/15 md:left-1/2" />
 
-                <div className="flex flex-1 flex-col p-7 md:p-8">
-                  <div className="mb-5 flex items-end gap-3">
-                    <span className="font-heading text-4xl font-bold text-foreground">{c.metric}</span>
-                    <span className="mb-1.5 inline-flex items-center gap-1 text-xs text-muted">
-                      <TrendingUp size={14} className="text-accent" />
+          <div className="space-y-16 md:space-y-24">
+            {cases.map((c, i) => {
+              const flip = i % 2 === 1;
+              return (
+                <motion.div
+                  key={c.segment}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.55 }}
+                  className="relative grid items-center gap-8 pl-10 md:grid-cols-2 md:gap-20 md:pl-0"
+                >
+                  {/* Marcador na linha */}
+                  <span className="absolute left-[11px] top-1.5 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-white bg-accent shadow-[0_0_0_6px_rgba(8,8,10,1)] md:left-1/2 md:top-1/2 md:-translate-y-1/2" />
+
+                  {/* Texto */}
+                  <div className={cn(flip ? "md:order-2" : "md:text-right")}>
+                    <p className="font-mono text-xs uppercase tracking-[0.18em] text-accent">
+                      {c.segment} · {c.context}
+                    </p>
+                    <p className="mt-3 font-heading text-5xl font-bold tracking-tight md:text-6xl">{c.metric}</p>
+                    <p
+                      className={cn(
+                        "mt-2 inline-flex items-center gap-1.5 text-sm text-white/60",
+                        !flip && "md:flex-row-reverse"
+                      )}
+                    >
+                      <TrendingUp size={15} className="text-accent" />
                       {c.metricLabel}
-                    </span>
+                    </p>
+                    <p className="mt-5 leading-relaxed text-white/70">{c.description}</p>
+                    <div className={cn("mt-5 flex flex-wrap gap-2", !flip && "md:justify-end")}>
+                      {c.chips.map((chip) => (
+                        <span
+                          key={chip}
+                          className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 text-xs font-medium text-white/75"
+                        >
+                          {chip}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  <div className="mb-5 flex flex-wrap gap-2">
-                    {c.chips.map((chip) => (
-                      <span
-                        key={chip}
-                        className="rounded-full border border-border bg-section px-3 py-1 text-[0.7rem] font-medium text-muted"
-                      >
-                        {chip}
-                      </span>
-                    ))}
+                  {/* Print do painel */}
+                  <div className={cn(flip && "md:order-1")}>
+                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#101015] p-3 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)]">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.img}
+                        alt={`Painel de resultados — ${c.segment}`}
+                        loading="lazy"
+                        decoding="async"
+                        draggable={false}
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                        }}
+                        className="mx-auto max-h-[340px] w-full rounded-lg object-contain"
+                      />
+                    </div>
                   </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
 
-                  <p className="mb-6 flex-1 text-sm leading-relaxed text-muted">{c.description}</p>
-
-                  <div className="flex items-center gap-2 border-t border-border pt-5">
-                    <span className="h-2 w-2 rounded-full bg-accent" />
-                    <span className="font-mono text-xs uppercase tracking-wider text-muted">{c.context}</span>
-                  </div>
-                </div>
-              </GlowCard>
-            </motion.div>
-          ))}
+        <div className="mt-16 flex justify-center md:mt-20">
+          <ActionButton href="#formulario" icon={<ArrowRight size={18} />}>
+            Quero resultados assim
+          </ActionButton>
         </div>
       </div>
     </section>

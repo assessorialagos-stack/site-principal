@@ -21,8 +21,8 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lagos Assessoria | Marketing para Varejo e E-commerce",
-  description: "A assessoria de marketing feita por quem entende de loja de verdade. Especialistas em e-commerce e varejo físico.",
+  title: "Lagos Assessoria | Marketing que vira lucro para o seu negócio",
+  description: "Assessoria de marketing de ponta a ponta para donos de negócio: tráfego pago, conteúdo, estratégia e comercial operando como um só ecossistema, com foco em lucro.",
 };
 
 export default function RootLayout({

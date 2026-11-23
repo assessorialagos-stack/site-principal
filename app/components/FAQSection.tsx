@@ -13,6 +13,11 @@ const faqs = [
       "Trabalhamos com planos de assessoria a partir de R$ 1.500 mensais. Além do valor do nosso serviço, recomendamos um investimento em anúncios no Meta/Google compatível com a sua meta de faturamento, que será definido em conjunto durante nosso diagnóstico inicial.",
   },
   {
+    question: "Vocês atendem o meu tipo de negócio?",
+    answer:
+      "Atendemos donos de negócio de vários segmentos: comércio e lojas físicas, e-commerce, prestadores de serviço, saúde, alimentação e mais. No diagnóstico gratuito, avaliamos juntos se faz sentido para o momento da sua empresa.",
+  },
+  {
     question: "Em quanto tempo começo a ver resultados?",
     answer:
       "Nenhuma estratégia sustentável se consolida em 3 dias. Nosso método foca em estruturação no Mês 1, testes de público e oferta no Mês 2, e escala a partir do Mês 3. Embora vitórias rápidas costumem ocorrer nas primeiras semanas, o alvo é construir um fluxo de caixa previsível no médio/longo prazo.",
@@ -20,7 +25,7 @@ const faqs = [
   {
     question: "Vocês dão garantia de resultado?",
     answer:
-      "Nós garantimos a execução do melhor método disponível no mercado, processos claros, entrega pontual e transparência absoluta. Desconfie de quem promete 'triplicar suas vendas em 30 dias'. Resultado em varejo é uma consequência de produto bom, atendimento eficiente e marketing agressivo. Nós garantimos a melhor estratégia do lado de cá.",
+      "Nós garantimos a execução do melhor método disponível no mercado, processos claros, entrega pontual e transparência absoluta. Desconfie de quem promete 'triplicar suas vendas em 30 dias'. Resultado é uma consequência de um bom produto ou serviço, atendimento eficiente e marketing agressivo. Nós garantimos a melhor estratégia do lado de cá.",
   },
   {
     question: "O que está incluso na assessoria?",

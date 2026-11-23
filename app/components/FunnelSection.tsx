@@ -17,7 +17,7 @@ const explain = [
     num: "1",
     name: "DESCOBERTA",
     process: "Alcance",
-    does: "Colocamos o seu produto na frente das pessoas certas e testamos o que realmente reage.",
+    does: "Colocamos a sua oferta na frente das pessoas certas e testamos o que realmente reage.",
     consumer: "conhecer a sua marca no momento certo.",
   },
   {
@@ -101,7 +101,7 @@ function ExplainCard({ stage, index }: { stage: (typeof explain)[number]; index:
       </div>
       <p className="text-[0.92rem] leading-relaxed text-white/65">{stage.does}</p>
       <p className="mt-4 border-t border-dashed border-white/10 pt-3 text-[0.88rem] leading-snug text-white/80">
-        <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-accent">Consumidor → </span>
+        <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-accent">Cliente → </span>
         {stage.consumer}
       </p>
     </motion.div>
@@ -117,13 +117,13 @@ export function FunnelSection() {
 
       <div className="relative z-10 px-4 pt-24 pb-6 text-center sm:px-6 sm:pt-28">
         <div className="flex justify-center">
-          <Eyebrow tone="dark">Como vendemos o seu produto</Eyebrow>
+          <Eyebrow tone="dark">Como fazemos o seu negócio vender</Eyebrow>
         </div>
         <h2 className="mt-3 font-heading text-[1.85rem] font-bold tracking-tight text-white sm:mt-4 sm:text-4xl md:text-5xl">
           O Funil da <span className="text-accent">Lagos</span>
         </h2>
         <p className="mx-auto mt-3 max-w-md text-[0.85rem] leading-snug text-white/55 sm:max-w-2xl sm:text-base">
-          O caminho que leva o seu consumidor de “nunca ouvi falar” até “comprei de novo”.
+          O caminho que leva o seu cliente de “nunca ouvi falar” até “comprei de novo”.
         </p>
 
         {/* Funil 3D — cada peça entra em cascata ao aparecer */}

@@ -1,19 +1,21 @@
 import { Header } from "./components/Header";
 import { HeroSection } from "./components/HeroSection";
 import { PageReveal } from "./components/ui/PageReveal";
-import { PainSection } from "./components/PainSection";
-import { SolutionSection } from "./components/SolutionSection";
-import { FunnelSection } from "./components/FunnelSection";
-import { BannerCTA } from "./components/BannerCTA";
-import { OnboardingSection } from "./components/OnboardingSection";
-import { ServicesSection } from "./components/ServicesSection";
-import { CasesSection } from "./components/CasesSection";
-import { InstaProofSection } from "./components/InstaProofSection";
-import { ComparisonSection } from "./components/ComparisonSection";
-import { FAQSection } from "./components/FAQSection";
+import { LogoStrip } from "./components/LogoStrip";
 import { LeadForm } from "./components/LeadForm";
+import { PositioningSection } from "./components/PositioningSection";
+import { CTAStrip } from "./components/CTAStrip";
+import { ServicesSection } from "./components/ServicesSection";
+import { FunnelSection } from "./components/FunnelSection";
+import { CasesSection } from "./components/CasesSection";
+import { TestimonialsSection } from "./components/TestimonialsSection";
+import { FAQSection } from "./components/FAQSection";
 import { Footer } from "./components/Footer";
 
+// Estrutura de página inspirada em bluefy.com.br: hero, faixa de logos,
+// posicionamento, faixas de chamada entre os blocos, serviços em zigue-zague,
+// resultados em linha do tempo, depoimentos, WhatsApp, FAQ e fechamento.
+// O formulário segue logo depois do hero (pedido do cliente).
 export default function Home() {
   return (
     <>
@@ -21,38 +23,33 @@ export default function Home() {
       <main>
         <HeroSection />
         <PageReveal>
+          <LogoStrip />
           <LeadForm />
-          <PainSection />
-          <SolutionSection />
-          <FunnelSection />
-          <BannerCTA
-            tone="dark"
-            eyebrow="Pronto pra começar?"
-            title={
-              <>
-                Sua loja está pronta para escalar. <br className="hidden md:block" />
-                Falta a <span className="underline decoration-white/40 underline-offset-[6px]">estratégia certa.</span>
-              </>
-            }
+          <PositioningSection />
+          <CTAStrip
+            title="Seu negócio está pronto para escalar. Falta a estratégia certa."
             subtitle="Agende um diagnóstico gratuito e descubra onde está o dinheiro que sua operação está deixando na mesa."
-            ctaText="Quero meu diagnóstico gratuito"
           />
-          <OnboardingSection />
           <ServicesSection />
+          <FunnelSection />
           <CasesSection />
-          <InstaProofSection />
-          <ComparisonSection />
+          <TestimonialsSection />
+          <CTAStrip
+            variant="whatsapp"
+            title="Prefere falar com a gente pelo WhatsApp?"
+            subtitle="Clique no botão abaixo e fale agora com um especialista da Lagos."
+            ctaText="Falar pelo WhatsApp"
+          />
           <FAQSection />
-          <BannerCTA
-            eyebrow="Última chamada"
+          <CTAStrip
+            variant="final"
             title={
               <>
-                Vamos transformar seu marketing em uma{" "}
-                <span className="underline decoration-white/40 underline-offset-[6px]">máquina de lucro.</span>
+                Vamos transformar seu marketing em uma <span className="text-accent">máquina de lucro.</span>
               </>
             }
             subtitle="Sem promessas mágicas. Só método, execução e foco no que importa: vendas."
-            ctaText="Quero uma análise da minha loja"
+            ctaText="Quero uma análise do meu negócio"
           />
         </PageReveal>
       </main>

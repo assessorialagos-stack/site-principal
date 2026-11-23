@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle, Loader2, ShieldCheck, Clock } from "lucide-react";
 import { Eyebrow } from "./ui/Eyebrow";
 import { Backdrop } from "./ui/Backdrop";
 import StarBorder from "./reactbits/StarBorder";
@@ -58,6 +58,22 @@ const requiredFields: (keyof FormData)[] = [
   "cidadeEstado",
   "faturamento",
   "investimento",
+];
+
+// O que acontece depois do envio (coluna ao lado do formulário).
+const steps = [
+  {
+    title: "Você conta como está o seu negócio",
+    text: "Com esses dados, a gente já chega na conversa sabendo do seu cenário.",
+  },
+  {
+    title: "Fala na hora com o nosso time",
+    text: "Ao enviar, o WhatsApp abre com as suas respostas já preenchidas.",
+  },
+  {
+    title: "Recebe o seu diagnóstico",
+    text: "Mostramos onde está o dinheiro que a sua operação está deixando na mesa.",
+  },
 ];
 
 // "Random string" do FormSubmit (recurso "Invisible emails" da documentação).
@@ -192,20 +208,44 @@ export function LeadForm() {
   };
 
   return (
-    <section id="formulario" className="theme-light relative isolate overflow-hidden border-t border-border bg-background py-28 text-foreground md:py-36">
+    <section id="formulario" className="theme-light relative isolate overflow-hidden bg-background py-20 text-foreground md:py-28">
       <Backdrop variant="section" />
 
-      <div className="container relative z-10 mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
-          <div className="mb-5 flex justify-center">
+      <div className="container relative z-10 mx-auto grid max-w-7xl items-start gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:px-8">
+        {/* Texto + passos (fica parado ao lado do formulário no desktop) */}
+        <div className="text-center lg:sticky lg:top-28 lg:text-left">
+          <div className="mb-5 flex justify-center lg:justify-start">
             <Eyebrow>Diagnóstico gratuito</Eyebrow>
           </div>
-          <h2 className="mb-6 font-heading text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-[2.85rem]">
+          <h2 className="mb-5 font-heading text-[2rem] font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-[2.85rem]">
             Vamos entender o seu <span className="text-gradient">cenário</span>
           </h2>
           <p className="text-lg text-muted">
-            Preencha os dados abaixo e, ao enviar, você fala na hora com a nossa equipe no WhatsApp.
+            Preencha o formulário e, ao enviar, você fala na hora com a nossa equipe no WhatsApp.
           </p>
+
+          <ol className="mx-auto mt-10 max-w-md space-y-6 text-left lg:mx-0">
+            {steps.map((s, i) => (
+              <li key={s.title} className="flex gap-4">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-accent-soft font-heading text-sm font-bold text-accent">
+                  {i + 1}
+                </span>
+                <span>
+                  <span className="block font-heading font-semibold text-foreground">{s.title}</span>
+                  <span className="mt-0.5 block text-sm leading-relaxed text-muted">{s.text}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="mt-10 flex flex-col items-center gap-3 text-sm text-muted sm:flex-row sm:justify-center sm:gap-8 lg:justify-start">
+            <span className="inline-flex items-center gap-2">
+              <ShieldCheck size={16} className="text-accent" /> Diagnóstico sem compromisso
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <Clock size={16} className="text-accent" /> Resposta em menos de 5h
+            </span>
+          </div>
         </div>
 
         <motion.div
@@ -213,7 +253,7 @@ export function LeadForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm md:p-12"
+          className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-sm md:p-10"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -252,7 +292,7 @@ export function LeadForm() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label htmlFor="instagram" className={labelCls}>
-                  @ do Instagram da Loja *
+                  @ do Instagram do negócio *
                 </label>
                 <input
                   type="text"
@@ -262,7 +302,7 @@ export function LeadForm() {
                   onChange={handleChange}
                   required
                   className={inputCls}
-                  placeholder="@sualoja"
+                  placeholder="@seunegocio"
                 />
               </div>
               <div className="space-y-2">
@@ -280,9 +320,12 @@ export function LeadForm() {
                   <option value="" disabled>
                     Selecione uma opção
                   </option>
+                  <option value="Comércio / loja física">Comércio / loja física</option>
                   <option value="E-commerce">E-commerce</option>
-                  <option value="Varejo físico">Varejo físico</option>
-                  <option value="Varejo físico + e-commerce">Varejo físico + e-commerce</option>
+                  <option value="Prestação de serviços">Prestação de serviços</option>
+                  <option value="Saúde e estética">Saúde e estética</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Indústria">Indústria</option>
                   <option value="Outro">Outro</option>
                 </select>
               </div>
@@ -360,7 +403,7 @@ export function LeadForm() {
 
             <div className="space-y-2">
               <label htmlFor="site" className="flex items-center gap-2 text-sm font-medium text-foreground">
-                Site / Link da loja
+                Site do negócio
                 <span className="rounded bg-foreground/[0.06] px-2 py-0.5 text-xs font-normal text-muted">
                   Opcional
                 </span>
@@ -373,7 +416,7 @@ export function LeadForm() {
                 value={formData.site}
                 onChange={handleChange}
                 className={inputCls}
-                placeholder="https://www.sualoja.com.br"
+                placeholder="https://www.seunegocio.com.br"
               />
             </div>
 

@@ -54,7 +54,7 @@ export function FAQSection() {
   const toggleOpen = (index: number) => setOpenIndex(openIndex === index ? null : index);
 
   return (
-    <section id="faq" className="theme-light relative overflow-hidden bg-background py-28 text-foreground md:py-36">
+    <section id="faq" className="relative overflow-hidden bg-background py-28 text-foreground md:py-36">
       <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Dúvidas"

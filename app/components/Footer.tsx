@@ -28,26 +28,26 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative isolate border-t border-white/10 bg-dark pb-10 pt-16 text-white md:pt-20">
+    <footer className="relative isolate border-t border-border bg-section pb-10 pt-16 text-foreground md:pt-20">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mb-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-12">
           {/* Marca */}
           <div className="flex flex-col gap-4 lg:col-span-3">
             <Link
               href="/"
-              className="flex items-center gap-1 font-heading text-3xl font-black tracking-widest text-white"
+              className="flex items-center gap-1 font-heading text-3xl font-black tracking-widest text-foreground"
             >
               LAGOS
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+              <span className="h-1.5 w-1.5 rounded-full bg-ink" />
             </Link>
-            <p className="max-w-sm text-white/65">
+            <p className="max-w-sm text-muted">
               A assessoria de marketing para donos de negócio. Tráfego, conteúdo, estratégia e comercial
               operando como um só ecossistema, com foco em lucro.
             </p>
             <div className="mt-2 flex gap-3">
               <a
                 href="#"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-dark-border text-white/70 transition-all hover:border-dark-border-strong hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-border text-muted transition-all hover:border-border-strong hover:text-foreground"
                 aria-label="Instagram"
               >
                 <InstagramIcon size={18} />
@@ -57,13 +57,13 @@ export function Footer() {
 
           {columns.map((col) => (
             <div key={col.title} className={`flex flex-col gap-4 ${col.title === "Serviços" ? "lg:col-span-3" : "lg:col-span-2"}`}>
-              <h3 className="font-heading text-base font-semibold text-white">{col.title}</h3>
+              <h3 className="font-heading text-base font-semibold text-foreground">{col.title}</h3>
               <ul className="flex flex-col gap-3">
                 {col.links.map((l) => (
                   <li key={l.label}>
                     <a
                       href={l.href}
-                      className="group inline-flex items-center gap-1 text-sm text-white/65 transition-colors hover:text-white"
+                      className="group inline-flex items-center gap-1 text-sm text-muted transition-colors hover:text-foreground"
                     >
                       {l.label}
                       <ArrowUpRight
@@ -79,36 +79,36 @@ export function Footer() {
 
           {/* Contato */}
           <div className="flex flex-col gap-4 lg:col-span-4">
-            <h3 className="font-heading text-base font-semibold text-white">Contato</h3>
+            <h3 className="font-heading text-base font-semibold text-foreground">Contato</h3>
             <a
               href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 rounded-2xl border border-dark-border bg-white/[0.03] p-4 transition-colors hover:border-dark-border-strong"
+              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-border-strong"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white">
                 <WhatsAppIcon size={20} />
               </span>
               <span className="leading-tight">
-                <span className="block text-xs text-white/50">WhatsApp</span>
-                <span className="block text-sm font-semibold text-white">Falar com a gente</span>
+                <span className="block text-xs text-muted">WhatsApp</span>
+                <span className="block text-sm font-semibold text-foreground">Falar com a gente</span>
               </span>
             </a>
             <a
               href="mailto:contato@lagosassessoria.com.br"
-              className="flex items-center gap-3 rounded-2xl border border-dark-border bg-white/[0.03] p-4 transition-colors hover:border-dark-border-strong"
+              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-border-strong"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
                 <Mail size={18} />
               </span>
               <span className="min-w-0 leading-tight">
-                <span className="block text-xs text-white/50">E-mail</span>
-                <span className="block truncate text-sm font-semibold text-white">
+                <span className="block text-xs text-muted">E-mail</span>
+                <span className="block truncate text-sm font-semibold text-foreground">
                   contato@lagosassessoria.com.br
                 </span>
               </span>
             </a>
-            <p className="flex items-center gap-2 text-sm text-white/55">
+            <p className="flex items-center gap-2 text-sm text-muted">
               <MapPin size={15} className="shrink-0 text-accent" />
               Atendimento para todo o Brasil
             </p>
@@ -116,7 +116,7 @@ export function Footer() {
         </div>
 
         {/* Barra inferior */}
-        <div className="border-t border-dark-border pt-8 text-center text-sm text-white/40 md:text-left">
+        <div className="border-t border-border pt-8 text-center text-sm text-muted md:text-left">
           <p>&copy; {currentYear} Lagos Assessoria. Todos os direitos reservados.</p>
         </div>
       </div>

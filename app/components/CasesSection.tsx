@@ -48,12 +48,11 @@ const cases = [
  */
 export function CasesSection() {
   return (
-    <section id="cases" className="relative isolate overflow-hidden bg-dark py-20 text-white md:py-28">
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(ellipse_55%_80%_at_50%_0%,rgba(47,107,255,0.14),transparent_65%)]" />
+    <section id="cases" className="relative isolate overflow-hidden bg-section py-20 text-foreground md:py-28">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[36rem] bg-[radial-gradient(ellipse_55%_80%_at_50%_0%,rgba(21,94,239,0.08),transparent_65%)]" />
 
       <div className="container relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          tone="dark"
           eyebrow="Resultados"
           title="Resultados que falam por si"
           subtitle="Operações reais que escalamos com a Lagos. Os números abaixo são de painéis dos próprios clientes."
@@ -62,7 +61,7 @@ export function CasesSection() {
 
         <div className="relative">
           {/* Linha do tempo */}
-          <div className="pointer-events-none absolute bottom-6 left-[11px] top-2 w-px bg-white/15 md:left-1/2" />
+          <div className="pointer-events-none absolute bottom-6 left-[11px] top-2 w-px bg-border-strong md:left-1/2" />
 
           <div className="space-y-16 md:space-y-24">
             {cases.map((c, i) => {
@@ -77,7 +76,7 @@ export function CasesSection() {
                   className="relative grid items-center gap-8 pl-10 md:grid-cols-2 md:gap-20 md:pl-0"
                 >
                   {/* Marcador na linha */}
-                  <span className="absolute left-[11px] top-1.5 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-white bg-accent shadow-[0_0_0_6px_rgba(8,8,10,1)] md:left-1/2 md:top-1/2 md:-translate-y-1/2" />
+                  <span className="absolute left-[11px] top-1.5 h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-white bg-accent shadow-[0_0_0_6px_#F6F7F9] md:left-1/2 md:top-1/2 md:-translate-y-1/2" />
 
                   {/* Texto */}
                   <div className={cn(flip ? "md:order-2" : "md:text-right")}>
@@ -87,19 +86,19 @@ export function CasesSection() {
                     <p className="mt-3 font-heading text-5xl font-bold tracking-tight md:text-6xl">{c.metric}</p>
                     <p
                       className={cn(
-                        "mt-2 inline-flex items-center gap-1.5 text-sm text-white/60",
+                        "mt-2 inline-flex items-center gap-1.5 text-sm text-muted",
                         !flip && "md:flex-row-reverse"
                       )}
                     >
                       <TrendingUp size={15} className="text-accent" />
                       {c.metricLabel}
                     </p>
-                    <p className="mt-5 leading-relaxed text-white/70">{c.description}</p>
+                    <p className="mt-5 leading-relaxed text-muted">{c.description}</p>
                     <div className={cn("mt-5 flex flex-wrap gap-2", !flip && "md:justify-end")}>
                       {c.chips.map((chip) => (
                         <span
                           key={chip}
-                          className="rounded-full border border-white/12 bg-white/[0.05] px-3 py-1 text-xs font-medium text-white/75"
+                          className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted"
                         >
                           {chip}
                         </span>
@@ -109,7 +108,7 @@ export function CasesSection() {
 
                   {/* Print do painel */}
                   <div className={cn(flip && "md:order-1")}>
-                    <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#101015] p-3 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.9)]">
+                    <div className="overflow-hidden rounded-2xl border border-border bg-card p-3 shadow-[0_30px_60px_-30px_rgba(15,23,42,0.3)]">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={c.img}

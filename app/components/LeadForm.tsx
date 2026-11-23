@@ -208,7 +208,7 @@ export function LeadForm() {
   };
 
   return (
-    <section id="formulario" className="theme-light relative isolate overflow-hidden bg-background py-20 text-foreground md:py-28">
+    <section id="formulario" className="relative isolate overflow-hidden bg-background py-20 text-foreground md:py-28">
       <Backdrop variant="section" />
 
       <div className="container relative z-10 mx-auto grid max-w-7xl items-start gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:px-8">
@@ -437,7 +437,7 @@ export function LeadForm() {
                 as="button"
                 type="submit"
                 disabled={isSubmitting}
-                color="#8FB4FF"
+                color="#3B78F2"
                 style={{ padding: "3px" }}
                 className="star-btn w-full rounded-[16px] disabled:opacity-70 md:w-auto"
               >

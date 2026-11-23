@@ -158,7 +158,7 @@ export function ServicesSection() {
   return (
     <section
       id="servicos"
-      className="theme-light relative overflow-hidden border-t border-border bg-background py-20 text-foreground md:py-28"
+      className="relative overflow-hidden border-t border-border bg-background py-20 text-foreground md:py-28"
     >
       <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading

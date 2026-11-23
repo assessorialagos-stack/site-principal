@@ -4,11 +4,11 @@ import { cn } from "@/app/lib/cn";
 import { smoothScrollTo } from "@/app/lib/scroll";
 
 const variants = {
-  // Branco sobre o escuro (e preto no modo claro), como o CTA do header.
+  // Preto sobre o branco, como o CTA do header.
   primary: "bg-ink text-background hover:bg-ink-soft",
   // Verde escuro o bastante para o texto branco ter contraste.
   whatsapp: "bg-[#15803d] text-white hover:bg-[#166534]",
-  outline: "border border-white/20 text-white hover:border-white/40 hover:bg-white/[0.06]",
+  outline: "border border-border-strong bg-card text-foreground hover:bg-section",
 };
 
 /**

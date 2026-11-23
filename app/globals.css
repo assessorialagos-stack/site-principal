@@ -5,48 +5,47 @@
   --font-heading: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  /* ===== Tema 100% ESCURO ===== */
-  --color-background: #08080A;   /* preto neutro (página inteira) */
-  --color-section: #0C0C10;      /* superfície de seção alternada */
-  --color-card: #101015;
-  --color-card-2: #16161C;
-  --color-foreground: #F4F4F5;   /* quase branco (títulos/texto) */
-  --color-muted: #9A9AA3;        /* cinza claro (texto de apoio) */
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
+  /* ===== Tema 100% CLARO ===== */
+  --color-background: #FFFFFF;   /* branco (página inteira) */
+  --color-section: #F6F7F9;      /* superfície de seção alternada */
+  --color-card: #FFFFFF;
+  --color-card-2: #F6F7F9;
+  --color-foreground: #0F0F12;   /* quase preto (títulos/texto) */
+  --color-muted: #5C6069;        /* cinza (texto de apoio) */
+  --color-border: rgba(15, 15, 17, 0.10);
+  --color-border-strong: rgba(15, 15, 17, 0.18);
 
-  /* Ação PRIMÁRIA = branco sobre preto (assinatura cal.com no escuro) */
-  --color-ink: #F4F4F5;
-  --color-ink-soft: #E4E4E7;
-  --color-ink-muted: #A1A1AA;
+  /* Ação PRIMÁRIA = preto sobre branco */
+  --color-ink: #0F0F12;
+  --color-ink-soft: #2A2A30;
+  --color-ink-muted: #5C6069;
 
   /* Acento azul (usado com parcimônia em ícones/realces) */
-  --color-accent: #2F6BFF;
-  --color-accent-2: #2F6BFF;
-  --color-accent-hover: #4F86FF;
-  --color-accent-soft: rgba(47, 107, 255, 0.14);
-  --color-accent-glow: rgba(47, 107, 255, 0.35);
+  --color-accent: #155EEF;
+  --color-accent-2: #155EEF;
+  --color-accent-hover: #0E47BE;
+  --color-accent-soft: rgba(21, 94, 239, 0.09);
+  --color-accent-glow: rgba(21, 94, 239, 0.22);
 
-  /* tokens "light-*" agora apontam para superfícies escuras */
-  --color-light: #16161C;
-  --color-light-2: #101015;
-  --color-light-border: rgba(255, 255, 255, 0.10);
+  --color-light: #F1F2F5;
+  --color-light-2: #FFFFFF;
+  --color-light-border: rgba(15, 15, 17, 0.10);
 
-  /* ===== Blocos escuros (hero, método, prova social, rodapé) ===== */
-  --color-dark: #08080A;
-  --color-dark-2: #131318;
-  --color-dark-border: rgba(255, 255, 255, 0.09);
-  --color-dark-border-strong: rgba(255, 255, 255, 0.18);
+  /* Tons escuros pontuais (ex.: moldura dos prints de painel) */
+  --color-dark: #0F0F12;
+  --color-dark-2: #1A1A1F;
+  --color-dark-border: rgba(15, 15, 17, 0.10);
+  --color-dark-border-strong: rgba(15, 15, 17, 0.18);
 
   /* compat com tokens antigos */
-  --color-neon: #2F6BFF;
-  --color-neon-bright: #4F86FF;
-  --color-neon-glow: rgba(47, 107, 255, 0.35);
-  --color-primary: #2F6BFF;
-  --color-primary-hover: #4F86FF;
-  --color-primary-glow: rgba(47, 107, 255, 0.30);
-  --color-support: #2F6BFF;
-  --color-border-neon: rgba(47, 107, 255, 0.22);
+  --color-neon: #155EEF;
+  --color-neon-bright: #3B78F2;
+  --color-neon-glow: rgba(21, 94, 239, 0.22);
+  --color-primary: #155EEF;
+  --color-primary-hover: #0E47BE;
+  --color-primary-glow: rgba(21, 94, 239, 0.22);
+  --color-support: #155EEF;
+  --color-border-neon: rgba(21, 94, 239, 0.22);
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -80,27 +79,27 @@
   }
 
   ::-webkit-scrollbar { width: 12px; }
-  ::-webkit-scrollbar-track { background: #0A0A0C; }
+  ::-webkit-scrollbar-track { background: #F6F7F9; }
   ::-webkit-scrollbar-thumb {
-    background: #2A2A31;
+    background: #C9CCD3;
     border-radius: 999px;
-    border: 3px solid #0A0A0C;
+    border: 3px solid #F6F7F9;
   }
-  ::-webkit-scrollbar-thumb:hover { background: #3A3A44; }
+  ::-webkit-scrollbar-thumb:hover { background: #A9ADB6; }
 }
 
 @layer utilities {
-  /* Glass escuro (header) */
+  /* Glass claro */
   .glass,
   .glass-neon,
   .glass-dark {
-    background: rgba(8, 8, 10, 0.72);
+    background: rgba(255, 255, 255, 0.78);
     backdrop-filter: blur(14px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(15, 15, 17, 0.08);
   }
   .glass-dark {
     border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(15, 15, 17, 0.08);
   }
 
   /* Realce de palavra — azul discreto */
@@ -114,13 +113,13 @@
   .neon-border {
     border: 1px solid var(--color-border);
   }
-  /* Card: hairline + leve glow no hover (escuro) */
+  /* Card: hairline + leve sombra no hover */
   .card-glow {
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .card-glow:hover {
     border-color: var(--color-border-strong);
-    box-shadow: 0 18px 50px -28px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 18px 50px -28px rgba(15, 23, 42, 0.35);
   }
 
   .glow-divider {
@@ -195,22 +194,22 @@
     z-index: 0;
   }
 
-  /* Grade/pontilhado claros sobre fundo escuro */
+  /* Grade/pontilhado em grafite translúcido sobre o branco */
   .bg-grid,
   .bg-grid-ink,
   .bg-grid-white {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, rgba(15, 15, 17, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15, 15, 17, 0.05) 1px, transparent 1px);
     background-size: 56px 56px;
   }
   .bg-dots,
   .bg-dots-white {
-    background-image: radial-gradient(rgba(255, 255, 255, 0.10) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(15, 15, 17, 0.10) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 
-  /* Granulado fotográfico (textura sutil sobre o preto) */
+  /* Granulado fotográfico (textura bem sutil) */
   .grain::after,
   .grain-soft::after {
     content: "";
@@ -220,10 +219,10 @@
     pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
-    opacity: 0.05;
+    opacity: 0.022;
   }
   .grain-soft::after {
-    opacity: 0.03;
+    opacity: 0.015;
   }
 
   .mask-radial {
@@ -235,11 +234,11 @@
     mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 45%, transparent 100%);
   }
 
-  /* Moldura de "janela de navegador" — agora escura (screenshot dark) */
+  /* Moldura de "janela de navegador" */
   .browser-frame {
     border: 1px solid var(--color-border);
     border-radius: 16px;
-    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55), 0 12px 24px -16px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 30px 60px -30px rgba(15, 23, 42, 0.28), 0 12px 24px -16px rgba(15, 23, 42, 0.16);
     background: var(--color-card);
     overflow: hidden;
   }
@@ -282,50 +281,6 @@
    marcas ficar parado no celular. Ele agora é criado com a Web Animations API
    (ver LogoLoop.tsx), que não é afetada por esta regra — se algum dia voltar a
    ser @keyframes, vai precisar de uma exceção aqui. */
-
-/* ===== MODO CLARO (toggle "ligar a luz") =====
-   O site é nativamente 100% escuro. Quando o usuário liga a luz (html.light),
-   as seções de conteúdo marcadas com .theme-light passam a usar tokens claros
-   (as seções de efeito — hero, funil, CTAs, prova social, rodapé — seguem
-   escuras nos dois modos). Transição suave entre os modos. */
-html.light .theme-light {
-  --color-background: #FFFFFF;
-  --color-section: #F6F7F9;
-  --color-card: #FFFFFF;
-  --color-card-2: #F6F7F9;
-  --color-foreground: #0F0F12;
-  --color-muted: #5C6069;
-  --color-border: rgba(15, 15, 17, 0.10);
-  --color-border-strong: rgba(15, 15, 17, 0.18);
-  --color-ink: #0F0F12;
-  --color-ink-soft: #2A2A30;
-  --color-light: #F1F2F5;
-  --color-light-2: #FFFFFF;
-  --color-light-border: rgba(15, 15, 17, 0.10);
-  --color-accent: #155EEF;
-  --color-accent-hover: #0E47BE;
-  --color-accent-soft: rgba(21, 94, 239, 0.09);
-  --color-accent-glow: rgba(21, 94, 239, 0.22);
-  --color-dark-border: rgba(15, 15, 17, 0.10);
-  --color-dark-border-strong: rgba(15, 15, 17, 0.18);
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-}
-html.light .theme-light .bg-dots,
-html.light .theme-light .bg-dots-white {
-  background-image: radial-gradient(rgba(15, 15, 17, 0.10) 1px, transparent 1px);
-}
-html.light .theme-light .bg-grid,
-html.light .theme-light .bg-grid-ink,
-html.light .theme-light .bg-grid-white {
-  background-image:
-    linear-gradient(to right, rgba(15, 15, 17, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 15, 17, 0.05) 1px, transparent 1px);
-}
-html.light .theme-light .grain::after,
-html.light .theme-light .grain-soft::after {
-  opacity: 0.022;
-}
 
 /* Lenis (smooth scroll) */
 html.lenis,

@@ -36,13 +36,6 @@ export default function RootLayout({
       className={`${inter.variable} ${interTight.variable} ${jetbrains.variable} h-full antialiased`}
     >
       <head>
-        {/* Aplica o tema salvo antes da primeira pintura (sem flash). Padrão: escuro. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html:
-              "try{var t=localStorage.getItem('lagos-theme');if(t==='light'){document.documentElement.classList.add('light');}}catch(e){}",
-          }}
-        />
         {/* Meta Pixel Code */}
         <script
           dangerouslySetInnerHTML={{

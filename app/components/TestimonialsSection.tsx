@@ -33,22 +33,22 @@ const highlights = ["ROAS 14,2x em 30 dias", "R$ 35 mil em 1 semana", "R$ 0,97 p
  */
 export function TestimonialsSection() {
   return (
-    <section id="depoimentos" className="relative isolate overflow-hidden bg-dark py-20 text-white md:py-28">
+    <section id="depoimentos" className="relative isolate overflow-hidden bg-background py-20 text-foreground md:py-28">
       <div className="container relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
           <div className="lg:sticky lg:top-28">
-            <Eyebrow tone="dark">Prova social</Eyebrow>
+            <Eyebrow>Prova social</Eyebrow>
             <h2 className="mt-5 font-heading text-[2rem] font-bold leading-[1.1] tracking-tight sm:text-4xl md:text-[2.85rem]">
               O que nossos clientes dizem
             </h2>
-            <p className="mt-5 text-lg leading-relaxed text-white/70">
+            <p className="mt-5 text-lg leading-relaxed text-muted">
               Resultados, bastidores e a comunidade de empresários que crescem com a gente.
             </p>
             <ul className="mt-8 flex flex-wrap gap-2">
               {highlights.map((h) => (
                 <li
                   key={h}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.05] px-4 py-2 text-sm font-semibold text-white/85"
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-section px-4 py-2 text-sm font-semibold text-foreground"
                 >
                   <Star size={13} className="fill-accent text-accent" />
                   {h}
@@ -63,7 +63,7 @@ export function TestimonialsSection() {
           <div>
             <div className="mb-5 flex items-center gap-2">
               <Video size={17} className="text-accent" />
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted">
                 Depoimentos em vídeo
               </span>
             </div>
@@ -93,7 +93,7 @@ export function TestimonialsSection() {
         {/* Prints reais de conversas */}
         <div className="mb-8 mt-20 flex items-center justify-center gap-2">
           <MessageCircle size={17} className="text-accent" />
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-white/50">Conversas reais</span>
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted">Conversas reais</span>
         </div>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
           {depoimentos.map((src, index) => (

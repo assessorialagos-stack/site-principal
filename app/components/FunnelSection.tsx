@@ -82,25 +82,25 @@ function ExplainCard({ stage, index }: { stage: (typeof explain)[number]; index:
       transition={{ duration: 0.5, delay: index * 0.08 }}
       className={
         "flex flex-col rounded-2xl border p-5 backdrop-blur-sm md:p-6 " +
-        (loop ? "border-white/25 bg-white/[0.06]" : "border-white/10 bg-white/[0.03]")
+        (loop ? "border-foreground/25 bg-card shadow-sm" : "border-border bg-card")
       }
     >
       <div className="mb-3 flex items-center gap-3">
         <span
           className={
             "flex h-11 w-11 shrink-0 items-center justify-center rounded-xl font-heading text-lg font-black " +
-            (loop ? "border-2 border-white/70 bg-white/10 text-white" : "bg-accent text-white")
+            (loop ? "border-2 border-foreground bg-card text-foreground" : "bg-accent text-white")
           }
         >
           {stage.num}
         </span>
         <div className="min-w-0">
-          <h4 className="font-heading text-lg font-bold leading-tight tracking-tight text-white">{stage.name}</h4>
+          <h4 className="font-heading text-lg font-bold leading-tight tracking-tight text-foreground">{stage.name}</h4>
           <span className="font-mono text-[0.62rem] uppercase tracking-[0.14em] text-accent">{stage.process}</span>
         </div>
       </div>
-      <p className="text-[0.92rem] leading-relaxed text-white/65">{stage.does}</p>
-      <p className="mt-4 border-t border-dashed border-white/10 pt-3 text-[0.88rem] leading-snug text-white/80">
+      <p className="text-[0.92rem] leading-relaxed text-muted">{stage.does}</p>
+      <p className="mt-4 border-t border-dashed border-border pt-3 text-[0.88rem] leading-snug text-foreground/85">
         <span className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-accent">Cliente → </span>
         {stage.consumer}
       </p>
@@ -110,19 +110,19 @@ function ExplainCard({ stage, index }: { stage: (typeof explain)[number]; index:
 
 export function FunnelSection() {
   return (
-    <section id="metodo" className="relative overflow-hidden bg-dark text-white">
+    <section id="metodo" className="relative overflow-hidden bg-background text-foreground">
       {/* Fundo */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] bg-[radial-gradient(ellipse_55%_80%_at_50%_4%,rgba(47,107,255,0.16),transparent_62%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-grid-white mask-radial opacity-15" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[42rem] bg-[radial-gradient(ellipse_55%_80%_at_50%_4%,rgba(21,94,239,0.08),transparent_62%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-grid mask-radial opacity-60" />
 
       <div className="relative z-10 px-4 pt-24 pb-6 text-center sm:px-6 sm:pt-28">
         <div className="flex justify-center">
-          <Eyebrow tone="dark">Como fazemos o seu negócio vender</Eyebrow>
+          <Eyebrow>Como fazemos o seu negócio vender</Eyebrow>
         </div>
-        <h2 className="mt-3 font-heading text-[1.85rem] font-bold tracking-tight text-white sm:mt-4 sm:text-4xl md:text-5xl">
+        <h2 className="mt-3 font-heading text-[1.85rem] font-bold tracking-tight text-foreground sm:mt-4 sm:text-4xl md:text-5xl">
           O Funil da <span className="text-accent">Lagos</span>
         </h2>
-        <p className="mx-auto mt-3 max-w-md text-[0.85rem] leading-snug text-white/55 sm:max-w-2xl sm:text-base">
+        <p className="mx-auto mt-3 max-w-md text-[0.85rem] leading-snug text-muted sm:max-w-2xl sm:text-base">
           O caminho que leva o seu cliente de “nunca ouvi falar” até “comprei de novo”.
         </p>
 
@@ -169,9 +169,9 @@ export function FunnelSection() {
               </div>
 
               {/* Recompra — o loop */}
-              <Piece className="relative z-10 mx-auto mt-1 w-[88%] rounded-2xl border-2 border-white/80 bg-white/[0.08] px-4 py-3 text-center shadow-[0_0_46px_-12px_rgba(255,255,255,0.5),inset_0_1px_0_rgba(255,255,255,0.25)] sm:mt-1.5 sm:w-[86%] sm:px-5 sm:py-4">
-                <p className="font-heading text-sm font-black tracking-wide text-white sm:text-base">4 · RECOMPRA</p>
-                <p className="mt-0.5 font-mono text-[0.5rem] uppercase tracking-[0.1em] text-white/75 sm:text-[0.58rem] sm:tracking-[0.12em]">
+              <Piece className="relative z-10 mx-auto mt-1 w-[88%] rounded-2xl border-2 border-ink bg-card px-4 py-3 text-center shadow-[0_14px_30px_-16px_rgba(15,23,42,0.35)] sm:mt-1.5 sm:w-[86%] sm:px-5 sm:py-4">
+                <p className="font-heading text-sm font-black tracking-wide text-foreground sm:text-base">4 · RECOMPRA</p>
+                <p className="mt-0.5 font-mono text-[0.5rem] uppercase tracking-[0.1em] text-muted sm:text-[0.58rem] sm:tracking-[0.12em]">
                   Pós-venda · Recorrência · Expansão
                 </p>
               </Piece>
@@ -193,18 +193,18 @@ export function FunnelSection() {
                 strokeLinecap="round"
                 strokeDasharray="3 5"
               />
-              <path d="M8 20 l 9 -5 m -9 5 l 9 5" stroke="#9FC0FF" strokeWidth="2" strokeLinecap="round" />
+              <path d="M8 20 l 9 -5 m -9 5 l 9 5" stroke="#155EEF" strokeWidth="2" strokeLinecap="round" />
               <defs>
                 <linearGradient id="loopGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#9FC0FF" />
-                  <stop offset="100%" stopColor="#3B6BFF" />
+                  <stop offset="0%" stopColor="#7AA2F7" />
+                  <stop offset="100%" stopColor="#155EEF" />
                 </linearGradient>
               </defs>
             </motion.svg>
             <motion.span
               variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="absolute -right-1 top-[46%] flex h-7 w-7 items-center justify-center rounded-full border border-accent/50 bg-[#0c1a40] text-[#9FC0FF] shadow-[0_0_18px_-4px_rgba(59,107,255,0.8)]"
+              className="absolute -right-1 top-[46%] flex h-7 w-7 items-center justify-center rounded-full border border-accent/40 bg-card text-accent shadow-sm"
             >
               <RefreshCw size={13} />
             </motion.span>
@@ -216,7 +216,7 @@ export function FunnelSection() {
       <div id="funil-etapas" className="relative z-10 px-4 pb-4 pt-10 sm:px-6 lg:px-8">
         <div className="mx-auto mb-8 max-w-2xl text-center">
           <div className="flex justify-center">
-            <Eyebrow tone="dark">As 4 etapas, na prática</Eyebrow>
+            <Eyebrow>As 4 etapas, na prática</Eyebrow>
           </div>
         </div>
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
@@ -235,8 +235,8 @@ export function FunnelSection() {
           transition={{ duration: 0.5 }}
           className="mx-auto max-w-4xl rounded-2xl border border-accent/25 bg-accent/[0.06] p-7 text-center backdrop-blur-sm md:p-9"
         >
-          <Eyebrow tone="dark">Em uma frase</Eyebrow>
-          <p className="mx-auto mt-4 max-w-3xl font-heading text-xl font-bold leading-snug text-white md:text-2xl">
+          <Eyebrow>Em uma frase</Eyebrow>
+          <p className="mx-auto mt-4 max-w-3xl font-heading text-xl font-bold leading-snug text-foreground md:text-2xl">
             A maioria das agências te traz cliente novo e para por aí. A Lagos constrói a oferta, atrai a
             pessoa certa, conduz a venda e faz ela voltar. O funil inteiro, da primeira impressão à
             recompra.

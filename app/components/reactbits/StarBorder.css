@@ -7,8 +7,8 @@
 
 /* Botão CTA com a borda animada bem visível (anel ao redor do botão branco) */
 .star-btn {
-  background: rgba(143, 180, 255, 0.16);
-  box-shadow: 0 0 22px -4px rgba(143, 180, 255, 0.55);
+  background: rgba(21, 94, 239, 0.12);
+  box-shadow: 0 0 22px -6px rgba(21, 94, 239, 0.45);
 }
 .star-btn .border-gradient-top,
 .star-btn .border-gradient-bottom {

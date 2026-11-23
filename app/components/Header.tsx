@@ -8,7 +8,6 @@ import { motion, useScroll } from "framer-motion";
 import { cn } from "@/app/lib/cn";
 import { smoothScrollTo } from "@/app/lib/scroll";
 import { whatsappLink } from "@/app/lib/contact";
-import { ThemeToggle } from "./ui/ThemeToggle";
 
 type StaggeredMenuProps = {
   items: { label: string; ariaLabel?: string; link: string }[];
@@ -41,13 +40,13 @@ function LagosLogo({ className = "" }: { className?: string }) {
     <Link href="/" className={cn("flex items-center gap-2", className)} aria-label="Lagos Assessoria">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/logo-lagos.png"
+        src="/logo-lagos-light.png"
         alt="Lagos Assessoria"
         width={28}
         height={28}
-        className="h-7 w-7 rounded-lg object-contain [mix-blend-mode:screen]"
+        className="h-7 w-7 object-contain"
       />
-      <span className="font-heading text-base font-black tracking-widest text-white">LAGOS</span>
+      <span className="font-heading text-base font-black tracking-widest text-foreground">LAGOS</span>
     </Link>
   );
 }
@@ -82,7 +81,7 @@ export function Header() {
       />
 
       {/* Desktop: barra slim única (estilo React Bits) */}
-      <div className="mx-auto hidden max-w-5xl items-center justify-between gap-4 rounded-full border border-white/10 bg-[#0c0c12]/80 px-4 py-2 backdrop-blur-xl md:flex [box-shadow:inset_0_1px_0_rgba(255,255,255,0.08),0_10px_30px_-14px_rgba(0,0,0,0.7)]">
+      <div className="mx-auto hidden max-w-5xl items-center justify-between gap-4 rounded-full border border-border bg-white/85 px-4 py-2 backdrop-blur-xl md:flex shadow-[0_10px_30px_-14px_rgba(15,23,42,0.25)]">
         <LagosLogo />
 
         <nav className="flex items-center gap-7">
@@ -91,7 +90,7 @@ export function Header() {
               key={link.name}
               href={link.href}
               onClick={(e) => scrollToSection(e, link.href)}
-              className="text-sm font-medium text-white/65 transition-colors hover:text-white"
+              className="text-sm font-medium text-muted transition-colors hover:text-foreground"
             >
               {link.name}
             </a>
@@ -99,11 +98,10 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2.5">
-          <ThemeToggle className="h-10 w-10" />
           <a
             href="#formulario"
             onClick={scrollToForm}
-            className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-sm font-semibold text-background transition-colors hover:bg-white/90"
+            className="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-ink-soft"
           >
             Quero uma análise
             <ArrowRight size={15} />
@@ -111,27 +109,26 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile: logo + toggle de tema à esquerda (o botão do menu fica à direita,
+      {/* Mobile: logo à esquerda (o botão do menu fica à direita,
           renderizado pelo Staggered Menu — evita sobreposição) */}
       <div
         className={cn(
           "mx-3 flex items-center gap-3 rounded-full px-4 py-2 transition-colors md:hidden",
           // Fundo sólido (sem backdrop-blur) no mobile: alternar blur a cada pixel
           // de scroll forçava recomposição de camada e fazia o header piscar.
-          isScrolled ? "border border-white/10 bg-[#0c0c12]/95" : "bg-transparent"
+          isScrolled ? "border border-border bg-white/95 shadow-sm" : "bg-transparent"
         )}
       >
         <LagosLogo />
-        <ThemeToggle className="h-10 w-10" />
       </div>
 
       <div className="md:hidden">
         <StaggeredMenu
           position="right"
-          colors={["#0e1f4d", "#2F6BFF"]}
-          accentColor="#2F6BFF"
-          menuButtonColor="#ffffff"
-          openMenuButtonColor="#ffffff"
+          colors={["#DCE6FD", "#155EEF"]}
+          accentColor="#155EEF"
+          menuButtonColor="#0F0F12"
+          openMenuButtonColor="#0F0F12"
           displayItemNumbering
           isFixed
           items={[

@@ -5,13 +5,14 @@ import LogoLoop from "../reactbits/LogoLoop";
 import { cn } from "@/app/lib/cn";
 
 // Logos reais dos clientes (versões recortadas/normalizadas em public/logos/trim,
-// geradas por scripts/trim-logos.mjs — sem padding, todas no mesmo tamanho visual).
+// geradas por scripts/trim-logos.mjs). Os que tinham partes brancas usam a versão
+// para fundo claro de public/logos/light (scripts/logos-on-light.mjs).
 const logos = [
   { src: "/logos/trim/sique.png", alt: "Sique Móveis" },
-  { src: "/logos/trim/praca-moca.png", alt: "Praça da Moça Café" },
+  { src: "/logos/light/praca-moca.png", alt: "Praça da Moça Café" },
   { src: "/logos/trim/roney-films.png", alt: "Roney Films" },
-  { src: "/logos/trim/crew-academy.png", alt: "Seaman Náutica · Crew Academy" },
-  { src: "/logos/trim/logo3.png", alt: "Elite Portas e Janelas" },
+  { src: "/logos/light/crew-academy.png", alt: "Seaman Náutica · Crew Academy" },
+  { src: "/logos/light/logo3.png", alt: "Elite Portas e Janelas" },
   { src: "/logos/trim/logo-final.png", alt: "VidaJá Saúde" },
 ];
 
@@ -26,7 +27,7 @@ function LogoTile({ src, alt, size }: { src: string; alt: string; size: Size }) 
   return (
     <span
       className={cn(
-        "flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] px-4",
+        "flex items-center justify-center rounded-2xl border border-border bg-card px-4",
         tileSize[size].tile
       )}
     >
@@ -75,7 +76,7 @@ export function ClientLogos({
         direction="left"
         gap={size === "sm" ? 20 : 28}
         fadeOut
-        fadeOutColor="#08080A"
+        fadeOutColor="#FFFFFF"
         pauseOnHover
         ariaLabel="Logos de clientes da Lagos (fileira 1)"
       />
@@ -86,7 +87,7 @@ export function ClientLogos({
           direction="right"
           gap={28}
           fadeOut
-          fadeOutColor="#08080A"
+          fadeOutColor="#FFFFFF"
           pauseOnHover
           ariaLabel="Logos de clientes da Lagos (fileira 2)"
         />

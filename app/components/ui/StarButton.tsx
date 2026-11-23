@@ -20,7 +20,7 @@ export function StarButton({
   return (
     <StarBorder
       as="a"
-      color="#8FB4FF"
+      color="#3B78F2"
       speed="4s"
       className={cn("star-btn rounded-[16px]", className)}
       style={{ padding: "3px", ...style }}

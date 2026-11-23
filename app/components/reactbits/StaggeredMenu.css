@@ -86,7 +86,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #fff;
+  color: #0F0F12;
   font-weight: 600;
   line-height: 1;
   overflow: visible;
@@ -159,7 +159,7 @@
   height: 100%;
   /* Fundo opaco: o backdrop-filter aqui era invisível (nada por trás aparecia)
      e só custava recomposição durante a animação de abertura no celular. */
-  background: #0b0b0f;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   padding: 6em 2em 2em 2em;
@@ -203,7 +203,7 @@
 .sm-panel-item {
   position: relative;
   display: inline-block;
-  color: #fff;
+  color: #0F0F12;
   font-weight: 700;
   font-size: clamp(1.6rem, 5vw, 2.4rem);
   line-height: 1.1;
@@ -269,7 +269,7 @@
 
 .sm-socials-link {
   position: relative;
-  color: #fff;
+  color: #0F0F12;
   font-size: 1.1rem;
   font-weight: 500;
   text-decoration: none;

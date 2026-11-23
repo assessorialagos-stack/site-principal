@@ -41,7 +41,7 @@ const pains = [
 
 function ComparisonCard() {
   return (
-    <div className="mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-border bg-card shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55)]">
+    <div className="mx-auto w-full max-w-xl overflow-hidden rounded-3xl border border-border bg-card shadow-[0_30px_60px_-30px_rgba(15,23,42,0.25)]">
       <div className="border-b border-border p-6 md:p-7">
         <h3 className="mb-5 font-heading text-base font-bold text-muted">Agência genérica</h3>
         <ul className="space-y-3.5">
@@ -78,7 +78,7 @@ export function PositioningSection() {
   return (
     <section
       id="sobre"
-      className="theme-light relative overflow-hidden border-t border-border bg-section py-20 text-foreground md:py-28"
+      className="relative overflow-hidden border-t border-border bg-section py-20 text-foreground md:py-28"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FeatureRow

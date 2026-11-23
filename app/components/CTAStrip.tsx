@@ -28,7 +28,7 @@ export function CTAStrip({
 }) {
   if (variant === "whatsapp") {
     return (
-      <section className="theme-light border-y border-border bg-section py-14 text-foreground md:py-16">
+      <section className="border-y border-border bg-section py-14 text-foreground md:py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -58,7 +58,7 @@ export function CTAStrip({
 
   if (variant === "final") {
     return (
-      <section className="theme-light bg-background py-20 text-foreground md:py-24">
+      <section className="bg-background py-20 text-foreground md:py-24">
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -101,7 +101,7 @@ export function CTAStrip({
   }
 
   return (
-    <section className="theme-light border-y border-border bg-section py-12 text-foreground md:py-14">
+    <section className="border-y border-border bg-section py-12 text-foreground md:py-14">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}

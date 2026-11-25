@@ -329,12 +329,13 @@ export function LeadForm() {
                   <option value="" disabled>
                     Selecione uma opção
                   </option>
-                  <option value="Projeto novo">Projeto novo (ainda não fatura)</option>
-                  <option value="A partir de R$ 50 mil">A partir de R$ 50 mil</option>
-                  <option value="A partir de R$ 80 mil">A partir de R$ 80 mil</option>
-                  <option value="A partir de R$ 100 mil">A partir de R$ 100 mil</option>
-                  <option value="A partir de R$ 150 mil">A partir de R$ 150 mil</option>
-                  <option value="A partir de R$ 200 mil">A partir de R$ 200 mil</option>
+                  <option value="Projeto novo">Projeto novo</option>
+                  <option value="De R$ 15 mil a R$ 30 mil">De R$ 15 mil a R$ 30 mil</option>
+                  <option value="De R$ 30 mil a R$ 60 mil">De R$ 30 mil a R$ 60 mil</option>
+                  <option value="De R$ 60 mil a R$ 90 mil">De R$ 60 mil a R$ 90 mil</option>
+                  <option value="De R$ 90 mil a R$ 150 mil">De R$ 90 mil a R$ 150 mil</option>
+                  <option value="De R$ 150 mil a R$ 220 mil">De R$ 150 mil a R$ 220 mil</option>
+                  <option value="Faturo acima de R$ 220 mil">Faturo acima de R$ 220 mil</option>
                 </select>
               </div>
             </div>

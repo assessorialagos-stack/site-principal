@@ -11,7 +11,6 @@ import { newEventId, trackPixel } from "@/app/lib/metaPixel";
 
 type FormData = {
   nome: string;
-  whatsapp: string;
   instagram: string;
   segmento: string;
   cidadeEstado: string;
@@ -29,7 +28,6 @@ type FormData = {
 
 const initialFormData: FormData = {
   nome: "",
-  whatsapp: "",
   instagram: "",
   segmento: "",
   cidadeEstado: "",
@@ -52,7 +50,6 @@ const labelCls = "block text-sm font-medium text-foreground";
 // Campos obrigatórios (o site é opcional).
 const requiredFields: (keyof FormData)[] = [
   "nome",
-  "whatsapp",
   "instagram",
   "segmento",
   "cidadeEstado",
@@ -108,16 +105,6 @@ export function LeadForm() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    // Máscara do WhatsApp
-    if (name === "whatsapp") {
-      let v = value.replace(/\D/g, "");
-      if (v.length > 11) v = v.slice(0, 11);
-      v = v.replace(/^(\d{2})(\d)/g, "($1) $2");
-      v = v.replace(/(\d)(\d{4})$/, "$1-$2");
-      setFormData({ ...formData, [name]: v });
-      return;
-    }
-
     setFormData({ ...formData, [name]: value });
   };
 
@@ -128,7 +115,6 @@ export function LeadForm() {
       "Acabei de preencher o formulário de diagnóstico no site da Lagos.",
       "",
       `*Nome:* ${d.nome}`,
-      `*WhatsApp:* ${d.whatsapp}`,
       `*Instagram:* ${d.instagram}`,
       `*Segmento:* ${d.segmento}`,
       `*Cidade/Estado:* ${d.cidadeEstado}`,
@@ -188,7 +174,6 @@ export function LeadForm() {
             _captcha: "false",
             _url: tracking.pagina_url || "",
             Nome: formData.nome,
-            WhatsApp: formData.whatsapp,
             Instagram: formData.instagram,
             Segmento: formData.segmento,
             "Cidade/Estado": formData.cidadeEstado,
@@ -273,24 +258,6 @@ export function LeadForm() {
                 />
               </div>
               <div className="space-y-2">
-                <label htmlFor="whatsapp" className={labelCls}>
-                  WhatsApp *
-                </label>
-                <input
-                  type="tel"
-                  id="whatsapp"
-                  name="whatsapp"
-                  value={formData.whatsapp}
-                  onChange={handleChange}
-                  required
-                  className={inputCls}
-                  placeholder="(00) 00000-0000"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              <div className="space-y-2">
                 <label htmlFor="instagram" className={labelCls}>
                   @ do Instagram do negócio *
                 </label>
@@ -305,6 +272,9 @@ export function LeadForm() {
                   placeholder="@seunegocio"
                 />
               </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label htmlFor="segmento" className={labelCls}>
                   Segmento de Atuação *
@@ -329,9 +299,6 @@ export function LeadForm() {
                   <option value="Outro">Outro</option>
                 </select>
               </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label htmlFor="cidadeEstado" className={labelCls}>
                   Cidade e Estado *
@@ -347,7 +314,7 @@ export function LeadForm() {
                   placeholder="Ex: São Paulo - SP"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-2 md:col-span-2">
                 <label htmlFor="faturamento" className={labelCls}>
                   Faturamento Mensal Atual *
                 </label>
@@ -374,8 +341,7 @@ export function LeadForm() {
 
             <div className="space-y-3">
               <label className={labelCls}>
-                Você tem disponibilidade de investir a partir de R$ 1.500/mês em anúncios (fora a mão
-                de obra)? *
+                Você tem disponibilidade de investir a partir de R$ 1.500/mês? *
               </label>
               <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                 {["Sim", "Não", "Quero entender melhor"].map((option) => (

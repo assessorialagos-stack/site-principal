@@ -1,40 +1,40 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import dynamic from "next/dynamic";
-import { ArrowRight, MessageSquare, Check, Megaphone, Search, MessageCircle } from "lucide-react";
+import { ArrowRight, MessageSquare, Check, Megaphone, Search, MessageCircle, Gift } from "lucide-react";
 import BlurText from "./reactbits/BlurText";
 import { StarButton } from "./ui/StarButton";
 import { ActionButton } from "./ui/ActionButton";
 import { Eyebrow } from "./ui/Eyebrow";
+import { Snowfall } from "./ui/Snowfall";
 import { smoothScrollTo } from "@/app/lib/scroll";
 import { whatsappLink } from "@/app/lib/contact";
-
-const HeroDashboard = dynamic(() => import("./ui/HeroDashboard"), { ssr: false });
+import { PROMO_NATAL } from "@/app/lib/promo";
 
 const proof = ["+120 negócios escalados", "Atendimento para todo o Brasil", "Painel de resultados ao vivo"];
 
-// Selos que flutuam sobre os painéis (formato dos badges da referência).
+// Selos que flutuam em volta da foto (formato dos badges da referência).
 const badges = [
   {
     icon: Megaphone,
     title: "Meta Ads",
     text: "Campanhas no ar",
-    className: "left-0 top-[6%] lg:-left-6",
+    className: "-left-4 top-[12%] lg:-left-14",
     delay: 1.1,
   },
   {
     icon: Search,
     title: "Google Ads",
     text: "Visibilidade na busca",
-    className: "right-0 top-[38%] lg:-right-2",
+    className: "-right-4 top-[46%] xl:-right-12",
     delay: 1.3,
   },
   {
     icon: MessageCircle,
     title: "Novo lead",
     text: "Chegou no WhatsApp",
-    className: "bottom-[4%] left-[6%]",
+    className: "-left-4 bottom-[10%] lg:-left-10",
     delay: 1.5,
   },
 ];
@@ -53,20 +53,36 @@ export function HeroSection() {
 
   return (
     <section className="relative isolate overflow-hidden bg-background">
-      {/* Fundo calmo: luz azul atrás dos painéis + grade fina (sem WebGL) */}
+      {/* Fundo calmo: luz azul atrás da foto + grade fina (sem WebGL) */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(55%_60%_at_78%_48%,rgba(21,94,239,0.10),transparent_70%)]" />
       <div className="pointer-events-none absolute inset-0 bg-grid mask-radial opacity-70" />
+      {PROMO_NATAL.ativa && <Snowfall />}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-background" />
 
-      <div className="container relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 pb-16 pt-32 sm:px-6 md:pt-40 lg:grid-cols-[1.05fr_1fr] lg:gap-8 lg:px-8 lg:pb-24">
-        {/* Texto */}
-        <div className="text-center lg:text-left">
+      <div className="container relative z-10 mx-auto grid max-w-7xl items-center gap-12 px-4 pb-16 pt-32 sm:px-6 md:pt-40 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:px-8 lg:pb-24">
+        {/* Texto (min-w-0: o selo da promo encurta com "…" em vez de alargar a coluna) */}
+        <div className="min-w-0 text-center lg:text-left">
           <h1 className="sr-only">Marketing que vira lucro de verdade.</h1>
 
           <div className="flex justify-center lg:justify-start">
-            <Eyebrow icon={<span className="h-1.5 w-1.5 rounded-full bg-accent" />}>
-              Assessoria de marketing para donos de negócio
-            </Eyebrow>
+            {PROMO_NATAL.ativa ? (
+              <a
+                href="#formulario"
+                onClick={scrollToForm}
+                className="group inline-flex max-w-full items-center gap-2 rounded-full border border-[#B91C1C]/20 bg-[#B91C1C]/[0.06] py-1 pl-1 pr-3.5 text-xs font-medium text-[#991B1B] transition-colors hover:bg-[#B91C1C]/10 sm:text-sm"
+              >
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#B91C1C] px-2.5 py-1 font-semibold text-white">
+                  <Gift size={13} />
+                  {PROMO_NATAL.selo}
+                </span>
+                <span className="min-w-0 truncate">{PROMO_NATAL.chamada}</span>
+                <ArrowRight size={14} className="shrink-0 transition-transform group-hover:translate-x-0.5" />
+              </a>
+            ) : (
+              <Eyebrow icon={<span className="h-1.5 w-1.5 rounded-full bg-accent" />}>
+                Assessoria de marketing para donos de negócio
+              </Eyebrow>
+            )}
           </div>
 
           <BlurText
@@ -125,18 +141,38 @@ export function HeroSection() {
           </motion.ul>
         </div>
 
-        {/* Painéis reais + selos flutuantes */}
+        {/* Foto + selos flutuantes */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.5 }}
-          className="relative h-[330px] w-full sm:h-[420px] lg:h-[480px]"
+          transition={{ duration: 0.7, delay: 0.4 }}
+          className="relative mx-auto w-full max-w-[360px] sm:max-w-[420px] lg:max-w-[440px]"
         >
-          {/* As cartas do CardSwap empilham para cima e para a direita; o recuo
-              evita que encostem no menu e na borda da tela. */}
-          <div className="absolute inset-0 translate-y-4 lg:-translate-x-10 lg:translate-y-10">
-            <HeroDashboard />
+          <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-[radial-gradient(closest-side,rgba(21,94,239,0.16),transparent)]" />
+          <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border border-border bg-section shadow-[0_40px_80px_-40px_rgba(15,23,42,0.45)]">
+            <Image
+              src="/hero-foto.jpg"
+              alt="Especialista da Lagos trabalhando no notebook"
+              fill
+              preload
+              sizes="(min-width: 1024px) 440px, (min-width: 640px) 420px, 360px"
+              className="object-cover object-[50%_35%]"
+            />
           </div>
+
+          {/* Etiqueta de presente (tema de Natal) */}
+          {PROMO_NATAL.ativa && (
+            <motion.div
+              initial={{ opacity: 0, rotate: -14, y: -8 }}
+              animate={{ opacity: 1, rotate: -6, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.7 }}
+              className="absolute -top-4 right-6 z-20 flex items-center gap-2 rounded-xl bg-[#B91C1C] px-3.5 py-2 text-sm font-semibold text-white shadow-[0_14px_30px_-12px_rgba(185,28,28,0.7)]"
+            >
+              <span className="absolute -top-2 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[#CA8A04] bg-background" />
+              <Gift size={16} />
+              {PROMO_NATAL.etiqueta}
+            </motion.div>
+          )}
 
           {badges.map(({ icon: Icon, title, text, className, delay }) => (
             <motion.div

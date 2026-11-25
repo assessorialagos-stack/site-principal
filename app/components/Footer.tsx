@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, ArrowUpRight } from "lucide-react";
+import { MapPin, ArrowUpRight } from "lucide-react";
 import { InstagramIcon, WhatsAppIcon } from "./ui/SocialIcons";
 import { whatsappLink } from "@/app/lib/contact";
 
@@ -92,20 +92,6 @@ export function Footer() {
               <span className="leading-tight">
                 <span className="block text-xs text-muted">WhatsApp</span>
                 <span className="block text-sm font-semibold text-foreground">Falar com a gente</span>
-              </span>
-            </a>
-            <a
-              href="mailto:contato@lagosassessoria.com.br"
-              className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-border-strong"
-            >
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
-                <Mail size={18} />
-              </span>
-              <span className="min-w-0 leading-tight">
-                <span className="block text-xs text-muted">E-mail</span>
-                <span className="block truncate text-sm font-semibold text-foreground">
-                  contato@lagosassessoria.com.br
-                </span>
               </span>
             </a>
             <p className="flex items-center gap-2 text-sm text-muted">

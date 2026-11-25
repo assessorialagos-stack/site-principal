@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, Clock } from "lucide-react";
 import { ActionButton } from "./ui/ActionButton";
 import { WhatsAppIcon } from "./ui/SocialIcons";
+import { PromoTag } from "./ui/PromoTag";
+import { Snowfall } from "./ui/Snowfall";
+import { PROMO_NATAL } from "@/app/lib/promo";
 import { whatsappLink } from "@/app/lib/contact";
 
 /**
@@ -68,8 +71,10 @@ export function CTAStrip({
             className="relative isolate overflow-hidden rounded-3xl border border-border bg-card p-8 md:p-12 lg:p-14"
           >
             <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_90%_at_100%_0%,var(--color-accent-soft),transparent_70%)]" />
+            {PROMO_NATAL.ativa && <Snowfall className="-z-10" />}
             <div className="flex flex-col gap-10 lg:flex-row lg:items-center lg:justify-between">
               <div className="max-w-2xl">
+                <PromoTag className="mb-4">Presente de Natal: condições especiais</PromoTag>
                 <h2 className="font-heading text-3xl font-bold leading-tight tracking-tight text-balance md:text-[2.6rem]">
                   {title}
                 </h2>
@@ -110,6 +115,7 @@ export function CTAStrip({
         className="container mx-auto flex max-w-7xl flex-col items-start gap-6 px-4 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8"
       >
         <div className="max-w-2xl">
+          <PromoTag className="mb-3" />
           <h2 className="font-heading text-2xl font-bold tracking-tight md:text-3xl">{title}</h2>
           {subtitle && <p className="mt-2 text-muted md:text-lg">{subtitle}</p>}
         </div>

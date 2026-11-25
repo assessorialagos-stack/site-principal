@@ -299,3 +299,21 @@ html.lenis body {
 .lenis.lenis-scrolling iframe {
   pointer-events: none;
 }
+
+/* Tema de Natal: flocos caindo no hero (ver components/ui/Snowfall.tsx e lib/promo.ts) */
+@keyframes snow-fall {
+  from { transform: translate3d(0, -2rem, 0) rotate(0deg); }
+  to { transform: translate3d(1.5rem, 110vh, 0) rotate(160deg); }
+}
+.snowflake {
+  animation-name: snow-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+/* Sem animação (regra de reduced-motion acima), cada floco fica parado na sua
+   altura em vez de sumir no topo. */
+@media (prefers-reduced-motion: reduce) {
+  .snowflake {
+    top: var(--y);
+  }
+}

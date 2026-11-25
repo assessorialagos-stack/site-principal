@@ -119,7 +119,6 @@ export async function POST(request: Request) {
 
     // Dados do lead (o que aparece na tabela do e-mail).
     Nome: data.nome || "",
-    WhatsApp: data.whatsapp || "",
     Instagram: data.instagram || "",
     Segmento: data.segmento || "",
     "Cidade/Estado": data.cidadeEstado || "",
@@ -141,7 +140,6 @@ export async function POST(request: Request) {
     ? sendLeadToMeta(request, {
         eventId: data.event_id,
         nome: data.nome,
-        whatsapp: data.whatsapp,
         sourceUrl: data.pagina_url,
       })
     : Promise.resolve({ sent: false, reason: "sem event_id" });
